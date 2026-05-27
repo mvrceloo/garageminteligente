@@ -1,0 +1,2594 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+ <title>Garagem Inteligente - Eficiência Automotiva</title>
+ <!-- Importação Oficial da Google Sans Flex (Variable Font) -->
+ <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
+ <style>
+  :root {
+   /* Paleta Noturna Mineral Tech - Confortável, Objetiva e Limpa */
+   --bg-primary: #0f111a;         /* Fundo Principal Super Escuro */
+   --bg-surface: #1a1d2c;         /* Cartões e Superfícies */
+   --bg-input: #23273a;           /* Inputs Integrados */
+   --bg-input-focus: #2d3249;     /* Foco do Input */
+   --text-main: #ffffff;          /* Texto Principal */
+   --text-muted: #8e95b2;         /* Texto Secundário Leve */
+   --border-glow: rgba(255, 255, 255, 0.04); /* Bordas Sutis */
+    
+   /* Cores Dinâmicas dos Combustíveis e Ações */
+   --accent-etanol: #2ecc71;      /* Verde Suave Ecológico */
+   --accent-gasolina: #e67e22;    /* Laranja Esportivo Gasolina */
+   --accent-blue: #3498db;        /* Azul Moderno Principal */
+   --accent-ai: #2f52e0;          /* Azul de Destaque da IA */
+   --accent-red: #e74c3c;         /* Vermelho para Erros / Alertas */
+    
+   /* Estrutura */
+   --radius-lg: 24px;
+   --radius-md: 16px;
+   --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  /* Paleta Diurna Clean Paper - Excelente Visualização */
+  .light-theme {
+   --bg-primary: #f4f6fa;         /* Fundo Diurno Claro e Suave */
+   --bg-surface: #ffffff;         /* Superfície Diurna Clean */
+   --bg-input: #eef1f6;           /* Inputs Suaves */
+   --bg-input-focus: #e0e4ed;     /* Foco de Input Diurno */
+   --text-main: #1e222e;          /* Texto Escuro de Alta Legibilidade */
+   --text-muted: #6b7280;         /* Texto Secundário Suave */
+   --border-glow: rgba(0, 0, 0, 0.04);
+   
+   --accent-etanol: #27ae60;      /* Ajuste de Contraste Diurno */
+   --accent-gasolina: #d35400;
+   --accent-blue: #2980b9;
+   --accent-ai: #1f3bb3;
+   --accent-red: #c0392b;
+  }
+
+  * {
+   box-sizing: border-box;
+   margin: 0;
+   padding: 0;
+   font-family: 'Google Sans Flex', sans-serif;
+   -webkit-tap-highlight-color: transparent;
+  }
+
+  body {
+   background-color: var(--bg-primary);
+   color: var(--text-main);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   min-height: 100vh;
+   padding: 12px;
+   transition: var(--transition);
+   overflow-x: hidden;
+  }
+
+  /* Container Principal Altamente Responsivo */
+  .app-container {
+   width: 100%;
+   max-width: 440px;
+   height: 640px; 
+   background-color: var(--bg-surface);
+   border-radius: var(--radius-lg);
+   padding: 24px;
+   box-shadow: 0 30px 80px rgba(0, 0, 0, 0.25);
+   border: 1px solid var(--border-glow);
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+   position: relative;
+   overflow: hidden; 
+   transition: var(--transition);
+  }
+
+  /* Estrutura de Telas */
+  .screen {
+   display: none;
+   flex-direction: column;
+   height: 100%;
+   overflow: hidden;
+  }
+
+  .screen.active {
+   display: flex;
+   animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes fadeIn {
+   from { opacity: 0; transform: translateY(4px); }
+   to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Navbar Superior */
+  .top-navbar {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin-bottom: 16px;
+   width: 100%;
+   flex-shrink: 0;
+  }
+
+  .welcome-header-right {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+  }
+
+  .screen-title {
+   font-size: 1.35rem;
+   font-weight: 700;
+   letter-spacing: -0.5px;
+   margin-bottom: 4px;
+  }
+
+  .screen-desc {
+   font-size: 0.8rem;
+   font-weight: 300;
+   color: var(--text-muted);
+   line-height: 1.4;
+   margin-bottom: 12px;
+  }
+
+  /* Botão de Novidades (Style Clean) */
+  .btn-news {
+   background: var(--bg-input);
+   border: 1px solid var(--border-glow);
+   color: var(--text-main);
+   font-size: 0.72rem;
+   font-weight: 400;
+   padding: 6px 12px;
+   border-radius: 30px;
+   cursor: pointer;
+   transition: var(--transition);
+  }
+
+  .btn-news:hover {
+   background-color: var(--bg-input-focus);
+   border-color: var(--accent-blue);
+  }
+
+  /* Alternador de Tema */
+  .theme-toggle-btn {
+   background: var(--bg-input);
+   border: 1px solid var(--border-glow);
+   width: 32px;
+   height: 32px;
+   border-radius: 50%;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   cursor: pointer;
+   color: var(--text-main);
+   font-size: 0.85rem;
+   transition: var(--transition);
+  }
+
+  .theme-toggle-btn:hover {
+   background-color: var(--bg-input-focus);
+  }
+
+  .btn-back {
+   background: transparent;
+   border: none;
+   color: var(--text-muted);
+   font-size: 0.85rem;
+   font-weight: 400;
+   cursor: pointer;
+   display: flex;
+   align-items: center;
+   gap: 6px;
+   transition: var(--transition);
+  }
+
+  .btn-back:hover {
+   color: var(--text-main);
+  }
+
+  /* --- TELA 0: INTRO CARREGAMENTO (CHARME) --- */
+  #screen-intro {
+   justify-content: center;
+   align-items: center;
+   text-align: center;
+   height: 100%;
+  }
+
+  .intro-spinner-wrapper {
+   margin-bottom: 24px;
+  }
+
+  .intro-status-text {
+   font-size: 1.05rem;
+   font-weight: 400;
+   color: var(--text-main);
+   margin-bottom: 8px;
+   height: 24px;
+  }
+
+  .intro-sub {
+   font-size: 0.75rem;
+   font-weight: 300;
+   color: var(--text-muted);
+   letter-spacing: 0.2px;
+  }
+
+  /* --- TELA 1: HOME --- */
+  #screen-welcome .welcome-content {
+   text-align: center;
+   padding: 10px 0;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   flex-grow: 1;
+  }
+
+  /* Classe Customizada para o Novo Logotipo em Imagem */
+  .welcome-logo {
+   width: 100%;
+   max-width: 180px;
+   height: auto;
+   margin-bottom: 16px;
+   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+   transition: var(--transition);
+  }
+
+  .light-theme .welcome-logo {
+   filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.1));
+  }
+
+  .welcome-desc {
+   font-size: 0.85rem;
+   font-weight: 300;
+   color: var(--text-muted);
+   line-height: 1.45;
+   margin-bottom: 28px;
+   max-width: 320px;
+  }
+
+  .welcome-actions {
+   width: 100%;
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+  }
+
+  .welcome-header-left {
+   display: flex;
+   align-items: center;
+   gap: 6px;
+  }
+
+  .welcome-badge {
+   background: var(--bg-input);
+   color: var(--text-main);
+   padding: 5px 12px;
+   border-radius: 30px;
+   font-size: 0.72rem;
+   font-weight: 400;
+   border: 1px solid var(--border-glow);
+  }
+
+  /* Botão de Sair Discreto */
+  .btn-logout {
+   background: var(--bg-input);
+   border: 1px solid var(--border-glow);
+   color: var(--text-muted);
+   font-size: 0.68rem;
+   font-weight: 400;
+   padding: 5px 10px;
+   border-radius: 30px;
+   cursor: pointer;
+   transition: var(--transition);
+   display: flex;
+   align-items: center;
+   gap: 4px;
+  }
+
+  .btn-logout:hover {
+   background: var(--bg-input-focus);
+   color: var(--accent-red);
+  }
+
+  /* --- CONFIGURAÇÕES DE CONSUMO & GERAIS --- */
+  .form-content {
+   flex: 1;
+   display: flex;
+   flex-direction: column;
+   justify-content: flex-start;
+   gap: 12px;
+   overflow-y: auto; 
+   padding-right: 2px;
+  }
+
+  .form-content::-webkit-scrollbar {
+   width: 3px;
+  }
+  .form-content::-webkit-scrollbar-thumb {
+   background: rgba(255, 255, 255, 0.08);
+   border-radius: 3px;
+  }
+
+  .form-scrollable {
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   width: 100%;
+  }
+
+  .category-title {
+   font-size: 0.7rem;
+   font-weight: 600;
+   text-transform: uppercase;
+   letter-spacing: 1.5px;
+   color: var(--accent-blue);
+   margin-bottom: 2px;
+   flex-shrink: 0;
+  }
+
+  .grid-inputs {
+   display: grid;
+   grid-template-columns: 1fr 1fr;
+   gap: 10px;
+   flex-shrink: 0;
+  }
+
+  .input-card {
+   background-color: var(--bg-input);
+   padding: 12px 14px;
+   border-radius: var(--radius-md);
+   border: 1px solid transparent;
+   display: flex;
+   flex-direction: column;
+   transition: var(--transition);
+  }
+
+  .input-card.focused {
+   border-color: rgba(52, 152, 219, 0.3);
+   background-color: var(--bg-input-focus);
+  }
+
+  .input-card label {
+   font-size: 0.6rem;
+   font-weight: 500;
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   color: var(--text-muted);
+   margin-bottom: 4px;
+  }
+
+  .input-field-group {
+   display: flex;
+   align-items: baseline;
+  }
+
+  .input-unit {
+   font-size: 0.8rem;
+   color: var(--text-muted);
+   font-weight: 400;
+   margin-right: 4px;
+  }
+
+  .input-card input, .input-card select {
+   background: transparent;
+   border: none;
+   color: var(--text-main);
+   font-size: 1.15rem;
+   font-weight: 500;
+   width: 100%;
+   outline: none;
+  }
+
+  /* Seletor Customizado Premium (Estilizado para ambos os temas) */
+  .input-card select {
+   cursor: pointer;
+   appearance: none;
+   -webkit-appearance: none;
+   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%233498db' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+   background-repeat: no-repeat;
+   background-position: right 8px center;
+   background-size: 14px;
+   padding-right: 32px;
+   border-radius: var(--radius-md);
+   border: 1px solid rgba(255,255,255,0.05);
+   padding-left: 4px;
+  }
+
+  .light-theme .input-card select {
+   background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%232980b9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+   border: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .input-card select option {
+   background: #1a1d2c;
+   color: #ffffff;
+   padding: 12px;
+   font-size: 0.95rem;
+  }
+
+  .light-theme .input-card select option {
+   background: #ffffff;
+   color: #1e222e;
+  }
+
+  /* --- ASSISTENTE DE IA --- */
+  .ai-assistant-card {
+   background: rgba(52, 152, 219, 0.04);
+   border: 1px solid rgba(52, 152, 219, 0.12);
+   border-radius: var(--radius-md);
+   padding: 12px;
+   display: flex;
+   gap: 10px;
+   align-items: flex-start;
+   margin-bottom: 12px;
+   flex-shrink: 0;
+  }
+
+  .ai-avatar {
+   font-size: 1.1rem;
+   background: rgba(52, 152, 219, 0.1);
+   width: 30px;
+   height: 30px;
+   border-radius: 50%;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   flex-shrink: 0;
+   border: 1px solid rgba(52, 152, 219, 0.15);
+  }
+
+  .ai-text {
+   font-size: 0.78rem;
+   font-weight: 300;
+   line-height: 1.4;
+   color: var(--text-main);
+  }
+
+  .ac-card {
+   background-color: var(--bg-input);
+   border-radius: var(--radius-md);
+   padding: 12px;
+   margin-bottom: 12px;
+   border: 1px solid var(--border-glow);
+   transition: var(--transition);
+   flex-shrink: 0;
+  }
+
+  .ac-card.active {
+   border-color: rgba(52, 152, 219, 0.2);
+   background-color: rgba(52, 152, 219, 0.03);
+  }
+
+  .ac-flex {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+  }
+
+  .ac-title {
+   font-size: 0.8rem;
+   font-weight: 400;
+   display: flex;
+   align-items: center;
+   gap: 6px;
+  }
+
+  .ac-desc {
+   font-size: 0.7rem;
+   font-weight: 300;
+   color: var(--text-muted);
+   margin-top: 1px;
+  }
+
+  /* Toggle Deslizante iOS */
+  .toggle-switch {
+   position: relative;
+   display: inline-block;
+   width: 40px;
+   height: 20px;
+  }
+
+  .toggle-switch input { opacity: 0; width: 0; height: 0; }
+
+  .slider {
+   position: absolute;
+   cursor: pointer;
+   top: 0; left: 0; right: 0; bottom: 0;
+   background-color: var(--text-muted);
+   transition: .3s;
+   border-radius: 34px;
+   opacity: 0.6;
+  }
+
+  .slider:before {
+   position: absolute;
+   content: "";
+   height: 14px;
+   width: 14px;
+   left: 3px;
+   bottom: 3px;
+   background-color: white;
+   transition: .3s;
+   border-radius: 50%;
+  }
+
+  body:not(.light-theme) .slider {
+   background-color: #23273a;
+  }
+
+  input:checked + .slider { background-color: var(--accent-blue); opacity: 1; }
+  input:checked + .slider:before { transform: translateX(20px); }
+
+  /* Botões */
+  .btn-action {
+   background: var(--bg-input);
+   color: var(--text-main);
+   border: 1px solid var(--border-glow);
+   width: 100%;
+   height: 46px;
+   border-radius: var(--radius-md);
+   font-size: 0.85rem;
+   font-weight: 400;
+   cursor: pointer;
+   transition: var(--transition);
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 8px;
+   flex-shrink: 0;
+  }
+
+  .btn-action:hover {
+   background: var(--bg-input-focus);
+  }
+
+  .btn-action:active {
+   transform: scale(0.98);
+  }
+
+  /* Botão Destacado Primário */
+  #calculate-btn, #btn-save-vehicle, #btn-save-driver-registration, #next-config-btn, #save-config-btn {
+   background: var(--accent-blue);
+   color: #ffffff;
+   border: none;
+   font-weight: 500;
+  }
+
+  #calculate-btn:hover, #btn-save-vehicle:hover, #btn-save-driver-registration:hover, #next-config-btn:hover, #save-config-btn:hover {
+   opacity: 0.9;
+  }
+
+  .btn-secondary {
+   background: transparent;
+   border: 1px solid var(--border-glow);
+   color: var(--text-muted);
+   width: 100%;
+   height: 38px;
+   border-radius: var(--radius-md);
+   font-size: 0.78rem;
+   font-weight: 300;
+   cursor: pointer;
+   margin-top: 8px;
+   transition: var(--transition);
+   flex-shrink: 0;
+  }
+
+  .btn-secondary:hover {
+   color: var(--text-main);
+   border-color: var(--text-muted);
+  }
+
+  .btn-action.btn-disabled {
+   background: var(--bg-input);
+   border: 1px solid var(--border-glow);
+   color: var(--text-muted);
+   cursor: not-allowed;
+   opacity: 0.3;
+   box-shadow: none;
+   font-weight: 300;
+  }
+
+  .badge-soon {
+   background-color: rgba(255, 255, 255, 0.08);
+   color: var(--text-muted);
+   font-size: 0.55rem;
+   font-weight: 500;
+   padding: 2px 5px;
+   border-radius: 4px;
+   text-transform: uppercase;
+  }
+
+  /* Painel de Resultados */
+  .result-panel {
+   background: rgba(255, 255, 255, 0.01);
+   border-radius: var(--radius-md);
+   padding: 12px;
+   margin-top: 12px;
+   border: 1px solid var(--border-glow);
+   display: none;
+   text-align: center;
+   animation: slideUp 0.3s ease-out;
+   flex-shrink: 0;
+  }
+
+  @keyframes slideUp {
+   from { transform: translateY(8px); opacity: 0; }
+   to { transform: translateY(0); opacity: 1; }
+  }
+
+  .result-indicator {
+   font-size: 0.65rem;
+   font-weight: 500;
+   text-transform: uppercase;
+   letter-spacing: 1px;
+   color: var(--text-muted);
+   margin-bottom: 4px;
+  }
+
+  .result-verdict {
+   font-size: 1.45rem;
+   font-weight: 700;
+   margin-bottom: 6px;
+   letter-spacing: -0.5px;
+  }
+
+  .result-verdict.etanol { color: var(--accent-etanol); }
+  .result-verdict.gasolina { color: var(--accent-gasolina); }
+
+  .result-panel.etanol-win { border-color: rgba(46, 204, 113, 0.2); }
+  .result-panel.gasolina-win { border-color: rgba(230, 126, 34, 0.2); }
+
+  .result-desc {
+   font-size: 0.8rem;
+   font-weight: 300;
+   line-height: 1.4;
+   color: var(--text-muted);
+   margin-bottom: 8px;
+  }
+
+  .result-highlight {
+   color: var(--text-main);
+   font-weight: 500;
+  }
+
+  .badge-pill {
+   display: inline-block;
+   background: rgba(255, 255, 255, 0.03);
+   padding: 3px 10px;
+   border-radius: 30px;
+   font-size: 0.68rem;
+   color: var(--text-muted);
+   margin-top: 4px;
+   font-weight: 400;
+   border: 1px solid var(--border-glow);
+  }
+
+  /* --- RELATÓRIO DO TORETTO --- */
+  .ai-report-btn {
+   background: rgba(52, 152, 219, 0.05);
+   border: 1px solid rgba(52, 152, 219, 0.15);
+   color: var(--accent-blue);
+   border-radius: var(--radius-md);
+   padding: 8px 12px;
+   font-size: 0.75rem;
+   font-weight: 400;
+   cursor: pointer;
+   display: inline-flex;
+   align-items: center;
+   justify-content: center;
+   gap: 6px;
+   margin-top: 8px;
+   width: 100%;
+   transition: var(--transition);
+  }
+
+  .ai-report-btn:hover {
+   background: rgba(52, 152, 219, 0.1);
+  }
+
+  .ai-report-panel {
+   background: rgba(52, 152, 219, 0.02);
+   border: 1px dashed rgba(52, 152, 219, 0.15);
+   border-radius: var(--radius-md);
+   padding: 12px;
+   margin-top: 10px;
+   display: none;
+   text-align: left;
+   animation: slideUp 0.3s ease-out;
+  }
+
+  .ai-report-panel.loading {
+   text-align: center;
+   color: var(--text-muted);
+   font-size: 0.78rem;
+   font-weight: 300;
+  }
+
+  .ai-report-title {
+   font-size: 0.65rem;
+   font-weight: 600;
+   color: var(--accent-blue);
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   margin-bottom: 4px;
+   display: flex;
+   align-items: center;
+   gap: 6px;
+  }
+
+  .ai-report-text {
+   font-size: 0.75rem;
+   line-height: 1.4;
+   color: var(--text-muted);
+  }
+
+  .ai-report-text p {
+   margin-bottom: 6px;
+  }
+
+  .ai-report-text p:last-child {
+   margin-bottom: 0;
+  }
+
+  .ai-report-text strong {
+   color: var(--text-main);
+   font-weight: 500;
+  }
+
+  /* Spinner Animado */
+  .spinner {
+   border: 2px solid rgba(255, 255, 255, 0.1);
+   width: 16px;
+   height: 16px;
+   border-radius: 50%;
+   border-left-color: var(--accent-blue);
+   animation: spin 1s linear infinite;
+   display: inline-block;
+   margin-bottom: 4px;
+  }
+
+  @keyframes spin {
+   0% { transform: rotate(0deg); }
+   100% { transform: rotate(360deg); }
+  }
+
+  /* --- MEUS VEÍCULOS --- */
+  .vehicles-list {
+   display: flex;
+   flex-direction: column;
+   gap: 10px;
+   max-height: 280px; 
+   overflow-y: auto;
+   padding-right: 4px;
+   margin-bottom: 12px;
+  }
+
+  .vehicles-list::-webkit-scrollbar {
+   width: 4px;
+  }
+
+  .vehicles-list::-webkit-scrollbar-thumb {
+   background: rgba(255, 255, 255, 0.08);
+   border-radius: 4px;
+  }
+
+  .vehicle-card {
+   background-color: var(--bg-input);
+   border-radius: var(--radius-md);
+   padding: 12px 14px;
+   border: 1px solid var(--border-glow);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   transition: var(--transition);
+   cursor: pointer;
+  }
+
+  .vehicle-card.active-vehicle {
+   border-color: var(--accent-blue);
+  }
+
+  .vehicle-card-details {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+   text-align: left;
+  }
+
+  .vehicle-card-model {
+   font-size: 0.9rem;
+   font-weight: 500;
+  }
+
+  .vehicle-card-meta {
+   font-size: 0.75rem;
+   color: var(--text-muted);
+   font-weight: 300;
+  }
+
+  .vehicle-card-right {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+  }
+
+  .vehicle-card-placa {
+   background: var(--bg-primary);
+   border: 1px solid var(--border-glow);
+   padding: 3px 6px;
+   border-radius: 4px;
+   font-size: 0.68rem;
+   font-weight: 500;
+   letter-spacing: 0.5px;
+  }
+
+  /* Botões de Ações no Card */
+  .btn-card-action {
+   background: transparent;
+   border: none;
+   font-size: 0.95rem;
+   cursor: pointer;
+   padding: 2px;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   transition: var(--transition);
+  }
+
+  .btn-edit-vehicle {
+   color: var(--accent-blue);
+  }
+
+  .btn-delete-vehicle {
+   color: var(--accent-red);
+  }
+
+  .btn-card-action:hover {
+   transform: scale(1.1);
+  }
+
+  .empty-state {
+   text-align: center;
+   padding: 24px 12px;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 8px;
+  }
+
+  .empty-state-icon {
+   font-size: 1.8rem;
+   opacity: 0.5;
+  }
+
+  .empty-state-text {
+   font-size: 0.8rem;
+   color: var(--text-muted);
+   font-weight: 300;
+   line-height: 1.4;
+  }
+
+  /* --- OVERLAY DE MODAL DE SELEÇÃO E AVISOS --- */
+  .modal-overlay {
+   position: fixed;
+   top: 0;
+   left: 0;
+   width: 100vw;
+   height: 100vh;
+   background: rgba(0, 0, 0, 0.6);
+   backdrop-filter: blur(4px);
+   -webkit-backdrop-filter: blur(4px);
+   z-index: 999;
+   display: none;
+   justify-content: center;
+   align-items: center;
+   padding: 20px;
+  }
+
+  .modal-overlay.active {
+   display: flex;
+   animation: modalFadeIn 0.25s ease;
+  }
+
+  .modal-card {
+   background-color: var(--bg-surface);
+   border-radius: var(--radius-lg);
+   border: 1px solid var(--border-glow);
+   width: 100%;
+   max-width: 360px;
+   padding: 20px;
+   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+   text-align: center;
+   animation: modalScaleUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  @keyframes modalFadeIn {
+   from { opacity: 0; }
+   to { opacity: 1; }
+  }
+
+  @keyframes modalScaleUp {
+   from { transform: scale(0.95); opacity: 0; }
+   to { transform: scale(1); opacity: 1; }
+  }
+
+  .modal-header {
+   margin-bottom: 12px;
+  }
+
+  .modal-title {
+   font-size: 1.15rem;
+   font-weight: 600;
+   letter-spacing: -0.5px;
+   margin-bottom: 4px;
+  }
+
+  .modal-desc {
+   font-size: 0.8rem;
+   font-weight: 300;
+   color: var(--text-muted);
+   line-height: 1.35;
+  }
+
+  .modal-list {
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   max-height: 180px;
+   overflow-y: auto;
+   margin-bottom: 12px;
+   padding-right: 4px;
+  }
+
+  .modal-list::-webkit-scrollbar {
+   width: 3px;
+  }
+  .modal-list::-webkit-scrollbar-thumb {
+   background: rgba(255, 255, 255, 0.08);
+   border-radius: 3px;
+  }
+
+  .modal-item-btn {
+   background-color: var(--bg-input);
+   border: 1px solid var(--border-glow);
+   border-radius: var(--radius-md);
+   padding: 10px 14px;
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   cursor: pointer;
+   width: 100%;
+   transition: var(--transition);
+   text-align: left;
+  }
+
+  .modal-item-btn:hover {
+   border-color: var(--accent-blue);
+   background-color: var(--bg-input-focus);
+  }
+
+  .modal-item-details {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+  }
+
+  .modal-item-name {
+   font-size: 0.85rem;
+   font-weight: 500;
+   color: var(--text-main);
+  }
+
+  .modal-item-meta {
+   font-size: 0.7rem;
+   color: var(--text-muted);
+  }
+
+  /* BOTÃO FLUTUANTE CHAT TORETTO */
+  .toreto-chat-trigger {
+   position: fixed;
+   bottom: 24px;
+   right: 24px;
+   width: 48px;
+   height: 48px;
+   border-radius: 50%;
+   background: linear-gradient(135deg, var(--accent-blue), var(--accent-ai));
+   color: #ffffff;
+   border: 1.5px solid rgba(255, 255, 255, 0.1);
+   box-shadow: 0 10px 30px rgba(52, 152, 219, 0.3);
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   font-size: 1.25rem;
+   cursor: pointer;
+   z-index: 998;
+   transition: var(--transition);
+  }
+
+  .toreto-chat-trigger:hover {
+   transform: scale(1.08);
+  }
+
+  /* PAINEL DE CHAT DO FILHO DO TORETTO (INTERATIVO POR CLIQUES) */
+  .toreto-chat-panel {
+   position: fixed;
+   bottom: 80px;
+   right: 24px;
+   width: 310px;
+   height: 380px;
+   background: var(--bg-surface);
+   border-radius: var(--radius-lg);
+   border: 1px solid var(--border-glow);
+   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+   display: none;
+   flex-direction: column;
+   overflow: hidden;
+   z-index: 1000;
+   animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .toreto-chat-header {
+   background: rgba(52, 152, 219, 0.05);
+   padding: 10px 14px;
+   border-bottom: 1px solid var(--border-glow);
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   flex-shrink: 0;
+  }
+
+  .toreto-header-info {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+  }
+
+  .toreto-header-title-box {
+   display: flex;
+   flex-direction: column;
+   gap: 2px;
+  }
+
+  .toreto-header-title {
+   font-size: 0.85rem;
+   font-weight: 700;
+   color: var(--text-main);
+   display: flex;
+   align-items: center;
+   gap: 4px;
+  }
+
+  .toreto-header-subtitle {
+   font-size: 0.65rem;
+   color: var(--accent-etanol);
+  }
+
+  .btn-close-chat {
+   background: transparent;
+   border: none;
+   color: var(--text-muted);
+   font-size: 1rem;
+   cursor: pointer;
+  }
+
+  .toreto-chat-messages {
+   flex-grow: 1;
+   padding: 10px;
+   overflow-y: auto;
+   display: flex;
+   flex-direction: column;
+   gap: 8px;
+  }
+
+  .toreto-chat-messages::-webkit-scrollbar {
+   width: 3px;
+  }
+  .toreto-chat-messages::-webkit-scrollbar-thumb {
+   background: rgba(255, 255, 255, 0.08);
+   border-radius: 3px;
+  }
+
+  .chat-msg {
+   max-width: 85%;
+   padding: 8px 12px;
+   border-radius: var(--radius-md);
+   font-size: 0.75rem;
+   line-height: 1.35;
+  }
+
+  .chat-msg.toreto {
+   background: var(--bg-input);
+   color: var(--text-main);
+   align-self: flex-start;
+   border-bottom-left-radius: 4px;
+  }
+
+  .chat-msg.user {
+   background: var(--accent-blue);
+   color: #ffffff;
+   align-self: flex-end;
+   border-bottom-right-radius: 4px;
+  }
+
+  /* Área de Sugestões de Perguntas Rápidas */
+  .toreto-chat-input-area {
+   padding: 10px;
+   border-top: 1px solid var(--border-glow);
+   background: rgba(0, 0, 0, 0.15);
+   display: flex;
+   flex-direction: column;
+   gap: 6px;
+   flex-shrink: 0;
+  }
+
+  .toreto-question-sug-title {
+   font-size: 0.65rem;
+   color: var(--text-muted);
+   text-transform: uppercase;
+   letter-spacing: 0.5px;
+   font-weight: 500;
+  }
+
+  .toreto-sug-btn-list {
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+  }
+
+  .btn-sug-question {
+   background: var(--bg-input);
+   border: 1px solid var(--border-glow);
+   border-radius: 6px;
+   padding: 6px 10px;
+   color: var(--text-main);
+   font-size: 0.7rem;
+   text-align: left;
+   cursor: pointer;
+   transition: var(--transition);
+   width: 100%;
+  }
+
+  .btn-sug-question:hover {
+   background: var(--bg-input-focus);
+   border-color: var(--accent-blue);
+  }
+
+  /* Micro Badge "EM APRENDIZADO" */
+  .learning-badge {
+   background: rgba(255, 255, 255, 0.08);
+   color: var(--text-muted);
+   padding: 1px 4px;
+   border-radius: 4px;
+   font-size: 0.5rem;
+   font-weight: 600;
+   letter-spacing: 0.3px;
+   text-transform: uppercase;
+  }
+
+  .beta-badge {
+   background: rgba(255, 255, 255, 0.06);
+   color: var(--text-muted);
+   padding: 2px 4px;
+   border-radius: 4px;
+   font-size: 0.6rem;
+   font-weight: 500;
+   display: inline-block;
+   margin-left: 4px;
+  }
+
+  /* LISTA DE NOVIDADES DENTRO DO MODAL */
+  .news-list {
+   text-align: left;
+   display: flex;
+   flex-direction: column;
+   gap: 12px;
+   max-height: 200px;
+   overflow-y: auto;
+   padding-right: 4px;
+  }
+
+  .news-list::-webkit-scrollbar {
+   width: 3px;
+  }
+  .news-list::-webkit-scrollbar-thumb {
+   background: rgba(255, 255, 255, 0.08);
+   border-radius: 3px;
+  }
+
+  .news-item {
+   border-left: 2px solid var(--accent-blue);
+   padding-left: 10px;
+  }
+
+  .news-item-title {
+   font-size: 0.8rem;
+   font-weight: 600;
+   color: var(--text-main);
+   margin-bottom: 2px;
+  }
+
+  .news-item-desc {
+   font-size: 0.72rem;
+   color: var(--text-muted);
+   line-height: 1.35;
+  }
+
+  /* Compartilhado Footer no Container */
+  .app-footer {
+   text-align: center;
+   display: flex;
+   flex-direction: column;
+   gap: 4px;
+   border-top: 1px solid var(--border-glow);
+   padding-top: 10px;
+   flex-shrink: 0;
+   height: 44px;
+   width: 100%;
+  }
+ </style>
+</head>
+<body>
+
+ <div class="app-container">
+
+  <!-- ================= TELA 0: INTRO CARREGAMENTO / BEM-VINDO (ONBOARDING) ================= -->
+  <div id="screen-intro" class="screen active">
+   <div class="welcome-content" style="justify-content: center; height: 100%;">
+    <div class="intro-spinner-wrapper">
+     <div class="spinner" style="width: 38px; height: 38px; border-width: 3px;"></div>
+    </div>
+    <div class="intro-status-text" id="intro-status-text">Iniciando sistemas...</div>
+    <span class="intro-sub">Aguarde, a Garagem Inteligente está iniciando...</span>
+   </div>
+  </div>
+
+  <!-- ================= TELA 1: HOME ================= -->
+  <div id="screen-welcome" class="screen">
+   <div class="top-navbar" style="justify-content: space-between; margin-bottom: 0px;">
+    <!-- Username Greeting na esquerda + Botão Sair ao Lado -->
+    <div class="welcome-header-left">
+     <div class="welcome-badge" id="welcome-username-greeting">Olá, motorista!</div>
+     <button class="btn-logout" id="btn-logout" title="Sair do Perfil">🚪 Sair</button>
+    </div>
+    <!-- Botão Novidades ao lado do Theme Toggle -->
+    <div class="welcome-header-right">
+     <button class="btn-news" id="btn-open-news">✨ Novidades</button>
+     <button class="theme-toggle-btn" id="theme-toggle-welcome" title="Alternar Tema">☀️</button>
+    </div>
+   </div>
+
+   <div class="welcome-content">
+    <!-- Logotipo Oficial Substituindo o Emoji e o Título de Texto -->
+    <img id="main-welcome-logo" src="https://i.imgur.com/7S2xQYI.png" alt="Garagem Inteligente Logo" class="welcome-logo">
+    <p class="welcome-desc">App focado em cuidar do seu veículo com a inteligência do Filho do Toretto.</p>
+     
+    <div class="welcome-actions">
+     <button class="btn-action" id="btn-open-vehicles">
+      Meus Veículos
+     </button>
+     <button class="btn-action" id="btn-open-garage" style="background: var(--accent-blue); color: #ffffff; border: none; font-weight: 500;">
+      Calculadora de Combustível
+     </button>
+     <button class="btn-action btn-disabled">
+      Controle de Manutenções <span class="badge-soon">Em Breve</span>
+     </button>
+    </div>
+   </div>
+  </div>
+
+  <!-- ================= TELA 2A: AR-CONDICIONADO DESLIGADO (CALIBRAÇÃO LEGADA) ================= -->
+  <div id="screen-config-ac-off" class="screen">
+   <div class="top-navbar">
+    <button class="btn-back" id="back-config-off-to-welcome">← Voltar</button>
+    <button class="theme-toggle-btn" id="theme-toggle-config-off" title="Alternar Tema">☀️</button>
+   </div>
+    
+   <div class="screen-header">
+    <h2 class="screen-title">Ar-Condicionado Desligado</h2>
+    <p class="screen-desc">Insira a média de consumo do seu carro rodando com o sistema de climatização desativado.</p>
+   </div>
+    
+   <div class="form-content">
+    <div class="category-title">Média de Consumo</div>
+    <div class="grid-inputs">
+     <div class="input-card">
+      <label style="color: var(--accent-etanol);">Etanol</label>
+      <div class="input-field-group">
+       <input type="text" id="cons-etanol-off" placeholder="Ex: 8.5" inputmode="decimal">
+       <span class="input-unit">km/l</span>
+      </div>
+     </div>
+     <div class="input-card">
+      <label style="color: var(--accent-gasolina);">Gasolina</label>
+      <div class="input-field-group">
+       <input type="text" id="cons-gasolina-off" placeholder="Ex: 12.0" inputmode="decimal">
+       <span class="input-unit">km/l</span>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <button class="btn-action" id="next-config-btn">
+    Próximo →
+   </button>
+  </div>
+
+  <!-- ================= TELA 2B: AR-CONDICIONADO ATIVO (CALIBRAÇÃO LEGADA) ================= -->
+  <div id="screen-config-ac-on" class="screen">
+   <div class="top-navbar">
+    <button class="btn-back" id="back-config-on-to-off">← Voltar</button>
+    <button class="theme-toggle-btn" id="theme-toggle-config-on" title="Alternar Tema">☀️</button>
+   </div>
+    
+   <div class="screen-header">
+    <h2 class="screen-title">Ar-Condicionado Ativo</h2>
+    <p class="screen-desc">Insira a média de consumo do seu carro rodando com o sistema de climatização ativo.</p>
+   </div>
+    
+   <div class="form-content">
+    <div class="category-title">Consumo Sob Climatização</div>
+    <div class="grid-inputs">
+     <div class="input-card">
+      <label style="color: var(--accent-etanol);">Etanol</label>
+      <div class="input-field-group">
+       <input type="text" id="cons-etanol-on" placeholder="Ex: 7.2" inputmode="decimal">
+       <span class="input-unit">km/l</span>
+      </div>
+     </div>
+     <div class="input-card">
+      <label style="color: var(--accent-gasolina);">Gasolina</label>
+      <div class="input-field-group">
+       <input type="text" id="cons-gasolina-on" placeholder="Ex: 10.2" inputmode="decimal">
+       <span class="input-unit">km/l</span>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <button class="btn-action" id="save-config-btn">
+    Salvar Informações
+   </button>
+  </div>
+
+  <!-- ================= TELA 3: ABASTECIMENTO / RESULTADOS ================= -->
+  <div id="screen-calc" class="screen">
+   <div class="top-navbar">
+    <button class="btn-back" id="back-calc-to-welcome">← Voltar ao Início</button>
+    <button class="theme-toggle-btn" id="theme-toggle-calc" title="Alternar Tema">☀️</button>
+   </div>
+
+   <!-- Card de Diagnóstico do Toretto -->
+   <div class="ai-assistant-card">
+    <div class="ai-avatar">🤖</div>
+    <div class="ai-text" id="ai-recommendation">
+     Sincronizando dados com o chip do motor...
+    </div>
+   </div>
+
+   <!-- Preços dos Combustíveis -->
+   <div class="grid-inputs" style="margin-bottom: 12px;">
+    <div class="input-card">
+     <label style="color: var(--accent-etanol);">Preço Etanol</label>
+     <div class="input-field-group">
+      <span class="input-unit">R$</span>
+      <input type="text" id="price-etanol" placeholder="0,00" inputmode="decimal">
+     </div>
+    </div>
+    <div class="input-card">
+     <label style="color: var(--accent-gasolina);">Preço Gasolina</label>
+     <div class="input-field-group">
+      <span class="input-unit">R$</span>
+      <input type="text" id="price-gasolina" placeholder="0,00" inputmode="decimal">
+     </div>
+    </div>
+   </div>
+
+   <!-- Interruptor do Ar-Condicionado -->
+   <div class="ac-card" id="ac-section">
+    <div class="ac-flex">
+     <div>
+      <div class="ac-title">❄️ Ar-Condicionado</div>
+      <div class="ac-desc" id="ac-status-desc">Simulando com ar-condicionado desligado</div>
+     </div>
+     <label class="toggle-switch">
+      <input type="checkbox" id="ac-toggle">
+      <span class="slider"></span>
+     </label>
+    </div>
+   </div>
+
+   <button class="btn-action" id="calculate-btn">
+    Calcular Combustível
+   </button>
+
+   <!-- Painel de Resultados -->
+   <div class="result-panel" id="result-card">
+    <div class="result-indicator">Veredicto do Toretto</div>
+    <div class="result-verdict" id="veredicto-text">---</div>
+    <div class="result-desc" id="economy-detail">---</div>
+    <div class="badge-pill" id="badge-efficiency">Eficiência real: --%</div>
+     
+    <!-- Gatilho de Relatório IA -->
+    <button class="ai-report-btn" id="btn-generate-report">
+     ⚡ Pedir relatório de consumo
+    </button>
+
+    <!-- Painel de Exibição do Relatório -->
+    <div class="ai-report-panel" id="ai-report-output">
+     <div class="ai-report-title">⚙️ Copilot Toretto</div>
+     <div class="ai-report-text" id="ai-report-content"></div>
+    </div>
+   </div>
+
+   <button class="btn-secondary" id="direct-edit-car-btn">
+    ⚙️ Alterar Parâmetros do Veículo
+   </button>
+  </div>
+
+  <!-- ================= SEÇÃO MEUS VEÍCULOS (LISTAGEM) ================= -->
+  <div id="screen-my-vehicles" class="screen">
+   <div class="top-navbar">
+    <button class="btn-back" id="back-vehicles-to-welcome">← Voltar</button>
+    <button class="theme-toggle-btn" id="theme-toggle-vehicles" title="Alternar Tema">☀️</button>
+   </div>
+
+   <div class="screen-header">
+    <h2 class="screen-title">Meus Veículos</h2>
+    <p class="screen-desc">Selecione o veículo ativo, adicione um novo ou edite as informações existentes.</p>
+   </div>
+
+   <div class="form-content">
+    <!-- Lista Dinâmica de Veículos -->
+    <div class="vehicles-list" id="vehicles-list-container">
+     <!-- Renderizado pelo JS -->
+    </div>
+   </div>
+
+   <button class="btn-action" id="btn-add-vehicle-screen">
+    Adicionar Veículo
+   </button>
+  </div>
+
+  <!-- ================= SEÇÃO ADICIONAR / EDITAR VEÍCULO (CADASTRO) ================= -->
+  <div id="screen-add-vehicle" class="screen">
+   <div class="top-navbar">
+    <button class="btn-back" id="back-add-to-list">← Cancelar</button>
+    <button class="theme-toggle-btn" id="theme-toggle-add-vehicle" title="Alternar Tema">☀️</button>
+   </div>
+
+   <div class="screen-header">
+    <h2 class="screen-title" id="add-vehicle-screen-title">Novo Veículo</h2>
+    <p class="screen-desc">Cadastre os detalhes do carro e seus respectivos parâmetros de consumo.</p>
+   </div>
+
+   <div class="form-content">
+    <div class="form-scrollable">
+      
+     <div class="category-title">Ficha Técnica</div>
+     <div class="grid-inputs">
+      <div class="input-card">
+       <label>Placa</label>
+       <input type="text" id="v-placa" placeholder="ABC1D23" maxlength="7">
+      </div>
+      <div class="input-card">
+       <label>KM Atual</label>
+       <input type="text" id="v-km" placeholder="Ex: 45000" inputmode="numeric">
+      </div>
+     </div>
+
+     <div class="grid-inputs">
+      <div class="input-card">
+       <label>Marca</label>
+       <select id="v-marca">
+        <option value="" disabled selected>Marca...</option>
+        <option value="BYD">BYD</option>
+        <option value="Caoa Chery">Caoa Chery</option>
+        <option value="Chevrolet">Chevrolet</option>
+        <option value="Citroën">Citroën</option>
+        <option value="Fiat">Fiat</option>
+        <option value="Ford">Ford</option>
+        <option value="GWM">GWM</option>
+        <option value="Honda">Honda</option>
+        <option value="Hyundai">Hyundai</option>
+        <option value="Jeep">Jeep</option>
+        <option value="Nissan">Nissan</option>
+        <option value="Peugeot">Peugeot</option>
+        <option value="Renault">Renault</option>
+        <option value="Toyota">Toyota</option>
+        <option value="Volkswagen">Volkswagen</option>
+        <option value="Outro">Outra Marca</option>
+       </select>
+      </div>
+      <div class="input-card">
+       <label>Cor</label>
+       <input type="text" id="v-cor" placeholder="Ex: Branco Pepper">
+      </div>
+     </div>
+
+     <div class="input-card">
+      <label>Modelo / Versão</label>
+      <input type="text" id="v-modelo" placeholder="Ex: Onix Premier 1.0 Turbo">
+     </div>
+
+     <!-- Consumo cadastrado direto no veículo -->
+     <div class="category-title">Métricas de Consumo</div>
+     <div class="grid-inputs">
+      <div class="input-card">
+       <label style="color: var(--accent-etanol);">Etanol (Sem Ar)</label>
+       <div class="input-field-group">
+        <input type="text" id="v-etanol-off" placeholder="Ex: 8.5" inputmode="decimal">
+        <span class="input-unit">km/l</span>
+       </div>
+      </div>
+      <div class="input-card">
+       <label style="color: var(--accent-gasolina);">Gasolina (Sem Ar)</label>
+       <div class="input-field-group">
+        <input type="text" id="v-gasolina-off" placeholder="Ex: 12.0" inputmode="decimal">
+        <span class="input-unit">km/l</span>
+       </div>
+      </div>
+     </div>
+
+     <div class="grid-inputs">
+      <div class="input-card" style="opacity: 0.9;">
+       <label style="color: var(--accent-etanol);">Etanol (Com Ar)</label>
+       <div class="input-field-group">
+        <input type="text" id="v-etanol-on" placeholder="Ex: 7.2" inputmode="decimal">
+        <span class="input-unit">km/l</span>
+       </div>
+      </div>
+      <div class="input-card" style="opacity: 0.9;">
+       <label style="color: var(--accent-gasolina);">Gasolina (Com Ar)</label>
+       <div class="input-field-group">
+        <input type="text" id="v-gasolina-on" placeholder="Ex: 10.2" inputmode="decimal">
+        <span class="input-unit">km/l</span>
+       </div>
+      </div>
+     </div>
+
+    </div>
+   </div>
+
+   <button class="btn-action" id="btn-save-vehicle">
+    Salvar Veículo
+   </button>
+  </div>
+
+  <!-- ================= FOOTER COMPARTILHADO ================= -->
+  <footer class="app-footer">
+   <div class="footer-info-row">
+    <div>Garagem Inteligente © 2026<span class="beta-badge">BETA</span></div>
+    <div style="margin-top: 4px;">
+     <a href="#">Termos de Uso</a> • <a href="#">Políticas de Privacidade</a>
+    </div>
+   </div>
+  </footer>
+
+ </div>
+
+ <!-- ================= OVERLAY DE MODAL DE SELEÇÃO ================= -->
+ <div class="modal-overlay" id="modal-select-vehicle">
+  <div class="modal-card">
+   <div class="modal-header">
+    <h3 class="modal-title">Selecionar Veículo</h3>
+    <p class="modal-desc">Sua garagem possui mais de 2 carros. Qual deseja usar como referência de consumo?</p>
+   </div>
+   <div class="modal-list" id="modal-vehicles-container">
+    <!-- Renderizado dinamicamente pelo JS -->
+   </div>
+   <button class="btn-secondary" id="btn-close-modal" style="margin-top: 0;">Cancelar</button>
+  </div>
+ </div>
+
+ <!-- ================= OVERLAY DE ALERTA SEM VEÍCULO ================= -->
+ <div class="modal-overlay" id="modal-no-vehicle">
+  <div class="modal-card">
+   <div class="modal-header">
+    <h3 class="modal-title" style="color: var(--accent-gasolina);">Garagem Vazia 🚘</h3>
+    <p class="modal-desc" style="margin-top: 10px;">Para o Toretto rodar os cálculos, você precisa cadastrar pelo menos um veículo na Garagem Inteligente.</p>
+   </div>
+   <button class="btn-action" id="btn-modal-go-to-vehicles">Cadastrar Veículo Agora</button>
+   <button class="btn-secondary" id="btn-close-no-vehicle-modal" style="margin-top: 10px;">Voltar</button>
+  </div>
+ </div>
+
+ <!-- ================= OVERLAY REGISTRO DO MOTORISTA (ONBOARDING) ================= -->
+ <div class="modal-overlay" id="modal-register-driver">
+  <div class="modal-card">
+   <div class="modal-header">
+    <h3 class="modal-title" style="letter-spacing: -0.5px;">Cadastro do Motorista 🙋‍♂️</h3>
+    <p class="modal-desc" style="margin-top: 8px;">Como o Toretto deve chamar você no painel de comando?</p>
+   </div>
+   <div class="form-content" style="gap: 14px; margin-bottom: 20px; text-align: left;">
+    <div class="input-card">
+     <label>Nome ou Apelido</label>
+     <input type="text" id="d-name" placeholder="Ex: Thiago, Amanda" autocomplete="off">
+    </div>
+     
+    <!-- Seleção de Estados estilizada no visual do App -->
+    <div class="input-card" style="padding-right: 12px;">
+     <label>Seu Estado / Região</label>
+     <select id="d-state" style="padding-right: 28px;">
+      <option value="" disabled selected>Selecione seu estado...</option>
+      <option value="SP">São Paulo (SP)</option>
+      <option value="RJ">Rio de Janeiro (RJ)</option>
+      <option value="MG">Minas Gerais (MG)</option>
+      <option value="RS">Rio Grande do Sul (RS)</option>
+      <option value="PR">Paraná (PR)</option>
+      <option value="SC">Santa Catarina (SC)</option>
+      <option value="BA">Bahia (BA)</option>
+      <option value="PE">Pernambuco (PE)</option>
+      <option value="CE">Ceará (CE)</option>
+      <option value="GO">Goiás (GO)</option>
+      <option value="DF">Distrito Federal (DF)</option>
+      <option value="Outro">Outro Estado</option>
+     </select>
+    </div>
+   </div>
+   <button class="btn-action" id="btn-save-driver-registration">Concluir Cadastro</button>
+  </div>
+ </div>
+
+ <!-- ================= OVERLAY CUSTOMIZADO: SAÍDA / LOGOUT COM DUAS OPÇÕES ================= -->
+ <div class="modal-overlay" id="modal-logout-options">
+  <div class="modal-card">
+   <div class="modal-header">
+    <h3 class="modal-title" style="color: var(--accent-blue);">Sair do Perfil 👋</h3>
+    <p class="modal-desc" style="margin-top: 10px;">Como você deseja proceder ao sair do aplicativo?</p>
+   </div>
+   <div style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+    <button class="btn-action" id="btn-logout-keep" style="background: var(--accent-blue); color: #ffffff; border: none; font-weight: 500;">
+     Manter Veículos Cadastrados
+    </button>
+    <button class="btn-action" id="btn-logout-wipe" style="background: var(--accent-red); color: #fff; border: none; font-weight: 500;">
+     Apagar Garagem e Reiniciar
+    </button>
+    <button class="btn-secondary" id="btn-logout-cancel" style="margin-top: 6px;">Cancelar</button>
+   </div>
+  </div>
+ </div>
+
+ <!-- ================= OVERLAY: MODAL DE NOVIDADES ================= -->
+ <div class="modal-overlay" id="modal-news">
+  <div class="modal-card">
+   <div class="modal-header">
+    <h3 class="modal-title" style="color: var(--accent-blue);">Últimas Atualizações 🚀</h3>
+    <p class="modal-desc" style="margin-bottom: 16px;">Descubra o que mudou na Garagem Inteligente.</p>
+   </div>
+   <div class="news-list">
+    <div class="news-item">
+     <div class="news-item-title">Logotipo Inteligente por Tema 🏷️</div>
+     <div class="news-item-desc">A imagem do logotipo agora se ajusta de forma mágica: versão em alta definição escura no modo noturno e versão otimizada no modo claro [1].</div>
+    </div>
+    <div class="news-item">
+     <div class="news-item-title">Filho do Toretto IA 👶</div>
+     <div class="news-item-desc">Apresentamos o assistente inteligente na versão de aprendizado para auxiliar nas suas decisões e dúvidas automotivas.</div>
+    </div>
+    <div class="news-item">
+     <div class="news-item-title">Nova Identidade Limpa e Esportiva 🌟</div>
+     <div class="news-item-desc">Refinamento tipográfico robusto utilizando pesos otimizados da Google Sans Flex. Visual de corrida confortável para o dia e noite.</div>
+    </div>
+    <div class="news-item">
+     <div class="news-item-title">Seletor Premium de Marcas e Estados ⚙️</div>
+     <div class="news-item-desc">Menu de seleção visualmente adaptado para a identidade do app, com altura ideal para toques ergonômicos.</div>
+    </div>
+    <div class="news-item">
+     <div class="news-item-title">Filtros de Proteção Reativos 🔒</div>
+     <div class="news-item-desc">Campos de inserção numérica agora impedem a digitação de letras e símbolos por engano, blindando os cálculos do app.</div>
+    </div>
+   </div>
+   <button class="btn-secondary" id="btn-close-news" style="margin-top: 18px; width: 100%;">Fechar</button>
+  </div>
+ </div>
+
+ <!-- ================= TELA / MODAL DE PROCESSAMENTO "PENSANDO" (TORETTO CALCULANDO) ================= -->
+ <div class="modal-overlay" id="modal-toreto-calculating">
+  <div class="modal-card">
+   <div class="intro-spinner-wrapper">
+    <div class="spinner" style="width: 38px; height: 38px; border-width: 3px;"></div>
+   </div>
+   <div class="modal-title" style="margin-bottom: 8px;">Toretto está calculando...</div>
+   <p class="modal-desc" id="toreto-calculation-step" style="font-weight: 300;">Analisando as curvas de torque do motor...</p>
+  </div>
+ </div>
+
+ <!-- ================= BOTÃO FLUTUANTE CHAT FILHO DO TORETTO ================= -->
+ <div class="toreto-chat-trigger" id="toreto-chat-trigger" title="Fale com o Filho do Toretto">
+  💬
+ </div>
+
+ <!-- ================= CHAT COMPACTO DO FILHO DO TORETTO (INTERATIVO POR CLIQUES) ================= -->
+ <div class="toreto-chat-panel" id="toreto-chat-panel">
+  <div class="toreto-chat-header">
+   <div class="toreto-header-info">
+    <span style="font-size: 1.1rem;">🤖</span>
+    <div class="toreto-header-title-box">
+     <div class="toreto-header-title">Filho do Toretto <span class="learning-badge">EM APRENDIZADO</span></div>
+     <div class="toreto-header-subtitle">Especialista em Combustível, Ar e Manutenção</div>
+    </div>
+   </div>
+   <button class="btn-close-chat" id="btn-close-chat">×</button>
+  </div>
+  <div class="toreto-chat-messages" id="toreto-chat-messages">
+   <div class="chat-msg toreto">
+    Olá! Eu sou o Filho do Toretto, o assistente inteligente da Garagem Inteligente. No momento eu ainda estou em fase de aprendizado, mas já sei muito sobre consumo de combustível, ar-condicionado e mecânica preventiva. Clique em uma das dúvidas abaixo para conversarmos:
+   </div>
+  </div>
+  <div class="toreto-chat-input-area">
+   <div class="toreto-question-sug-title">Selecione uma pergunta para o Filho do Toretto:</div>
+   <div class="toreto-sug-btn-list">
+    <button class="btn-sug-question" onclick="askToretto('combustivel')"># Como funciona a proporção real de combustível?</button>
+    <button class="btn-sug-question" onclick="askToretto('ar')"># O ar-condicionado realmente consome muito mais combustível?</button>
+    <button class="btn-sug-question" onclick="askToretto('manutencao')"># Quais manutenções ajudam a reduzir o consumo do carro?</button>
+   </div>
+  </div>
+ </div>
+
+ <script>
+  // DOM Screens
+  const screenIntro = document.getElementById('screen-intro');
+  const screenWelcome = document.getElementById('screen-welcome');
+  const screenConfigOff = document.getElementById('screen-config-ac-off');
+  const screenConfigOn = document.getElementById('screen-config-ac-on');
+  const screenCalc = document.getElementById('screen-calc');
+  const screenMyVehicles = document.getElementById('screen-my-vehicles');
+  const screenAddVehicle = document.getElementById('screen-add-vehicle');
+
+  // DOM Modais
+  const modalSelectVehicle = document.getElementById('modal-select-vehicle');
+  const modalVehiclesContainer = document.getElementById('modal-vehicles-container');
+  const btnCloseModal = document.getElementById('btn-close-modal');
+   
+  // Modal Sem Veículo
+  const modalNoVehicle = document.getElementById('modal-no-vehicle');
+  const btnModalGoToVehicles = document.getElementById('btn-modal-go-to-vehicles');
+  const btnCloseNoVehicleModal = document.getElementById('btn-close-no-vehicle-modal');
+
+  // Modal Registro do Motorista
+  const modalRegisterDriver = document.getElementById('modal-register-driver');
+  const inputDName = document.getElementById('d-name');
+  const selectDState = document.getElementById('d-state');
+  const btnSaveDriverRegistration = document.getElementById('btn-save-driver-registration');
+  const btnLogout = document.getElementById('btn-logout');
+
+  // Modal Sair (Opções de Logout)
+  const modalLogoutOptions = document.getElementById('modal-logout-options');
+  const btnLogoutKeep = document.getElementById('btn-logout-keep');
+  const btnLogoutWipe = document.getElementById('btn-logout-wipe');
+  const btnLogoutCancel = document.getElementById('btn-logout-cancel');
+
+  // Modal "Toretto Pensando"
+  const modalToretoCalculating = document.getElementById('modal-toreto-calculating');
+  const toretoCalculationStep = document.getElementById('toreto-calculation-step');
+
+  // Modal Novidades
+  const modalNews = document.getElementById('modal-news');
+  const btnOpenNews = document.getElementById('btn-open-news');
+  const btnCloseNews = document.getElementById('btn-close-news');
+
+  // Chat do Toretto
+  const toretoChatTrigger = document.getElementById('toreto-chat-trigger');
+  const toretoChatPanel = document.getElementById('toreto-chat-panel');
+  const btnCloseChat = document.getElementById('btn-close-chat');
+  const toretoChatMessages = document.getElementById('toreto-chat-messages');
+
+  // Elementos da Home
+  const welcomeUsernameGreeting = document.getElementById('welcome-username-greeting');
+  const mainWelcomeLogo = document.getElementById('main-welcome-logo');
+
+  // Buttons
+  const btnOpenGarage = document.getElementById('btn-open-garage');
+  const btnOpenVehicles = document.getElementById('btn-open-vehicles');
+  const btnAddVehicleScreen = document.getElementById('btn-add-vehicle-screen');
+  const btnSaveVehicle = document.getElementById('btn-save-vehicle');
+  const nextConfigBtn = document.getElementById('next-config-btn');
+  const saveConfigBtn = document.getElementById('save-config-btn');
+  const calculateBtn = document.getElementById('calculate-btn');
+  const directEditCarBtn = document.getElementById('direct-edit-car-btn');
+  const btnGenerateReport = document.getElementById('btn-generate-report');
+
+  // Back Buttons
+  const backConfigOffToWelcome = document.getElementById('back-config-off-to-welcome');
+  const backConfigOnToOff = document.getElementById('back-config-on-to-off');
+  const backCalcToWelcome = document.getElementById('back-calc-to-welcome');
+  const backVehiclesToWelcome = document.getElementById('back-vehicles-to-welcome');
+  const backAddToList = document.getElementById('back-add-to-list');
+
+  // Theme Toggles
+  const themeToggleWelcome = document.getElementById('theme-toggle-welcome');
+  const themeToggleConfigOff = document.getElementById('theme-toggle-config-off');
+  const themeToggleConfigOn = document.getElementById('theme-toggle-config-on');
+  const themeToggleCalc = document.getElementById('theme-toggle-calc');
+  const themeToggleVehicles = document.getElementById('theme-toggle-vehicles');
+  const themeToggleAddVehicle = document.getElementById('theme-toggle-add-vehicle');
+
+  // Form Inputs (Ar Desligado - Calibração legada)
+  const inputConsEtanolOff = document.getElementById('cons-etanol-off');
+  const inputConsGasolinaOff = document.getElementById('cons-gasolina-off');
+
+  // Form Inputs (Ar Ligado - Calibração legada)
+  const inputConsEtanolOn = document.getElementById('cons-etanol-on');
+  const inputConsGasolinaOn = document.getElementById('cons-gasolina-on');
+
+  // Price Inputs
+  const inputPriceEtanol = document.getElementById('price-etanol');
+  const inputPriceGasolina = document.getElementById('price-gasolina');
+
+  // Add/Edit Vehicle Inputs
+  const addVehicleScreenTitle = document.getElementById('add-vehicle-screen-title');
+  const inputVkm = document.getElementById('v-km');
+  const inputVplaca = document.getElementById('v-placa');
+  const selectVmarca = document.getElementById('v-marca');
+  const inputVmodelo = document.getElementById('v-modelo');
+  const inputVcor = document.getElementById('v-cor');
+  const inputVEtanolOff = document.getElementById('v-etanol-off');
+  const inputVGasolinaOff = document.getElementById('v-gasolina-off');
+  const inputVEtanolOn = document.getElementById('v-etanol-on');
+  const inputVGasolinaOn = document.getElementById('v-gasolina-on');
+
+  // Vehicles Container
+  const vehiclesListContainer = document.getElementById('vehicles-list-container');
+
+  // Ar Condicionado
+  const acToggle = document.getElementById('ac-toggle');
+  const acSection = document.getElementById('ac-section');
+  const acStatusDesc = document.getElementById('ac-status-desc');
+
+  // Results
+  const aiRecommendation = document.getElementById('ai-recommendation');
+  const resultCard = document.getElementById('result-card');
+  const veredictoText = document.getElementById('veredicto-text');
+  const economyDetail = document.getElementById('economy-detail');
+  const badgeEfficiency = document.getElementById('badge-efficiency');
+  const aiReportOutput = document.getElementById('ai-report-output');
+  const aiReportContent = document.getElementById('ai-report-content');
+
+  // Cache local
+  let appState = {
+   consumoEtanolOff: parseFloat(localStorage.getItem('gi_etanol_off')) || 0,
+   consumoGasolinaOff: parseFloat(localStorage.getItem('gi_gasolina_off')) || 0,
+   consumoEtanolOn: parseFloat(localStorage.getItem('gi_etanol_on')) || 0,
+   consumoGasolinaOn: parseFloat(localStorage.getItem('gi_gasolina_on')) || 0,
+   theme: localStorage.getItem('gi_theme') || 'dark',
+    
+   // Motorista
+   motoristaNome: localStorage.getItem('gi_motorista_nome') || null,
+   motoristaEstado: localStorage.getItem('gi_motorista_estado') || null,
+    
+   // Meus Veículos (Array de objetos)
+   veiculos: JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [],
+    
+   // ID do veículo ativo
+   veiculoAtivoId: localStorage.getItem('gi_veiculo_ativo_id') || null,
+   veiculoEmEdicaoId: null
+  };
+
+  // --- VALIDAÇÃO RIGOROSA DE INPUTS ---
+  function setNumericValidation(inputElement, isDecimal) {
+   inputElement.addEventListener('input', (e) => {
+    let value = e.target.value;
+    value = value.replace(',', '.');
+    if (isDecimal) {
+     value = value.replace(/[^0-9.]/g, '');
+     const parts = value.split('.');
+     if (parts.length > 2) {
+      value = parts[0] + '.' + parts.slice(1).join('');
+     }
+    } else {
+     value = value.replace(/[^0-9]/g, '');
+    }
+    e.target.value = value;
+   });
+  }
+
+  setNumericValidation(inputConsEtanolOff, true);
+  setNumericValidation(inputConsGasolinaOff, true);
+  setNumericValidation(inputConsEtanolOn, true);
+  setNumericValidation(inputConsGasolinaOn, true);
+  setNumericValidation(inputPriceEtanol, true);
+  setNumericValidation(inputPriceGasolina, true);
+  setNumericValidation(inputVEtanolOff, true);
+  setNumericValidation(inputVGasolinaOff, true);
+  setNumericValidation(inputVEtanolOn, true);
+  setNumericValidation(inputVGasolinaOn, true);
+  setNumericValidation(inputVkm, false);
+
+  // Inicializador & Fluxo Onboarding Completo (Tela de Carregamento)
+  window.addEventListener('DOMContentLoaded', () => {
+   // Aplica tema salvo
+   if (appState.theme === 'light') {
+    document.body.classList.add('light-theme');
+    updateThemeToggleIcons('☀️');
+    if (mainWelcomeLogo) mainWelcomeLogo.src = 'https://i.imgur.com/eIOAKM0.png';
+   } else {
+    updateThemeToggleIcons('🌙');
+    if (mainWelcomeLogo) mainWelcomeLogo.src = 'https://i.imgur.com/7S2xQYI.png';
+   }
+
+   // Prepara inputs legados se existirem
+   inputConsEtanolOff.value = appState.consumoEtanolOff || '';
+   inputConsGasolinaOff.value = appState.consumoGasolinaOff || '';
+   inputConsEtanolOn.value = appState.consumoEtanolOn || '';
+   inputConsGasolinaOn.value = appState.consumoGasolinaOn || '';
+
+   // Verifica se o motorista já está cadastrado
+   if (appState.motoristaNome) {
+    welcomeUsernameGreeting.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
+    runCharmIntroAnimation(false); 
+   } else {
+    runCharmIntroAnimation(true);
+   }
+
+   // Define veículo ativo padrão se houver
+   if (appState.veiculos.length > 0 && !appState.veiculoAtivoId) {
+    setVeiculoAtivo(appState.veiculos[0].id);
+   }
+  });
+
+  // Forçar primeira letra do nome como maiúscula dinamicamente
+  inputDName.addEventListener('input', (e) => {
+   const val = e.target.value;
+   if (val.length > 0) {
+    e.target.value = val.charAt(0).toUpperCase() + val.slice(1);
+   }
+  });
+
+  // Animação de Carregamento Simulado
+  function runCharmIntroAnimation(requireDriverRegistration) {
+   changeScreen(screenWelcome, screenIntro);
+   const introStatusText = document.getElementById('intro-status-text');
+    
+   const loadingFrases = [
+    "Calibrando as curvas de consumo...",
+    "Analisando a injeção eletrônica...",
+    "Mapeando consumo de ar-condicionado...",
+    "Revisando a pressão das linhas de combustível...",
+    "Carregando tabelas de eficiência térmica..."
+   ];
+    
+   const fraseSorteada = loadingFrases[Math.floor(Math.random() * loadingFrases.length)];
+   introStatusText.innerHTML = fraseSorteada;
+
+   setTimeout(() => {
+    if (requireDriverRegistration) {
+     modalRegisterDriver.classList.add('active');
+    } else {
+     changeScreen(screenIntro, screenWelcome);
+    }
+   }, 2800);
+  }
+
+  // Gravar dados do Motorista
+  btnSaveDriverRegistration.addEventListener('click', () => {
+   const nome = inputDName.value.trim();
+   const estado = selectDState.value;
+
+   if (!nome || !estado) {
+    alert('Por favor, preencha todos os campos para prosseguir.');
+    return;
+   }
+
+   appState.motoristaNome = nome;
+   appState.motoristaEstado = estado;
+   localStorage.setItem('gi_motorista_nome', nome);
+   localStorage.setItem('gi_motorista_estado', estado);
+
+   welcomeUsernameGreeting.innerHTML = `Olá, <span>${nome}</span>!`;
+    
+   modalRegisterDriver.classList.remove('active');
+   changeScreen(screenIntro, screenWelcome); 
+  });
+
+  // Alternar Tema e Mudar Logos Dinamicamente
+  function toggleTheme() {
+   const isLight = document.body.classList.toggle('light-theme');
+   const newTheme = isLight ? 'light' : 'dark';
+   appState.theme = newTheme;
+   localStorage.setItem('gi_theme', newTheme);
+   updateThemeToggleIcons(isLight ? '☀️' : '🌙');
+   
+   // Alteração de Logotipo por Tema [1]
+   if (isLight) {
+    if (mainWelcomeLogo) mainWelcomeLogo.src = 'https://i.imgur.com/eIOAKM0.png';
+   } else {
+    if (mainWelcomeLogo) mainWelcomeLogo.src = 'https://i.imgur.com/7S2xQYI.png';
+   }
+  }
+
+  function updateThemeToggleIcons(icon) {
+   const toggles = [themeToggleWelcome, themeToggleConfigOff, themeToggleConfigOn, themeToggleCalc, themeToggleVehicles, themeToggleAddVehicle];
+   toggles.forEach(toggle => { if (toggle) toggle.textContent = icon; });
+  }
+
+  [themeToggleWelcome, themeToggleConfigOff, themeToggleConfigOn, themeToggleCalc, themeToggleVehicles, themeToggleAddVehicle].forEach(btn => {
+   if (btn) btn.addEventListener('click', toggleTheme);
+  });
+
+  // Lógica do Modal de Novidades
+  btnOpenNews.addEventListener('click', () => {
+   modalNews.classList.add('active');
+  });
+
+  btnCloseNews.addEventListener('click', () => {
+   modalNews.classList.remove('active');
+  });
+
+  modalNews.addEventListener('click', (e) => {
+   if (e.target === modalNews) modalNews.classList.remove('active');
+  });
+
+  function changeScreen(from, to) {
+   from.classList.remove('active');
+   to.classList.add('active');
+  }
+
+  // Lógica do Botão Sair (Logout de Perfil)
+  btnLogout.addEventListener('click', () => {
+   modalLogoutOptions.classList.add('active');
+  });
+
+  // Opção 1: Manter veículos e apenas resetar dados do motorista
+  btnLogoutKeep.addEventListener('click', () => {
+   appState.motoristaNome = null;
+   appState.motoristaEstado = null;
+   localStorage.removeItem('gi_motorista_nome');
+   localStorage.removeItem('gi_motorista_estado');
+
+   inputDName.value = '';
+   selectDState.value = '';
+
+   modalLogoutOptions.classList.remove('active');
+   runCharmIntroAnimation(true);
+  });
+
+  // Opção 2: Reset total da garagem e das informações do motorista
+  btnLogoutWipe.addEventListener('click', () => {
+   appState.motoristaNome = null;
+   appState.motoristaEstado = null;
+   appState.veiculos = [];
+   appState.veiculoAtivoId = null;
+   appState.veiculoEmEdicaoId = null;
+   appState.consumoEtanolOff = 0;
+   appState.consumoGasolinaOff = 0;
+   appState.consumoEtanolOn = 0;
+   appState.consumoGasolinaOn = 0;
+
+   localStorage.clear();
+
+   inputDName.value = '';
+   selectDState.value = '';
+
+   modalLogoutOptions.classList.remove('active');
+   runCharmIntroAnimation(true);
+  });
+
+  // Cancelar saída
+  btnLogoutCancel.addEventListener('click', () => {
+   modalLogoutOptions.classList.remove('active');
+  });
+
+  // --- NAVEGAÇÃO DE FLUXO ---
+  btnOpenGarage.addEventListener('click', () => {
+   const totalVeiculos = appState.veiculos.length;
+
+   if (totalVeiculos === 0) {
+    openNoVehicleModal();
+   } else if (totalVeiculos > 2) {
+    openVehicleSelectionModal();
+   } else {
+    iniciarCalculadoraDireta();
+   }
+  });
+
+  function iniciarCalculadoraDireta() {
+   const veiculoAtivo = getVeiculoAtivoObj();
+    
+   if (veiculoAtivo) {
+    appState.consumoEtanolOff = veiculoAtivo.etanolOff;
+    appState.consumoGasolinaOff = veiculoAtivo.gasolinaOff;
+    appState.consumoEtanolOn = veiculoAtivo.etanolOn;
+    appState.consumoGasolinaOn = veiculoAtivo.gasolinaOn;
+     
+    changeScreen(screenWelcome, screenCalc);
+    updateAiCostAnalysis();
+   } else {
+    const jaTemConfig = appState.consumoEtanolOff > 0 && appState.consumoGasolinaOff > 0 && appState.consumoEtanolOn > 0 && appState.consumoGasolinaOn > 0;
+    if (jaTemConfig) {
+     changeScreen(screenWelcome, screenCalc);
+     updateAiCostAnalysis();
+    } else {
+     changeScreen(screenWelcome, screenConfigOff);
+    }
+   }
+  }
+
+  function openNoVehicleModal() {
+   modalNoVehicle.classList.add('active');
+  }
+
+  function closeNoVehicleModal() {
+   modalNoVehicle.classList.remove('active');
+  }
+
+  btnCloseNoVehicleModal.addEventListener('click', closeNoVehicleModal);
+   
+  btnModalGoToVehicles.addEventListener('click', () => {
+   closeNoVehicleModal();
+   changeScreen(screenWelcome, screenMyVehicles);
+   renderVehiclesList();
+  });
+
+  modalNoVehicle.addEventListener('click', (e) => {
+   if (e.target === modalNoVehicle) closeNoVehicleModal();
+  });
+
+  function openVehicleSelectionModal() {
+   modalVehiclesContainer.innerHTML = '';
+    
+   appState.veiculos.forEach(v => {
+    const btn = document.createElement('button');
+    btn.className = 'modal-item-btn';
+    btn.innerHTML = `
+     <div class="modal-item-details">
+      <span class="modal-item-name">${v.marca} ${v.modelo}</span>
+      <span class="modal-item-meta">${v.cor} • Consumo: ${v.etanolOff}/${v.gasolinaOff} km/l</span>
+     </div>
+     <span class="vehicle-card-placa" style="margin-left: 10px;">${v.placa}</span>
+    `;
+     
+    btn.addEventListener('click', () => {
+     setVeiculoAtivo(v.id);
+     appState.consumoEtanolOff = v.etanolOff;
+     appState.consumoGasolinaOff = v.gasolinaOff;
+     appState.consumoEtanolOn = v.etanolOn;
+     appState.consumoGasolinaOn = v.gasolinaOn;
+      
+     closeVehicleSelectionModal();
+     changeScreen(screenWelcome, screenCalc);
+     updateAiCostAnalysis();
+    });
+     
+    modalVehiclesContainer.appendChild(btn);
+   });
+    
+   modalSelectVehicle.classList.add('active');
+  }
+
+  function closeVehicleSelectionModal() {
+   modalSelectVehicle.classList.remove('active');
+  }
+
+  btnCloseModal.addEventListener('click', closeVehicleSelectionModal);
+  modalSelectVehicle.addEventListener('click', (e) => {
+   if (e.target === modalSelectVehicle) closeVehicleSelectionModal();
+  });
+
+  btnOpenVehicles.addEventListener('click', () => {
+   changeScreen(screenWelcome, screenMyVehicles);
+   renderVehiclesList();
+  });
+
+  // Click do botão de adicionar veículo na listagem
+  if (btnAddVehicleScreen) {
+    btnAddVehicleScreen.addEventListener('click', () => {
+     appState.veiculoEmEdicaoId = null; 
+     addVehicleScreenTitle.textContent = "Novo Veículo";
+     changeScreen(screenMyVehicles, screenAddVehicle);
+     resetAddVehicleForm();
+    });
+  }
+
+  // Back Buttons
+  backConfigOffToWelcome.addEventListener('click', () => changeScreen(screenConfigOff, screenWelcome));
+  backConfigOnToOff.addEventListener('click', () => changeScreen(screenConfigOn, screenConfigOff));
+  backCalcToWelcome.addEventListener('click', () => changeScreen(screenCalc, screenWelcome));
+  backVehiclesToWelcome.addEventListener('click', () => changeScreen(screenMyVehicles, screenWelcome));
+  backAddToList.addEventListener('click', () => changeScreen(screenAddVehicle, screenMyVehicles));
+
+  directEditCarBtn.addEventListener('click', () => {
+   const veiculoAtivo = getVeiculoAtivoObj();
+   if (veiculoAtivo) {
+    changeScreen(screenCalc, screenMyVehicles);
+    renderVehiclesList();
+   } else {
+    changeScreen(screenCalc, screenConfigOff);
+   }
+  });
+
+  // --- LÓGICA DE CADASTRO/EDIÇÃO DE VEÍCULOS ---
+  function resetAddVehicleForm() {
+   inputVkm.value = '';
+   inputVplaca.value = '';
+   selectVmarca.value = '';
+   inputVmodelo.value = '';
+   inputVcor.value = '';
+   inputVEtanolOff.value = '';
+   inputVGasolinaOff.value = '';
+   inputVEtanolOn.value = '';
+   inputVGasolinaOn.value = '';
+  }
+
+  btnSaveVehicle.addEventListener('click', () => {
+   const km = parseInt(inputVkm.value);
+   const placa = inputVplaca.value.trim();
+   const marca = selectVmarca.value;
+   const modelo = inputVmodelo.value.trim();
+   const cor = inputVcor.value.trim();
+    
+   const etanolOff = parseFloat(inputVEtanolOff.value);
+   const gasolinaOff = parseFloat(inputVGasolinaOff.value);
+   const etanolOn = parseFloat(inputVEtanolOn.value);
+   const gasolinaOn = parseFloat(inputVGasolinaOn.value);
+
+   if (!km || isNaN(km) || km < 0 || !placa || !marca || !modelo || !cor || isNaN(etanolOff) || isNaN(gasolinaOff) || isNaN(etanolOn) || isNaN(gasolinaOn)) {
+    alert('Por favor, preencha todos os campos do formulário e parâmetros de consumo corretos.');
+    return;
+   }
+
+   if (appState.veiculoEmEdicaoId) {
+    const index = appState.veiculos.findIndex(v => v.id === appState.veiculoEmEdicaoId);
+    if (index !== -1) {
+     appState.veiculos[index] = {
+      id: appState.veiculoEmEdicaoId,
+      km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn
+     };
+     localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+    }
+    appState.veiculoEmEdicaoId = null;
+   } else {
+    const novoVeiculo = { 
+     id: String(Date.now()), 
+     km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn
+    };
+    appState.veiculos.push(novoVeiculo);
+    localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+    setVeiculoAtivo(novoVeiculo.id);
+   }
+
+   changeScreen(screenAddVehicle, screenMyVehicles);
+   renderVehiclesList();
+  });
+
+  function editVehicle(id, event) {
+   event.stopPropagation();
+    
+   const v = appState.veiculos.find(veh => veh.id === id);
+   if (!v) return;
+
+   appState.veiculoEmEdicaoId = id;
+   addVehicleScreenTitle.textContent = "Editar Veículo";
+
+   inputVkm.value = v.km;
+   inputVplaca.value = v.placa;
+   selectVmarca.value = v.marca;
+   inputVmodelo.value = v.modelo;
+   inputVcor.value = v.cor;
+   inputVEtanolOff.value = v.etanolOff;
+   inputVGasolinaOff.value = v.gasolinaOff;
+   inputVEtanolOn.value = v.etanolOn;
+   inputVGasolinaOn.value = v.gasolinaOn;
+
+   changeScreen(screenMyVehicles, screenAddVehicle);
+  }
+
+  function setVeiculoAtivo(id) {
+   appState.veiculoAtivoId = id;
+   localStorage.setItem('gi_veiculo_ativo_id', id);
+  }
+
+  function getVeiculoAtivoObj() {
+   if (appState.veiculos.length === 0) return null;
+   return appState.veiculos.find(v => v.id === appState.veiculoAtivoId) || appState.veiculos[0];
+  }
+
+  function deleteVehicle(id, event) {
+   event.stopPropagation();
+    
+   if (!confirm('Deseja realmente excluir este veículo da sua Garagem Inteligente?')) {
+    return;
+   }
+
+   appState.veiculos = appState.veiculos.filter(v => v.id !== id);
+   localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+
+   if (appState.veiculoAtivoId === id) {
+    if (appState.veiculos.length > 0) {
+     setVeiculoAtivo(appState.veiculos[0].id);
+    } else {
+     appState.veiculoAtivoId = null;
+     localStorage.removeItem('gi_veiculo_ativo_id');
+    }
+   }
+
+   renderVehiclesList();
+  }
+
+  function renderVehiclesList() {
+   vehiclesListContainer.innerHTML = '';
+
+   if (appState.veiculos.length === 0) {
+    vehiclesListContainer.innerHTML = `
+     <div class="empty-state">
+      <span class="empty-state-icon">🚘</span>
+      <span class="empty-state-text">Sua Garagem Inteligente está vazia.<br>Cadastre seu veículo com consumo dinâmico abaixo.</span>
+     </div>
+    `;
+    return;
+   }
+
+   const ativoObj = getVeiculoAtivoObj();
+
+   appState.veiculos.forEach(v => {
+    const isActive = ativoObj && v.id === ativoObj.id;
+    const card = document.createElement('div');
+    card.className = `vehicle-card ${isActive ? 'active-vehicle' : ''}`;
+     
+    card.addEventListener('click', () => {
+     setVeiculoAtivo(v.id);
+     renderVehiclesList();
+     setTimeout(() => {
+      changeScreen(screenMyVehicles, screenWelcome);
+     }, 200);
+    });
+
+    card.innerHTML = `
+     <div class="vehicle-card-details">
+      <span class="vehicle-card-model">${v.marca} <span style="font-weight: 300;">${v.modelo}</span></span>
+      <span class="vehicle-card-meta">${v.cor} • ${v.km.toLocaleString('pt-BR')} km</span>
+      <span class="vehicle-card-meta" style="color: var(--accent-blue); font-weight: 400; margin-top: 2px;">
+       ⚡ Consumo: ${v.etanolOff}/${v.gasolinaOff} km/l
+      </span>
+     </div>
+     <div class="vehicle-card-right">
+      <span class="vehicle-card-placa">${v.placa}</span>
+      <button class="btn-card-action btn-edit-vehicle" title="Editar Veículo">✏️</button>
+      <button class="btn-card-action btn-delete-vehicle" title="Remover Veículo">🗑️</button>
+     </div>
+    `;
+
+    card.querySelector('.btn-edit-vehicle').addEventListener('click', (e) => editVehicle(v.id, e));
+    card.querySelector('.btn-delete-vehicle').addEventListener('click', (e) => deleteVehicle(v.id, e));
+
+    vehiclesListContainer.appendChild(card);
+   });
+  }
+
+  // --- LÓGICA DE ABASTECIMENTO (DASHBOARD) ---
+  nextConfigBtn.addEventListener('click', () => {
+   const strEtanol = inputConsEtanolOff.value.trim();
+   const strGasolina = inputConsGasolinaOff.value.trim();
+   const consEtanol = parseFloat(strEtanol);
+   const consGasolina = parseFloat(strGasolina);
+
+   if (isNaN(consEtanol) || isNaN(consGasolina) || consEtanol <= 0 || consGasolina <= 0) {
+    alert('Métricas de consumo padrão inválidas. Certifique-se de digitar números positivos maiores que zero.');
+    return;
+   }
+
+   appState.consumoEtanolOff = consEtanol;
+   appState.consumoGasolinaOff = consGasolina;
+   localStorage.setItem('gi_etanol_off', consEtanol);
+   localStorage.setItem('gi_gasolina_off', consGasolina);
+
+   if (!inputConsEtanolOn.value) {
+    inputConsEtanolOn.value = (consEtanol * 0.85).toFixed(1);
+    inputConsGasolinaOn.value = (consGasolina * 0.85).toFixed(1);
+   }
+
+   changeScreen(screenConfigOff, screenConfigOn);
+  });
+
+  saveConfigBtn.addEventListener('click', () => {
+   const strEtanolOn = inputConsEtanolOn.value.trim();
+   const strGasolinaOn = inputConsGasolinaOn.value.trim();
+   const consEtanolOn = parseFloat(strEtanolOn);
+   const consGasolinaOn = parseFloat(strGasolinaOn);
+
+   if (isNaN(consEtanolOn) || isNaN(consGasolinaOn) || consEtanolOn <= 0 || consGasolinaOn <= 0) {
+    alert('Métricas de consumo sob climatização inválidas. Redefina antes de prosseguir.');
+    return;
+   }
+
+   appState.consumoEtanolOn = consEtanolOn;
+   appState.consumoGasolinaOn = consGasolinaOn;
+   localStorage.setItem('gi_etanol_on', consEtanolOn);
+   localStorage.setItem('gi_gasolina_on', consGasolinaOn);
+
+   changeScreen(screenConfigOn, screenCalc);
+   updateAiCostAnalysis();
+  });
+
+  acToggle.addEventListener('change', () => {
+   updateAiCostAnalysis();
+   resultCard.style.display = 'none';
+   aiReportOutput.style.display = 'none';
+  });
+
+  function updateAiCostAnalysis() {
+   const isAcActive = acToggle.checked;
+   const veiculoAtivo = getVeiculoAtivoObj();
+    
+   if (veiculoAtivo) {
+    appState.consumoEtanolOff = veiculoAtivo.etanolOff;
+    appState.consumoGasolinaOff = veiculoAtivo.gasolinaOff;
+    appState.consumoEtanolOn = veiculoAtivo.etanolOn;
+    appState.consumoGasolinaOn = veiculoAtivo.gasolinaOn;
+   }
+
+   const cEtanol = isAcActive ? appState.consumoEtanolOn : appState.consumoEtanolOff;
+   const cGasolina = isAcActive ? appState.consumoGasolinaOn : appState.consumoGasolinaOff;
+   const labelAr = isAcActive ? "ar-condicionado ligado" : "ar-condicionado desligado";
+
+   acSection.className = `ac-card ${isAcActive ? 'active' : ''}`;
+   acStatusDesc.innerHTML = `Simulando com ${labelAr}`;
+    
+   if (veiculoAtivo) {
+    aiRecommendation.innerHTML = `🤖 <strong>Garagem Inteligente:</strong> rodando simulação fina com o Toretto para o <strong>${veiculoAtivo.marca} ${veiculoAtivo.modelo}</strong> (${labelAr}). Rendimento: <strong>${cEtanol} km/l</strong> (Etanol) e <strong>${cGasolina} km/l</strong> (Gasolina).`;
+   } else {
+    aiRecommendation.innerHTML = `🤖 <strong>Garagem Inteligente:</strong> rodando simulação com o Toretto baseada com <strong>${labelAr}</strong>. Média de consumo: <strong>${cEtanol} km/l</strong> (Etanol) e <strong>${cGasolina} km/l</strong> (Gasolina).`;
+   }
+  }
+
+  // Calculador Decisor com "Load Pensando" do Toretto
+  calculateBtn.addEventListener('click', () => {
+   const strPriceEtanol = inputPriceEtanol.value.trim();
+   const strPriceGasolina = inputPriceGasolina.value.trim();
+   const priceEtanol = parseFloat(strPriceEtanol);
+   const priceGasolina = parseFloat(strPriceGasolina);
+
+   if (isNaN(priceEtanol) || isNaN(priceGasolina) || priceEtanol <= 0 || priceGasolina <= 0) {
+    alert('Informe os preços vigentes dos combustíveis no posto de serviço para continuar.');
+    return;
+   }
+
+   aiReportOutput.style.display = 'none';
+
+   modalToretoCalculating.classList.add('active');
+   toretoCalculationStep.textContent = "Revisando o consumo de combustível...";
+
+   setTimeout(() => {
+    toretoCalculationStep.textContent = "Analisando variáveis térmicas do motor...";
+   }, 600);
+
+   setTimeout(() => {
+    toretoCalculationStep.textContent = "Finalizando relatório de eficiência...";
+   }, 1200);
+
+   setTimeout(() => {
+    modalToretoCalculating.classList.remove('active');
+
+    const usarValoresComAr = acToggle.checked;
+    const consEtanolAtivo = usarValoresComAr ? appState.consumoEtanolOn : appState.consumoEtanolOff;
+    const consGasolinaAtivo = usarValoresComAr ? appState.consumoGasolinaOn : appState.consumoGasolinaOff;
+
+    const eficienciaReal = consEtanolAtivo / consGasolinaAtivo;
+    const relacaoPrecoPosto = priceEtanol / priceGasolina;
+
+    const custoKmGasolina = priceGasolina / consGasolinaAtivo;
+    const custoKmEtanol = priceEtanol / consEtanolAtivo;
+
+    resultCard.style.display = 'block';
+    resultCard.className = 'result-panel';
+
+    if (relacaoPrecoPosto < eficienciaReal) {
+     resultCard.classList.add('etanol-win');
+     veredictoText.textContent = 'VÁ DE ETANOL!';
+     veredictoText.className = 'result-verdict etanol';
+
+     const economyPorLitro = custoKmGasolina - custoKmEtanol;
+     const economyTanque = economyPorLitro * consEtanolAtivo * 50;
+
+     economyDetail.innerHTML = `O Toretto calculou que o Etanol representa <span class="result-highlight">${(relacaoPrecoPosto * 100).toFixed(0)}%</span> do custo da Gasolina.<br>Sua economia projetada por tanque completo (50L) é de <span class="result-highlight">R$ ${economyTanque.toFixed(2)}</span>.`;
+    } else {
+     resultCard.classList.add('gasolina-win');
+     veredictoText.textContent = 'VÁ DE GASOLINA!';
+     veredictoText.className = 'result-verdict gasolina';
+
+     const precoLimiteEtanol = priceGasolina * eficienciaReal;
+
+     economyDetail.innerHTML = `O Toretto calculou que o Etanol representa <span class="result-highlight">${(relacaoPrecoPosto * 100).toFixed(0)}%</span> do custo da Gasolina.<br>Para o Etanol compensar, o preço limite no posto deveria ser de <span class="result-highlight">R$ ${precoLimiteEtanol.toFixed(2)}</span>.`;
+    }
+
+    badgeEfficiency.textContent = `Eficiência real calculada: ${(eficienciaReal * 100).toFixed(1)}%`;
+   }, 1800);
+  });
+
+  // Copilot Relatório AI (Assinado pelo assistente Toretto)
+  btnGenerateReport.addEventListener('click', () => {
+   aiReportOutput.style.display = 'block';
+   aiReportOutput.className = 'ai-report-panel loading';
+   aiReportOutput.innerHTML = `
+    <div class="spinner"></div>
+    <div>O Toretto está redigindo seu diagnóstico oficial...</div>
+   `;
+
+   setTimeout(() => {
+    const priceEtanol = parseFloat(inputPriceEtanol.value);
+    const priceGasolina = parseFloat(inputPriceGasolina.value);
+    const usarValoresComAr = acToggle.checked;
+     
+    const consEtanolAtivo = usarValoresComAr ? appState.consumoEtanolOn : appState.consumoEtanolOff;
+    const consGasolinaAtivo = usarValoresComAr ? appState.consumoGasolinaOn : appState.consumoGasolinaOff;
+     
+    const custoKmEtanol = priceEtanol / consEtanolAtivo;
+    const custoKmGasolina = priceGasolina / consGasolinaAtivo;
+    const relacaoPreco = priceEtanol / priceGasolina;
+    const eficiencia = consEtanolAtivo / consGasolinaAtivo;
+    const etanolVenceu = relacaoPreco < eficiencia;
+
+    let relatorioHTML = '';
+
+    if (etanolVenceu) {
+     const diferencaKM = (custoKmGasolina - custoKmEtanol).toFixed(2);
+     relatorioHTML = `
+      <div class="ai-report-title">⚙️ Copilot Toretto</div>
+      <div class="ai-report-text">
+       <p>📍 <strong>Diagnóstico de Eficiência:</strong> O custo por quilômetro rodado com Etanol é de <strong>R$ ${custoKmEtanol.toFixed(2)}</strong> contra <strong>R$ ${custoKmGasolina.toFixed(2)}</strong> na Gasolina. Isso resulta em economia real de <strong>R$ ${diferencaKM} por quilômetro</strong>.</p>
+       <p>🚗 <strong>Autonomia Estimada:</strong> Com o Etanol, um tanque de 50 litros renderá cerca de <strong>${(consEtanolAtivo * 50).toFixed(0)} km</strong>. Caso optasse pela Gasolina, a autonomia seria de <strong>${(consGasolinaAtivo * 50).toFixed(0)} km</strong>, mas o custo por quilômetro não compensa a diferença de preços no momento.</p>
+       <p>🌱 <strong>Pegada Verde:</strong> A queima de Etanol reduz as emissões de gases poluentes do seu veículo em aproximadamente <strong>68%</strong> no ciclo completo.</p>
+       ${usarValoresComAr ? '<p>⚠️ <strong>Observação:</strong> Mesmo com a perda de torque causada pelo ar-condicionado ativo, o Etanol continua se sustentando como a melhor opção de consumo.</p>' : '<p>💡 <strong>Recomendação:</strong> Como o ar-condicionado está desligado, o motor opera na sua melhor faixa de eficiência térmica.</p>'}
+      </div>
+     `;
+    } else {
+     const precoJustoEtanol = (priceGasolina * eficiencia).toFixed(2);
+     relatorioHTML = `
+      <div class="ai-report-title">⚙️ Copilot Toretto</div>
+      <div class="ai-report-text">
+       <p>📍 <strong>Diagnóstico de Eficiência:</strong> O custo por quilômetro na Gasolina é de <strong>R$ ${custoKmGasolina.toFixed(2)} por km</strong>, enquanto o Etanol forçaria você a gastar <strong>R$ ${custoKmEtanol.toFixed(2)} por km</strong>.</p>
+       <p>📉 <strong>Valor Alvo:</strong> Para tornar o Etanol competitivo nas atuais condições do veículo, o preço máximo do litro de combustível vegetal no posto de combustível deveria ser de <strong>R$ ${precoJustoEtanol}</strong>.</p>
+       <p>🚗 <strong>Autonomia Estendida:</strong> Abastecendo com Gasolina, sua autonomia projetada para o tanque (50L) chega a <strong>${(consGasolinaAtivo * 50).toFixed(0)} km</strong>, exigindo menor frequência de reabastecimento.</p>
+       ${usarValoresComAr ? '<p>❄️ <strong>Parâmetro Térmico:</strong> O ar-condicionado ativado consome torque extra do motor, mas o desempenho absoluto da Gasolina lida melhor com essa carga extra.</p>' : ''}
+      </div>
+     `;
+    }
+
+    aiReportOutput.className = 'ai-report-panel';
+    aiReportOutput.innerHTML = relatorioHTML;
+   }, 1800);
+  });
+
+  // --- LÓGICA DO INTERATIVO CHAT DO FILHO DO TORETTO (POR SUGESTÕES) ---
+  toretoChatTrigger.addEventListener('click', () => {
+   toretoChatPanel.style.display = toretoChatPanel.style.display === 'flex' ? 'none' : 'flex';
+  });
+
+  btnCloseChat.addEventListener('click', () => {
+   toretoChatPanel.style.display = 'none';
+  });
+
+  function askToretto(theme) {
+   let questionText = "";
+   let responseText = "";
+
+   if (theme === 'combustivel') {
+    questionText = "Como funciona a proporção real de combustível?";
+    responseText = "A relação de consumo depende exclusivamente da calibragem do seu motor. Embora o mercado use a margem estática de 70%, o Toretto analisa os seus dados reais de quilometragem para dar a resposta matemática exata do que é melhor para o seu bolso.";
+   } else if (theme === 'ar') {
+    questionText = "O ar-condicionado realmente consome muito mais combustível?";
+    responseText = "Sim. O sistema exige esforço direto do motor, aumentando a queima em cerca de 10% a 15% na cidade. No entanto, em vias rápidas (acima de 80 km/h), é mais econômico usar o ar do que abrir as janelas, o que quebra a aerodinâmica e força mais o motor.";
+   } else if (theme === 'manutencao') {
+    questionText = "Quais manutenções ajudam a reduzir o consumo do carro?";
+    responseText = "Calibrar os pneus semanalmente, substituir velas carbonizadas, manter os filtros de ar limpos e utilizar o óleo lubrificante de viscosidade correta reduz o esforço do motor, gerando uma economia de até 5% no consumo geral.";
+   }
+
+   appendChatMessage(questionText, 'user');
+
+   setTimeout(() => {
+    appendChatMessage(responseText, 'toreto');
+   }, 600);
+  }
+
+  function appendChatMessage(text, sender) {
+   const msgDiv = document.createElement('div');
+   msgDiv.className = `chat-msg ${sender}`;
+   msgDiv.textContent = text;
+   toretoChatMessages.appendChild(msgDiv);
+   toretoChatMessages.scrollTop = toretoChatMessages.scrollHeight;
+  }
+ </script>
+</body>
+</html>
