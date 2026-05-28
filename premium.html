@@ -1,0 +1,3000 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+ <title>Garagem Inteligente - de gearhead para gearhead</title>
+ <!-- Importação Oficial da Google Sans Flex (Variable Font) -->
+ <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
+ <!-- Importação do FontAwesome para ícones premium -->
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+ <style>
+ :root {
+ /* Paleta Genesis Obsidian Slates (Luxo Minimalista Moderno) [5] */
+ --bg-base: #050608;              /* Obsidian Deep Velvet */
+ --bg-app: #0c0d12;               /* Graphite Matte */
+ --bg-surface: #111216;           /* Slate Titanium Sólido */
+ --bg-input: #171921;             /* Input Jateado / Charcoal */
+ --bg-input-focus: #1e212d;       /* Foco Selecionado */
+ --text-main: #f3f4f6;            /* Platinum Off-White */
+ --text-muted: #7e84a2;           /* Cinza Muted Fino */
+ --border-glass: 1px solid rgba(255, 255, 255, 0.05); /* Hairline Divider */
+ --border-glass-glow: rgba(197, 160, 89, 0.25);        /* Copper Glow sutil */
+  
+ /* Assinaturas de Cores Luxuosas */
+ --accent-etanol: #119c6e;        /* Verde do Logo / Emerald Sage */
+ --accent-gasolina: #965b2a;      /* Burnished Amber / Copper */
+ --accent-blue: #c5a059;          /* Precision Gold (Substitui o Azul na UI) */
+ --accent-ai: #c5a059;            /* Telemetry Gold */
+ --accent-red: #cc2929;           /* Crimson Redline */
+ --accent-gold: #c5a059;          /* Genesis Brand Copper / Gold */
+  
+ --radius-lg: 4px;                /* Cantos retos e lapidados estilo Genesis [5] */
+ --radius-md: 4px;
+ --radius-sm: 2px;
+ --shadow-premium: 0 16px 48px rgba(0, 0, 0, 0.7);
+ --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+ }
+
+ .light-theme {
+ /* Paleta Clean Titanium (Branco Escandinavo) */
+ --bg-base: #f4f5f8;
+ --bg-app: #ffffff;
+ --bg-surface: rgba(235, 238, 244, 0.85);
+ --bg-input: rgba(220, 225, 235, 0.6);
+ --bg-input-focus: rgba(205, 210, 225, 0.9);
+ --text-main: #121316;
+ --text-muted: #686d7e;
+ --border-glass: 1px solid rgba(0, 0, 0, 0.06);
+ --border-glass-glow: rgba(197, 160, 89, 0.15);
+  
+ --accent-etanol: #059669;
+ --accent-gasolina: #ea580c;
+ --accent-blue: #9f7c50;
+ --accent-ai: #9f7c50;
+ --accent-red: #dc2626;
+ --accent-gold: #9f7c50;
+ }
+
+ * {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ font-family: 'Google Sans Flex', sans-serif;
+ -webkit-tap-highlight-color: transparent;
+ }
+
+ body {
+ background-color: var(--bg-base);
+ background-image: radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.02) 0%, transparent 40%),
+                   radial-gradient(circle at 90% 80%, rgba(17, 156, 110, 0.02) 0%, transparent 40%);
+ color: var(--text-main);
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ min-height: 100vh;
+ transition: var(--transition);
+ overflow-x: hidden;
+ }
+
+ /* --- VIEWPORT PRINCIPAL --- */
+ .webapp-shell {
+ display: flex;
+ flex-direction: column;
+ width: 100vw;
+ height: 100vh;
+ overflow: hidden;
+ position: relative;
+ max-width: 1050px;
+ margin: 0 auto;
+ padding: 32px 24px;
+ }
+
+ /* --- CABEÇALHO SUPERIOR (LUXO MINIMALISTA) --- */
+ .topbar-shell {
+ display: none;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 20px;
+ padding-bottom: 20px;
+ border-bottom: var(--border-glass);
+ width: 100%;
+ }
+
+ .webapp-shell.ready .topbar-shell {
+ display: flex;
+ }
+
+ .topbar-logo-block {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ }
+
+ .topbar-logo-img {
+ height: 38px;
+ width: auto;
+ transition: var(--transition);
+ }
+
+ .topbar-profile {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ cursor: pointer;
+ padding: 8px 16px;
+ border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ background: var(--bg-input);
+ border: var(--border-glass);
+ transition: var(--transition);
+ }
+
+ .topbar-profile:hover {
+ border-color: var(--accent-gold);
+ }
+
+ .profile-avatar {
+ font-size: 1.15rem;
+ width: 24px;
+ height: 24px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ border-radius: var(--radius-sm);
+ }
+
+ .profile-name {
+ font-size: 0.85rem;
+ font-weight: 700;
+ }
+
+ .topbar-controls {
+ display: flex;
+ gap: 8px;
+ align-items: center;
+ }
+
+ .btn-control-utility {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ height: 38px;
+ padding: 0 16px;
+ border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ cursor: pointer;
+ color: var(--text-main);
+ font-size: 0.75rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ gap: 6px;
+ transition: var(--transition);
+ letter-spacing: 1.5px;
+ }
+
+ .btn-control-utility:hover {
+ border-color: var(--accent-gold);
+ background: var(--bg-input-focus);
+ }
+
+ .btn-control-utility.icon-only {
+ width: 38px;
+ padding: 0;
+ border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ }
+
+ /* --- PAINEL DE STATUS DA ECU (SUPORTE DE BORDO) [2] --- */
+ .ecu-status-bar {
+ display: none;
+ background: var(--bg-input);
+ border: var(--border-glass);
+ border-radius: var(--radius-sm);
+ padding: 12px 20px;
+ margin-bottom: 24px;
+ justify-content: space-between;
+ align-items: center;
+ gap: 12px;
+ flex-wrap: wrap;
+ width: 100%;
+ border-left: 2px solid var(--accent-gold);
+ }
+
+ .webapp-shell.ready .ecu-status-bar {
+ display: flex;
+ }
+
+ .ecu-status-item {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.75rem;
+ font-weight: 700;
+ color: var(--text-muted);
+ letter-spacing: 0.5px;
+ }
+
+ .ecu-status-indicator {
+ width: 8px;
+ height: 8px;
+ border-radius: 50%;
+ background-color: var(--accent-etanol);
+ box-shadow: 0 0 10px var(--accent-etanol);
+ display: inline-block;
+ }
+
+ .ecu-status-indicator.amber {
+ background-color: var(--accent-gasolina);
+ box-shadow: 0 0 10px var(--accent-gasolina);
+ }
+
+ .ecu-status-value {
+ color: var(--text-main);
+ font-weight: 800;
+ text-transform: uppercase;
+ }
+
+ /* --- ÁREA DE TRABALHO DAS TELAS --- */
+ .main-viewport {
+ flex-grow: 1;
+ display: flex;
+ flex-direction: column;
+ overflow-y: auto;
+ width: 100%;
+ padding-bottom: 20px;
+ }
+
+ .main-viewport::-webkit-scrollbar { display: none; }
+
+ /* --- TELAS SPA --- */
+ .screen {
+ display: none;
+ flex-direction: column;
+ flex-grow: 1;
+ width: 100%;
+ animation: viewFade 0.25s ease;
+ }
+
+ .screen.active {
+ display: flex;
+ }
+
+ @keyframes viewFade {
+ from { opacity: 0; transform: translateY(4px); }
+ to { opacity: 1; transform: translateY(0); }
+ }
+
+ .screen-header {
+ margin-bottom: 24px;
+ border-left: 1px solid var(--accent-gold);
+ padding-left: 12px;
+ }
+
+ .screen-title {
+ font-size: 1.45rem;
+ font-weight: 800;
+ letter-spacing: -0.5px;
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ text-transform: uppercase;
+ }
+
+ .screen-desc {
+ font-size: 0.88rem;
+ font-weight: 400;
+ color: var(--text-muted);
+ margin-top: 4px;
+ }
+
+ /* --- BENTO GRID SYSTEM --- */
+ .bento-grid {
+ display: grid;
+ grid-template-columns: 1fr;
+ gap: 20px;
+ margin-bottom: 24px;
+ }
+
+ .bento-card {
+ background: var(--bg-surface);
+ border-radius: var(--radius-lg);
+ border: var(--border-glass);
+ padding: 24px;
+ display: flex;
+ flex-direction: column;
+ justify-content: space-between;
+ transition: var(--transition);
+ position: relative;
+ }
+
+ .bento-card:hover {
+ border-color: var(--accent-gold);
+ }
+
+ .bento-card.hero {
+ background: radial-gradient(ellipse at bottom right, rgba(197, 160, 89, 0.05), transparent 75%), var(--bg-surface);
+ align-items: flex-start;
+ justify-content: center;
+ min-height: 120px;
+ }
+
+ /* --- BARRA DE NAVEGAÇÃO FIXA: SETORES DA GARAGEM [1] --- */
+ .setores-garagem-navigation {
+ display: none;
+ grid-template-columns: repeat(5, 1fr);
+ gap: 12px;
+ width: 100%;
+ margin-top: 16px;
+ margin-bottom: 8px;
+ z-index: 10;
+ border-top: var(--border-glass);
+ padding-top: 16px;
+ }
+
+ .webapp-shell.ready .setores-garagem-navigation {
+ display: grid;
+ }
+
+ .setores-btn {
+ background: transparent;
+ border: none;
+ padding: 14px 6px;
+ text-align: center;
+ cursor: pointer;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 6px;
+ color: var(--text-muted);
+ transition: var(--transition);
+ text-decoration: none;
+ font-size: 0.75rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ border-bottom: 2px solid transparent;
+ }
+
+ .setores-btn:hover {
+ color: var(--text-main);
+ }
+
+ .setores-btn.active {
+ border-bottom: 2px solid var(--accent-gold);
+ color: var(--text-main);
+ }
+
+ .setores-btn i {
+ font-size: 1.2rem;
+ color: var(--accent-gold);
+ }
+
+ /* --- FORMULÁRIOS E INPUTS --- */
+ .input-group-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 16px;
+ margin-bottom: 16px;
+ }
+
+ .premium-input-card {
+ background: var(--bg-input);
+ border-radius: var(--radius-md);
+ border: none;
+ border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+ padding: 14px 18px;
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
+ transition: var(--transition);
+ }
+
+ .premium-input-card:focus-within {
+ border-bottom-color: var(--accent-gold);
+ background: var(--bg-input-focus);
+ }
+
+ .premium-input-card label {
+ font-size: 0.65rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.8px;
+ color: var(--text-muted);
+ }
+
+ .premium-input-wrapper {
+ display: flex;
+ align-items: center;
+ position: relative;
+ }
+
+ .premium-input-card input, .premium-input-card select {
+ background: transparent;
+ border: none;
+ outline: none;
+ color: var(--text-main);
+ font-size: 1.05rem;
+ font-weight: 600;
+ width: 100%;
+ }
+
+ .premium-input-card select {
+ cursor: pointer;
+ appearance: none;
+ -webkit-appearance: none;
+ background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23858da7' stroke-width='2.5'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+ background-repeat: no-repeat;
+ background-position: right center;
+ background-size: 14px;
+ padding-right: 20px;
+ }
+
+ .premium-input-unit {
+ font-size: 0.85rem;
+ color: var(--text-muted);
+ font-weight: 500;
+ margin-left: 6px;
+ }
+
+ /* --- INTERRUPTOR TESLA --- */
+ .tesla-switch-card {
+ background: var(--bg-surface);
+ border-radius: var(--radius-md);
+ padding: 18px 22px;
+ border: var(--border-glass);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 20px;
+ transition: var(--transition);
+ }
+
+ .tesla-switch-card.active {
+ border-color: rgba(197, 160, 89, 0.25);
+ background: rgba(197, 160, 89, 0.02);
+ }
+
+ .switch-details {
+ display: flex;
+ flex-direction: column;
+ gap: 2px;
+ }
+
+ .switch-title {
+ font-size: 0.9rem;
+ font-weight: 700;
+ }
+
+ .switch-desc {
+ font-size: 0.78rem;
+ color: var(--text-muted);
+ }
+
+ .ios-toggle {
+ position: relative;
+ display: inline-block;
+ width: 44px;
+ height: 24px;
+ }
+
+ .ios-toggle input { opacity: 0; width: 0; height: 0; }
+
+ .ios-slider {
+ position: absolute;
+ cursor: pointer;
+ top: 0; left: 0; right: 0; bottom: 0;
+ background-color: rgba(120, 120, 120, 0.2);
+ transition: 0.3s;
+ border-radius: var(--radius-sm);
+ }
+
+ .ios-slider:before {
+ position: absolute;
+ content: "";
+ height: 18px;
+ width: 18px;
+ left: 3px;
+ bottom: 3px;
+ background-color: white;
+ transition: 0.3s;
+ border-radius: var(--radius-sm);
+ }
+
+ input:checked + .ios-slider { background-color: var(--accent-gold); }
+ input:checked + .ios-slider:before { transform: translateX(20px); }
+
+ /* --- ALERTA ATUALIZAÇÃO ODÔMETRO --- */
+ .odometer-update-alert {
+ display: none;
+ background: rgba(249, 115, 22, 0.03);
+ border: 1px solid rgba(249, 115, 22, 0.15);
+ border-radius: var(--radius-md);
+ padding: 18px 22px;
+ margin-bottom: 24px;
+ align-items: center;
+ justify-content: space-between;
+ gap: 16px;
+ }
+
+ .odo-alert-text {
+ display: flex;
+ flex-direction: column;
+ gap: 2px;
+ }
+
+ .odo-alert-title {
+ font-size: 0.9rem;
+ font-weight: 700;
+ color: var(--accent-gasolina);
+ }
+
+ .odo-alert-desc {
+ font-size: 0.8rem;
+ color: var(--text-muted);
+ }
+
+ /* --- SISTEMA DE MANUTENÇÃO (RECURSOS REFINADOS) [1] --- */
+ .maint-status-card {
+ display: flex;
+ flex-direction: column;
+ gap: 16px;
+ }
+
+ .maint-item {
+ display: flex;
+ flex-direction: column;
+ gap: 12px;
+ background: var(--bg-input);
+ padding: 20px;
+ border-radius: var(--radius-md);
+ border: var(--border-glass);
+ }
+
+ .maint-meta {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+
+ .maint-name {
+ font-size: 0.95rem;
+ font-weight: 700;
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ }
+
+ .maint-name i {
+ color: var(--accent-gold);
+ }
+
+ .maint-badge {
+ font-size: 0.7rem;
+ padding: 2px 8px;
+ border-radius: 4px;
+ font-weight: 700;
+ text-transform: uppercase;
+ }
+
+ .maint-badge.healthy { background: rgba(16, 185, 129, 0.1); color: var(--accent-etanol); }
+ .maint-badge.attention { background: rgba(249, 115, 22, 0.1); color: var(--accent-gasolina); }
+ .maint-badge.critical { background: rgba(239, 68, 68, 0.1); color: var(--accent-red); }
+
+ .maint-km {
+ font-size: 0.8rem;
+ color: var(--text-muted);
+ }
+
+ .maint-progress-bar {
+ background: rgba(255, 255, 255, 0.04);
+ height: 6px;
+ border-radius: 10px;
+ overflow: hidden;
+ position: relative;
+ }
+
+ .maint-progress-fill {
+ background: var(--accent-gold);
+ height: 100%;
+ border-radius: 10px;
+ width: 0%;
+ transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+ }
+
+ .maint-action-btn {
+ background: transparent;
+ border: var(--border-glass);
+ color: var(--text-muted);
+ font-size: 0.72rem;
+ font-weight: 600;
+ text-transform: uppercase;
+ padding: 6px 12px;
+ border-radius: var(--radius-sm);
+ cursor: pointer;
+ transition: var(--transition);
+ display: flex;
+ align-items: center;
+ gap: 6px;
+ }
+
+ .maint-action-btn:hover {
+ color: var(--text-main);
+ border-color: var(--text-muted);
+ }
+
+ /* --- DIAGNÓSTICO DE MANUTENÇÃO AVANÇADO --- */
+ .maint-diagnostic-grid {
+ display: grid;
+ grid-template-columns: repeat(3, 1fr);
+ gap: 10px;
+ background: rgba(0, 0, 0, 0.15);
+ padding: 12px;
+ border-radius: var(--radius-sm);
+ margin-top: 8px;
+ }
+
+ .maint-diagnostic-col {
+ display: flex;
+ flex-direction: column;
+ text-align: center;
+ gap: 2px;
+ }
+
+ .maint-diag-lbl {
+ font-size: 0.62rem;
+ text-transform: uppercase;
+ color: var(--text-muted);
+ letter-spacing: 0.5px;
+ }
+
+ .maint-diag-val {
+ font-size: 0.82rem;
+ font-weight: 700;
+ color: var(--text-main);
+ }
+
+ /* --- FINANCIAMENTO COM CHECKLIST --- */
+ .fin-results-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 16px;
+ margin-top: 20px;
+ }
+
+ .fin-result-item {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ padding: 18px;
+ border-radius: var(--radius-md);
+ text-align: left;
+ }
+
+ .fin-result-label {
+ font-size: 0.72rem;
+ color: var(--text-muted);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ margin-bottom: 6px;
+ }
+
+ .fin-result-value {
+ font-size: 1.25rem;
+ font-weight: 800;
+ }
+
+ .parcelas-checklist-container {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ max-height: 280px;
+ overflow-y: auto;
+ padding-right: 4px;
+ margin-top: 16px;
+ border-top: var(--border-glass);
+ padding-top: 16px;
+ }
+
+ .parcelas-checklist-container::-webkit-scrollbar {
+ width: 4px;
+ }
+ .parcelas-checklist-container::-webkit-scrollbar-thumb {
+ background: rgba(255, 255, 255, 0.08);
+ border-radius: 4px;
+ }
+
+ .parcela-row {
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ background: var(--bg-input);
+ padding: 12px 16px;
+ border-radius: var(--radius-sm);
+ border: var(--border-glass);
+ transition: var(--transition);
+ }
+
+ .parcela-row.paga {
+ border-color: rgba(16, 185, 129, 0.2);
+ background: rgba(16, 185, 129, 0.02);
+ }
+
+ .parcela-info {
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ }
+
+ .parcela-checkbox {
+ width: 18px;
+ height: 18px;
+ accent-color: var(--accent-gold);
+ cursor: pointer;
+ }
+
+ .parcela-text {
+ font-size: 0.85rem;
+ font-weight: 600;
+ }
+
+ .parcela-date {
+ font-size: 0.78rem;
+ color: var(--text-muted);
+ }
+
+ /* --- CONSOLE DE RESULTADOS (MODERNO E SUTIL) --- */
+ .diagnostic-display {
+ background: rgba(255, 255, 255, 0.01);
+ border-radius: var(--radius-md);
+ border: var(--border-glass);
+ padding: 24px;
+ margin-top: 16px;
+ display: none;
+ flex-direction: column;
+ gap: 16px;
+ }
+
+ .diagnostic-display.ready {
+ display: flex;
+ }
+
+ .diagnostic-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+ padding-bottom: 12px;
+ }
+
+ .diagnostic-tag {
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.8px;
+ text-transform: uppercase;
+ color: var(--text-muted);
+ }
+
+ .diagnostic-verdict-box {
+ text-align: left;
+ padding: 4px 0;
+ }
+
+ .diagnostic-verdict {
+ font-size: 1.6rem;
+ font-weight: 900;
+ letter-spacing: -0.5px;
+ }
+
+ .diagnostic-verdict.etanol-win { color: var(--accent-etanol); }
+ .diagnostic-verdict.gasolina-win { color: var(--accent-gasolina); }
+
+ .diagnostic-desc {
+ font-size: 0.85rem;
+ color: var(--text-muted);
+ line-height: 1.5;
+ }
+
+ .diagnostic-data-table {
+ display: flex;
+ flex-direction: column;
+ gap: 8px;
+ margin-top: 4px;
+ }
+
+ .diagnostic-data-row {
+ display: flex;
+ justify-content: space-between;
+ font-size: 0.8rem;
+ color: var(--text-muted);
+ padding: 10px 14px;
+ background: rgba(255, 255, 255, 0.01);
+ border-radius: var(--radius-sm);
+ border: var(--border-glass);
+ }
+
+ .diagnostic-data-row span:last-child {
+ color: var(--text-main);
+ font-weight: 600;
+ }
+
+ .ai-report-container {
+ display: none;
+ margin-top: 16px;
+ background: rgba(99, 102, 241, 0.01);
+ border: 1px dashed rgba(99, 102, 241, 0.15);
+ border-radius: var(--radius-md);
+ padding: 18px;
+ }
+
+ .ai-report-header {
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ font-size: 0.75rem;
+ font-weight: 700;
+ color: var(--accent-ai);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ margin-bottom: 10px;
+ }
+
+ .ai-report-body {
+ font-size: 0.82rem;
+ line-height: 1.55;
+ color: var(--text-muted);
+ }
+
+ .ai-report-body p { margin-bottom: 10px; }
+ .ai-report-body p:last-child { margin-bottom: 0; }
+ .ai-report-body strong { color: var(--text-main); }
+
+ /* --- VEÍCULOS GRID --- */
+ .vehicles-grid {
+ display: grid;
+ grid-template-columns: 1fr;
+ gap: 16px;
+ margin-bottom: 24px;
+ }
+
+ .premium-vehicle-card {
+ background: var(--bg-surface);
+ border-radius: var(--radius-md);
+ border: var(--border-glass);
+ padding: 20px;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ cursor: pointer;
+ transition: var(--transition);
+ position: relative;
+ }
+
+ .premium-vehicle-card:hover {
+ border-color: var(--accent-gold);
+ }
+
+ .premium-vehicle-card.active {
+ border-color: var(--accent-gold);
+ background: rgba(197, 160, 89, 0.03);
+ }
+
+ .premium-vehicle-card.active::before {
+ content: "";
+ position: absolute;
+ left: 0; top: 15%; height: 70%; width: 4px;
+ background: var(--accent-gold);
+ border-radius: 0 4px 4px 0;
+ }
+
+ .vehicle-info-block {
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
+ }
+
+ .vehicle-model-line {
+ font-size: 1.05rem;
+ font-weight: 700;
+ }
+
+ .vehicle-meta-line {
+ font-size: 0.8rem;
+ color: var(--text-muted);
+ display: flex;
+ align-items: center;
+ gap: 8px;
+ }
+
+ .vehicle-placa-badge {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ padding: 2px 8px;
+ border-radius: var(--radius-sm);
+ font-size: 0.7rem;
+ font-weight: 700;
+ color: var(--text-main);
+ }
+
+ .vehicle-actions-block {
+ display: flex;
+ align-items: center;
+ gap: 10px;
+ }
+
+ /* --- BOTÕES --- */
+ .btn-premium {
+ background: var(--text-main);
+ color: var(--bg-base);
+ border: none;
+ border-radius: var(--radius-sm);
+ height: 48px;
+ font-size: 0.85rem;
+ font-weight: 700;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ gap: 8px;
+ cursor: pointer;
+ transition: var(--transition);
+ width: 100%;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ }
+
+ .btn-premium:hover {
+ opacity: 0.9;
+ transform: translateY(-1px);
+ }
+
+ .btn-premium-secondary {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ color: var(--text-main);
+ border-radius: var(--radius-sm);
+ height: 46px;
+ font-size: 0.82rem;
+ font-weight: 700;
+ cursor: pointer;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ gap: 6px;
+ transition: var(--transition);
+ width: 100%;
+ text-transform: uppercase;
+ letter-spacing: 1.5px;
+ }
+
+ .btn-premium-secondary:hover {
+ background: var(--bg-input-focus);
+ }
+
+ .icon-btn {
+ background: transparent;
+ border: none;
+ font-size: 1.15rem;
+ cursor: pointer;
+ padding: 6px;
+ border-radius: 50%;
+ transition: var(--transition);
+ color: var(--text-muted);
+ }
+
+ .icon-btn:hover {
+ background: var(--bg-input-focus);
+ transform: scale(1.12);
+ }
+
+ .icon-btn.edit:hover { color: var(--accent-blue); }
+ .icon-btn.delete:hover { color: var(--accent-red); }
+
+ /* --- SYSTEM FOOTER [3] --- */
+ .app-footer {
+ margin-top: auto;
+ padding-top: 24px;
+ border-top: var(--border-glass);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ font-size: 0.72rem;
+ color: var(--text-muted);
+ width: 100%;
+ text-transform: uppercase;
+ letter-spacing: 1px;
+ }
+
+ .app-footer a {
+ color: var(--text-muted);
+ text-decoration: none;
+ margin-left: 10px;
+ transition: var(--transition);
+ }
+
+ .app-footer a:hover { color: var(--text-main); }
+
+ /* --- MODAIS --- */
+ .modal-overlay {
+ position: fixed;
+ top: 0; left: 0; width: 100vw; height: 100vh;
+ background: rgba(4, 5, 10, 0.85);
+ backdrop-filter: blur(8px);
+ -webkit-backdrop-filter: blur(8px);
+ z-index: 1000;
+ display: none;
+ justify-content: center;
+ align-items: center;
+ padding: 20px;
+ }
+
+ .modal-overlay.active { display: flex; animation: modalFadeIn 0.2s ease; }
+
+ .modal-box {
+ background: var(--bg-app);
+ border: var(--border-glass);
+ border-radius: var(--radius-lg);
+ width: 100%;
+ max-width: 440px;
+ padding: 32px;
+ box-shadow: var(--shadow-premium);
+ animation: modalScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+ position: relative;
+ }
+
+ .modal-close-btn {
+ position: absolute;
+ top: 16px;
+ right: 16px;
+ background: transparent;
+ border: none;
+ font-size: 1.3rem;
+ color: var(--text-muted);
+ cursor: pointer;
+ transition: var(--transition);
+ }
+
+ .modal-close-btn:hover {
+ color: var(--text-main);
+ }
+
+ @keyframes modalFadeIn { from { opacity: 0; } to { opacity: 1; } }
+ @keyframes modalScaleUp { from { transform: scale(0.97); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+ .avatar-selector-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 10px;
+ margin: 18px 0;
+ }
+
+ .avatar-option-btn {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ aspect-ratio: 1;
+ font-size: 1.3rem;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ cursor: pointer;
+ transition: var(--transition);
+ }
+
+ .avatar-option-btn:hover, .avatar-option-btn.selected {
+ border-color: var(--accent-gold);
+ background: var(--bg-input-focus);
+ transform: scale(1.06);
+ }
+
+ /* TORETTO CHAT */
+ .toreto-chat-trigger {
+ position: fixed;
+ bottom: 24px; right: 24px;
+ width: 48px; height: 48px;
+ border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ background: var(--text-main);
+ color: var(--bg-base);
+ border: var(--border-glass);
+ box-shadow: var(--shadow-premium);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-size: 1.15rem;
+ cursor: pointer;
+ z-index: 999;
+ transition: var(--transition);
+ }
+
+ .toreto-chat-trigger:hover {
+ transform: scale(1.1) rotate(5deg);
+ border-color: var(--accent-gold);
+ }
+
+ .toreto-chat-panel {
+ position: fixed;
+ bottom: 84px; right: 24px;
+ width: 330px; height: 420px;
+ background: var(--bg-app);
+ border: var(--border-glass);
+ border-radius: var(--radius-lg);
+ box-shadow: var(--shadow-premium);
+ display: none;
+ flex-direction: column;
+ overflow: hidden;
+ z-index: 1001;
+ }
+
+ .toreto-chat-header {
+ background: rgba(255, 255, 255, 0.02);
+ padding: 14px 18px;
+ border-bottom: var(--border-glass);
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+
+ .toreto-chat-messages {
+ flex-grow: 1;
+ padding: 14px;
+ overflow-y: auto;
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+ }
+
+ .toreto-chat-input-area {
+ padding: 12px;
+ border-top: var(--border-glass);
+ background: rgba(0,0,0,0.2);
+ display: flex;
+ flex-direction: column;
+ gap: 6px;
+ }
+
+ .btn-sug-question {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ border-radius: 8px;
+ padding: 8px 12px;
+ color: var(--text-main);
+ font-size: 0.75rem;
+ text-align: left;
+ cursor: pointer;
+ transition: var(--transition);
+ }
+
+ .btn-sug-question:hover {
+ border-color: var(--accent-gold);
+ background: var(--bg-input-focus);
+ }
+
+ .spinner-premium {
+ border: 2px solid rgba(255, 255, 255, 0.05);
+ width: 40px;
+ height: 44px;
+ border-radius: 50%;
+ border-left-color: var(--text-main);
+ animation: spin 0.8s linear infinite;
+ display: inline-block;
+ }
+
+ @keyframes spin { 100% { transform: rotate(360deg); } }
+
+ /* ==========================================
+ MEDIA QUERIES - SPA VIEWPORT RESPONSIVIDADE
+ ========================================== */
+
+ @media (max-width: 900px) {
+ .setores-garagem-navigation {
+   position: fixed;
+   bottom: 0; left: 0; right: 0;
+   background: rgba(12, 13, 20, 0.95);
+   backdrop-filter: blur(20px);
+   -webkit-backdrop-filter: blur(20px);
+   border-top: var(--border-glass);
+   padding: 12px 16px 20px 16px;
+   margin: 0;
+   grid-template-columns: repeat(5, 1fr);
+   border-radius: 0;
+   box-shadow: var(--shadow-premium);
+ }
+ .main-viewport {
+   padding-bottom: 120px !important; /* Recuo generoso na base contra conflito de footer e menu [3] */
+ }
+ .webapp-shell {
+   padding: 16px 16px 0 16px; /* Desafoga a área de visualização no celular */
+ }
+ .topbar-shell {
+   margin-bottom: 16px;
+ }
+ .setores-btn {
+   padding: 8px 4px;
+   font-size: 0.65rem;
+   gap: 4px;
+   background: transparent;
+   border: none;
+ }
+ .setores-btn i {
+   font-size: 1rem;
+ }
+ .setores-btn.active {
+   background: rgba(255, 255, 255, 0.05);
+   border-radius: var(--radius-sm);
+ }
+ .fin-results-grid {
+   grid-template-columns: 1fr;
+ }
+ .input-group-grid {
+   grid-template-columns: 1fr;
+   gap: 12px;
+ }
+ }
+
+ @media (min-width: 768px) {
+ .bento-grid {
+   grid-template-columns: 1.1fr 1fr;
+   gap: 24px;
+ }
+ .vehicles-grid {
+   grid-template-columns: 1fr 1fr;
+   gap: 16px;
+ }
+ }
+ </style>
+</head>
+<body>
+
+ <div class="webapp-shell" id="app-shell">
+
+  <!-- ================= TOPBAR (AÇÕES & PERFIL) ================= -->
+  <header class="topbar-shell" id="app-topbar">
+   <div class="topbar-logo-block">
+    <img id="topbar-logo-img" src="https://i.imgur.com/7S2xQYI.png" alt="Garagem" class="topbar-logo-img">
+   </div>
+   <div class="topbar-controls">
+    <div class="topbar-profile" id="navbar-profile-trigger">
+     <div class="profile-avatar" id="navbar-profile-avatar">👨‍✈️</div>
+     <div class="profile-meta">
+      <span class="profile-name" id="welcome-username-greeting">Piloto</span>
+     </div>
+    </div>
+    <button class="btn-control-utility" id="btn-open-news" title="Novidades">
+     <i class="fa-solid fa-bullhorn"></i> Novidades
+    </button>
+    <button class="btn-control-utility icon-only" id="theme-toggle-main" title="Alternar Tema">
+     <i class="fa-solid fa-sun" id="theme-icon"></i>
+    </button>
+    <button class="btn-control-utility" id="btn-logout-trigger" title="Sair do Perfil">
+     <i class="fa-solid fa-right-from-bracket"></i> Sair
+    </button>
+   </div>
+  </header>
+
+  <!-- ================= PAINEL DE STATUS DA ECU (SUPORTE DE BORDO) [2] ================= -->
+  <div class="ecu-status-bar" id="app-ecu-status">
+   <div class="ecu-status-item">
+    <span class="ecu-status-indicator" id="ecu-pulse"></span>
+    <span>SISTEMA: <span class="ecu-status-value">NOMINAL</span></span>
+   </div>
+   <div class="ecu-status-item">
+    <span>VEÍCULO ATIVO: <span class="ecu-status-value" id="ecu-active-car">NENHUM</span></span>
+   </div>
+   <div class="ecu-status-item">
+    <span>VERSÃO: <span class="ecu-status-value" style="color: var(--accent-gold);">GTi v2.6</span></span>
+   </div>
+   <button class="btn-control-utility" id="btn-sync-app" style="height: 28px; padding: 0 12px; font-size: 0.68rem; border-radius: 14px;" title="Sincronizar Banco de Dados">
+    <i class="fa-solid fa-rotate"></i> Sincronizar App
+   </button>
+  </div>
+
+  <!-- ================= VIEWPORT PRINCIPAL ================= -->
+  <main class="main-viewport">
+
+   <!-- ================= TELA 0: INTRO CARREGAMENTO ================= -->
+   <div id="screen-intro" class="screen active" style="justify-content: center; align-items: center; text-align: center; flex-grow: 1;">
+    <div class="intro-spinner-wrapper" style="margin-bottom: 32px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+     <img id="intro-logo" src="https://i.imgur.com/7S2xQYI.png" alt="Garagem" style="width: 260px; height: auto; margin-bottom: 24px; animation: pulse 2s infinite ease-in-out;">
+     <div class="spinner-premium" style="width: 32px; height: 32px; border-width: 2px;"></div>
+    </div>
+    <div class="intro-status-text" id="intro-status-text" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 6px;">Conectando ECU...</div>
+    <span class="intro-sub" style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.5px; text-transform: uppercase;">Carregando calibrações térmicas</span>
+   </div>
+
+   <!-- ================= TELA 1: HOME ================= -->
+   <div id="screen-welcome" class="screen">
+    <!-- Alerta de Atualização de Odômetro -->
+    <div class="odometer-update-alert" id="odo-update-container">
+     <div class="odo-alert-text">
+      <span class="odo-alert-title">Sistemas Requerem Leitura</span>
+      <span class="odo-alert-desc">Faz mais de 7 dias desde a última leitura de KM. Atualize para calibrar os desgastes.</span>
+     </div>
+     <button class="maint-action-btn" onclick="openOdometerUpdateModal()" style="border-color: var(--accent-gasolina); color: var(--accent-gasolina); min-width: 100px;">Atualizar</button>
+    </div>
+
+    <div class="bento-grid">
+     <!-- Bento Garagem Status -->
+     <div class="bento-card hero">
+      <div style="text-align: left; width: 100%;">
+       <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Central Ativa</span>
+       <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum Veículo</h3>
+       <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar a telemetria.</p>
+      </div>
+     </div>
+
+     <!-- Bento Quick Fuel Calculator Integrada na Home -->
+     <div class="bento-card">
+      <div style="text-align: left; width: 100%;">
+       <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Cálculo Expresso</span>
+       <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 4px; margin-bottom: 12px;">Mapeador de Combustível</h3>
+       
+       <div class="input-group-grid" style="margin-bottom: 10px;">
+        <div class="premium-input-card" style="padding: 10px 14px;">
+         <label style="color: var(--accent-etanol);">Etanol (Posto)</label>
+         <div class="premium-input-wrapper">
+          <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
+          <input type="text" id="home-price-etanol" placeholder="0.00" inputmode="decimal" style="font-size: 0.95rem;">
+         </div>
+        </div>
+        <div class="premium-input-card" style="padding: 10px 14px;">
+         <label style="color: var(--accent-gasolina);">Gasolina (Posto)</label>
+         <div class="premium-input-wrapper">
+          <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
+          <input type="text" id="home-price-gasolina" placeholder="0.00" inputmode="decimal" style="font-size: 0.95rem;">
+         </div>
+        </div>
+       </div>
+
+       <div class="tesla-switch-card" id="home-ac-section" style="margin-bottom: 14px; padding: 10px 14px;">
+        <div class="switch-details">
+         <div class="switch-title" style="font-size: 0.85rem;">Climatização (A/C)</div>
+        </div>
+        <label class="ios-toggle">
+         <input type="checkbox" id="home-ac-toggle">
+         <span class="ios-slider"></span>
+        </label>
+       </div>
+
+       <button class="btn-premium" id="btn-home-calculate" style="height: 40px; font-size: 0.8rem;">Analisar Abastecimento</button>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- ================= TELA 2: ABASTECIMENTO / RESULTADOS ================= -->
+   <div id="screen-calc" class="screen">
+    <div class="screen-header">
+     <h2 class="screen-title">Injeção Reativa</h2>
+     <p class="screen-desc">Mapeamento em tempo real do combustível e compressores térmicos.</p>
+    </div>
+
+    <div class="bento-grid">
+     <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
+      <span class="category-title" style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted); font-weight: 700;">Valores do Posto</span>
+      <div class="input-group-grid" style="margin-bottom: 0;">
+       <div class="premium-input-card">
+        <label style="color: var(--accent-etanol);">Etanol</label>
+        <div class="premium-input-wrapper">
+         <span class="premium-input-unit">R$</span>
+         <input type="text" id="price-etanol" placeholder="0.00" inputmode="decimal">
+        </div>
+       </div>
+       <div class="premium-input-card">
+        <label style="color: var(--accent-gasolina);">Gasolina</label>
+        <div class="premium-input-wrapper">
+         <span class="premium-input-unit">R$</span>
+         <input type="text" id="price-gasolina" placeholder="0.00" inputmode="decimal">
+        </div>
+       </div>
+      </div>
+
+      <div class="tesla-switch-card" id="ac-section">
+       <div class="switch-details">
+        <div class="switch-title">Climatização Ativa (A/C)</div>
+        <div class="switch-desc" id="ac-status-desc">Simulação com compressor inativo</div>
+       </div>
+       <label class="ios-toggle">
+        <input type="checkbox" id="ac-toggle">
+        <span class="ios-slider"></span>
+       </label>
+      </div>
+
+      <button class="btn-premium" id="calculate-btn">Interrogar Banco de Dados</button>
+     </div>
+
+     <!-- Resultados e Telemetria -->
+     <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
+      <div class="ai-assistant-card" style="margin-bottom: 0; background: rgba(0, 112, 243, 0.02); border: 1px solid rgba(0, 112, 243, 0.06); padding: 16px; border-radius: var(--radius-md); display: flex; gap: 12px;">
+       <div class="ai-text" id="ai-recommendation" style="font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);">Sintonizando telemetria...</div>
+      </div>
+
+      <div class="diagnostic-display" id="result-card">
+       <div class="diagnostic-header">
+        <span class="diagnostic-tag">Veredicto de Injeção</span>
+        <span class="badge-pill" id="badge-efficiency" style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 700;">Eficiência: --%</span>
+       </div>
+       <div class="diagnostic-verdict-box">
+        <div class="diagnostic-verdict" id="veredicto-text">---</div>
+       </div>
+       <p class="diagnostic-desc" id="economy-detail">---</p>
+       
+       <div class="diagnostic-data-table">
+        <div class="diagnostic-data-row">
+         <span>Custo/KM Etanol</span>
+         <span id="meta-cost-etanol">R$ 0.00</span>
+        </div>
+        <div class="diagnostic-data-row">
+         <span>Custo/KM Gasolina</span>
+         <span id="meta-cost-gasolina">R$ 0.00</span>
+        </div>
+       </div>
+
+       <button class="btn-premium-secondary" id="btn-generate-report" style="margin-top: 10px; height: 42px; font-size: 0.82rem; font-weight: 700;">Girar Analítico AI</button>
+       
+       <div class="ai-report-container" id="ai-report-output">
+        <div class="ai-report-header">⚙️ Copilot Toretto Analytics</div>
+        <div class="ai-report-body" id="ai-report-content"></div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- ================= TELA 3: MEUS VEÍCULOS ================= -->
+   <div id="screen-my-vehicles" class="screen">
+    <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+     <div>
+      <h2 class="screen-title">Garagem Ativa</h2>
+      <p class="screen-desc">Mapeie e selecione seus veículos para calibração térmica.</p>
+     </div>
+     <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.8rem;">Adicionar Carro</button>
+    </div>
+
+    <div class="form-content">
+     <div class="vehicles-grid" id="vehicles-list-container">
+      <!-- Injetado Dinamicamente -->
+     </div>
+    </div>
+   </div>
+
+   <!-- ================= TELA 4: ADICIONAR / EDITAR VEÍCULO ================= -->
+   <div id="screen-add-vehicle" class="screen">
+    <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+     <div>
+      <h2 class="screen-title" id="add-vehicle-screen-title">Ficha Técnica</h2>
+      <p class="screen-desc">Introduza os dados corretos no banco de dados da ECU.</p>
+     </div>
+     <button class="btn-premium-secondary" id="back-add-to-list" style="width: auto; height: 40px; padding: 0 16px;">Cancelar</button>
+    </div>
+
+    <div class="form-content" style="gap: 16px;">
+     <div class="form-scrollable">
+      <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Informações da ECU</span>
+      <div class="input-group-grid">
+       <div class="premium-input-card">
+        <label>Placa Identificadora</label>
+        <input type="text" id="v-placa" placeholder="ABC1D23" maxlength="7" style="text-transform: uppercase;">
+       </div>
+       <div class="premium-input-card">
+        <label>Odômetro Atual</label>
+        <input type="text" id="v-km" placeholder="45000" inputmode="numeric">
+       </div>
+      </div>
+
+      <div class="input-group-grid">
+       <div class="premium-input-card">
+        <label>Fabricante</label>
+        <select id="v-marca">
+         <option value="" disabled selected>Selecionar...</option>
+         <option value="BYD">BYD</option>
+         <option value="Caoa Chery">Caoa Chery</option>
+         <option value="Chevrolet">Chevrolet</option>
+         <option value="Citroën">Citroën</option>
+         <option value="Fiat">Fiat</option>
+         <option value="Ford">Ford</option>
+         <option value="GWM">GWM</option>
+         <option value="Honda">Honda</option>
+         <option value="Hyundai">Hyundai</option>
+         <option value="Jeep">Jeep</option>
+         <option value="Nissan">Nissan</option>
+         <option value="Peugeot">Peugeot</option>
+         <option value="Renault">Renault</option>
+         <option value="Toyota">Toyota</option>
+         <option value="Volkswagen">Volkswagen</option>
+         <option value="Outro">Outra</option>
+        </select>
+       </div>
+       <div class="premium-input-card">
+        <label>Pintura / Cor</label>
+        <input type="text" id="v-cor" placeholder="Ex: Cinza Nardo">
+       </div>
+      </div>
+
+      <div class="premium-input-card" style="margin-bottom: 12px;">
+       <label>Modelo & Motorização</label>
+       <input type="text" id="v-modelo" placeholder="Ex: Onix 1.0 Turbo">
+      </div>
+
+      <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Padrão (Sem A/C)</span>
+      <div class="input-group-grid">
+       <div class="premium-input-card">
+        <label style="color: var(--accent-etanol);">Etanol</label>
+        <div class="premium-input-wrapper">
+         <input type="text" id="v-etanol-off" placeholder="8.5" inputmode="decimal">
+         <span class="premium-input-unit">km/l</span>
+        </div>
+       </div>
+       <div class="premium-input-card">
+        <label style="color: var(--accent-gasolina);">Gasolina</label>
+        <div class="premium-input-wrapper">
+         <input type="text" id="v-gasolina-off" placeholder="12.0" inputmode="decimal">
+         <span class="premium-input-unit">km/l</span>
+        </div>
+       </div>
+      </div>
+
+      <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Climatizado (Com A/C)</span>
+      <div class="input-group-grid">
+       <div class="premium-input-card">
+        <label style="color: var(--accent-etanol);">Etanol A/C</label>
+        <div class="premium-input-wrapper">
+         <input type="text" id="v-etanol-on" placeholder="7.2" inputmode="decimal">
+         <span class="premium-input-unit">km/l</span>
+        </div>
+       </div>
+       <div class="premium-input-card">
+        <label style="color: var(--accent-gasolina);">Gasolina A/C</label>
+        <div class="premium-input-wrapper">
+         <input type="text" id="v-gasolina-on" placeholder="10.2" inputmode="decimal">
+         <span class="premium-input-unit">km/l</span>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+
+    <button class="btn-premium" id="btn-save-vehicle">Mapear Dados</button>
+   </div>
+
+   <!-- ================= TELA 5: MANUTENÇÃO ================= -->
+   <div id="screen-maintenance" class="screen">
+    <div class="screen-header">
+     <h2 class="screen-title">Mapeamento de Óleo e Filtros</h2>
+     <p class="screen-desc">Métricas de previsão de trocas e acompanhamento de desgaste real da garagem.</p>
+    </div>
+
+    <div class="bento-card" style="justify-content: flex-start; gap: 20px;">
+     <div class="maint-status-card" id="maintenance-items-container">
+      <!-- Injetado Dinamicamente -->
+     </div>
+    </div>
+   </div>
+
+   <!-- ================= TELA 6: FINANCIAMENTO COM CHECKLIST [3] ================= -->
+   <div id="screen-finance" class="screen">
+    <div class="screen-header" style="display:flex; justify-content:space-between; align-items:center;">
+     <div>
+      <h2 class="screen-title">Fluxo de Financiamento</h2>
+      <p class="screen-desc">Controle individual de parcelas quitadas, valores restantes e previsão de liquidação.</p>
+     </div>
+     <button class="btn-premium-secondary" id="btn-toggle-finance-form" style="width:auto; height:38px; padding: 0 14px; font-size:0.75rem; display:none;"><i class="fa-solid fa-pen-to-square"></i> Editar Contrato</button>
+    </div>
+
+    <!-- Layout Grid Refatorado Sem Espaços Vazios -->
+    <div class="bento-grid" id="finance-grid-layout">
+     <!-- Coluna de Form de Cadastro de Financiamento -->
+     <div class="bento-card" id="finance-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
+      <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Contrato Operacional</span>
+      
+      <div class="premium-input-card">
+       <label>Valor da Parcela</label>
+       <div class="premium-input-wrapper">
+        <span class="premium-input-unit">R$</span>
+        <input type="text" id="fin-valor-p" placeholder="1200" inputmode="numeric">
+       </div>
+      </div>
+      
+      <div class="premium-input-card">
+       <label>Dia do Vencimento</label>
+       <input type="text" id="fin-vencimento-p" placeholder="10" inputmode="numeric" maxlength="2">
+      </div>
+
+      <div class="input-group-grid" style="margin-bottom: 0;">
+       <div class="premium-input-card">
+        <label>Parcela Atualmente Paga</label>
+        <input type="text" id="fin-atual-p" placeholder="8" inputmode="numeric">
+       </div>
+       <div class="premium-input-card">
+        <label>Total de Parcelas</label>
+        <input type="text" id="fin-total-p" placeholder="48" inputmode="numeric">
+       </div>
+      </div>
+
+      <button class="btn-premium" id="btn-save-finance">Gravar Contrato</button>
+     </div>
+
+     <!-- Coluna do Resumo de Amortização -->
+     <div class="bento-card" id="finance-summary-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
+      <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Status de Amortização</span>
+      
+      <div class="fin-results-grid" id="finance-summary" style="margin-top: 0; width: 100%;">
+       <div class="fin-result-item" style="grid-column: span 2; padding: 14px;">
+        <div class="fin-result-label">Próxima Parcela</div>
+        <div class="fin-result-value" id="fin-meta-next" style="color: var(--accent-gold); font-size: 1.15rem;">R$ 0,00</div>
+        <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-days">Calculando...</div>
+       </div>
+       <div class="fin-result-item" style="padding: 12px;">
+        <div class="fin-result-label" style="font-size: 0.65rem;">Total já Pago</div>
+        <div class="fin-result-value" id="fin-meta-pago" style="color: var(--accent-etanol); font-size: 1.05rem;">R$ 0,00</div>
+        <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-pago-lbl">-- pagas</div>
+       </div>
+       <div class="fin-result-item" style="padding: 12px;">
+        <div class="fin-result-label" style="font-size: 0.65rem;">Saldo Restante</div>
+        <div class="fin-result-value" id="fin-meta-restante" style="font-size: 1.05rem;">R$ 0,00</div>
+        <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-restante-lbl">-- restantes</div>
+       </div>
+       <div class="fin-result-item" style="grid-column: span 2; padding: 12px;">
+        <div class="fin-result-label">Previsão de Quitação</div>
+        <div class="fin-result-value" id="fin-meta-previsao" style="font-size: 1rem;">--</div>
+       </div>
+      </div>
+
+      <div id="finance-empty-state" style="text-align: center; padding: 40px 10px;">
+       <p style="color: var(--text-muted); font-size: 0.85rem;">Preencha os dados operacionais do contrato para computar o checklist.</p>
+      </div>
+     </div>
+
+     <!-- Checklist de Parcelas Interativas (Aparece ao Lado no Desktop) -->
+     <div class="bento-card" id="finance-checklist-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
+      <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Histórico de Parcelas</span>
+      <div class="parcelas-checklist-container" id="parcelas-checklist-container">
+       <!-- Injetado via JS de forma dinâmica -->
+      </div>
+     </div>
+    </div>
+   </div>
+
+   <!-- ================= FOOTER COMPARTILHADO [3] ================= -->
+   <footer class="app-footer">
+    <div>Garagem Inteligente © 2026 GTi Version</div>
+    <div>
+     <a href="#">Privacidade</a> • <a href="#">Termos</a>
+    </div>
+   </footer>
+
+  </main>
+
+  <!-- ================= BARRA DE NAVEGAÇÃO FIXA: SETORES DA GARAGEM [1] ================= -->
+  <nav class="setores-garagem-navigation" id="app-setores-nav">
+   <button class="setores-btn active" id="side-tab-home" onclick="switchTab('screen-welcome')">
+    <i class="fa-solid fa-house"></i>
+    <span>Home</span>
+   </button>
+   <button class="setores-btn" id="side-tab-vehicles" onclick="switchTab('screen-my-vehicles')">
+    <i class="fa-solid fa-warehouse"></i>
+    <span>Garagem</span>
+   </button>
+   <button class="setores-btn" id="side-tab-calc" onclick="switchTab('screen-calc')">
+    <i class="fa-solid fa-gas-pump"></i>
+    <span>Cálculos</span>
+   </button>
+   <button class="setores-btn" id="side-tab-maint" onclick="switchTab('screen-maintenance')">
+    <i class="fa-solid fa-screwdriver-wrench"></i>
+    <span>Maint.</span>
+   </button>
+   <button class="setores-btn" id="side-tab-fin" onclick="switchTab('screen-finance')">
+    <i class="fa-solid fa-wallet"></i>
+    <span>Finanças</span>
+   </button>
+  </nav>
+
+ </div>
+
+ <!-- ================= MODAL: CONFIGURAÇÃO DE PROFILE ================= -->
+ <div class="modal-overlay" id="modal-register-driver">
+  <div class="modal-box">
+   <button class="modal-close-btn" id="profile-close-btn" onclick="closeProfileModal()">×</button>
+   <div style="text-align: center; margin-bottom: 24px;">
+    <h3 style="font-size: 1.35rem; font-weight: 800;" id="profile-modal-title">Sistemas de Identificação</h3>
+    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Forneça as credenciais de comando e selecione seu avatar.</p>
+   </div>
+   <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+    <div class="premium-input-card">
+     <label>Identificação do Piloto</label>
+     <input type="text" id="d-name" placeholder="Ex: Toretto, Brian" autocomplete="off">
+    </div>
+    
+    <div class="premium-input-card">
+     <label>Região Operacional (UF)</label>
+     <select id="d-state">
+      <option value="" disabled selected>Selecionar Região...</option>
+      <option value="SP">São Paulo (SP)</option>
+      <option value="RJ">Rio de Janeiro (RJ)</option>
+      <option value="MG">Minas Gerais (MG)</option>
+      <option value="RS">Rio Grande do Sul (RS)</option>
+      <option value="PR">Paraná (PR)</option>
+      <option value="SC">Santa Catarina (SC)</option>
+      <option value="BA">Bahia (BA)</option>
+      <option value="PE">Pernambuco (PE)</option>
+      <option value="CE">Ceará (CE)</option>
+      <option value="GO">Goiás (GO)</option>
+      <option value="DF">Distrito Federal (DF)</option>
+      <option value="Outro">Outra</option>
+     </select>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 6px;">
+     <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Avatar de Preferência</span>
+     <div class="avatar-selector-grid">
+      <button class="avatar-option-btn selected" data-avatar="👨‍✈️">👨‍✈️</button>
+      <button class="avatar-option-btn" data-avatar="🚀">🚀</button>
+      <button class="avatar-option-btn" data-avatar="🏎️">🏎️</button>
+      <button class="avatar-option-btn" data-avatar="⚙️">⚙️</button>
+      <button class="avatar-option-btn" data-avatar="🦸">🦸</button>
+      <button class="avatar-option-btn" data-avatar="🚥">🚥</button>
+      <button class="avatar-option-btn" data-avatar="🏁">🏁</button>
+      <button class="avatar-option-btn" data-avatar="⚡">⚡</button>
+     </div>
+    </div>
+   </div>
+   <button class="btn-premium" id="btn-save-driver-registration">Confirmar Conexão</button>
+  </div>
+ </div>
+
+ <!-- ================= OVERLAY: MODAL DE NOVIDADES ================= -->
+ <div class="modal-overlay" id="modal-news">
+  <div class="modal-box">
+   <button class="modal-close-btn" onclick="closeNewsModal()">×</button>
+   <div style="text-align: center; margin-bottom: 20px;">
+    <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-blue);">Atualizações Recentes</h3>
+    <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Descubra as novas rotinas implementadas na central.</p>
+   </div>
+   <div style="display: flex; flex-direction: column; gap: 16px; max-height: 260px; overflow-y: auto;">
+    <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
+     <h4 style="font-size: 0.9rem; font-weight: 700;">Nova Telemetria de Óleo e Filtros</h4>
+     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Insira os parâmetros de sua última intervenção e monitore os KMs restantes de forma ultra precisa baseada no odômetro.</p>
+    </div>
+    <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
+     <h4 style="font-size: 0.9rem; font-weight: 700;">Amortização & Checklist</h4>
+     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Controle real e interativo de parcelas quitadas, saldos e datas estimadas de quitação do contrato.</p>
+    </div>
+   </div>
+  </div>
+ </div>
+
+ <!-- ================= OVERLAY ALERTA SEM VEÍCULO ================= -->
+ <div class="modal-overlay" id="modal-no-vehicle">
+  <div class="modal-box" style="text-align: center;">
+   <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-gasolina);">Tabela de Calibração Vazia</h3>
+   <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 24px;">É necessário pelo menos um carro cadastrado para computar telemetrias de injeção e compressor.</p>
+   <button class="btn-premium" id="btn-modal-go-to-vehicles">Calibrar Veículo</button>
+  </div>
+ </div>
+
+ <!-- ================= MODAL ATUALIZAR ODÔMETRO ================= -->
+ <div class="modal-overlay" id="modal-update-odometer">
+  <div class="modal-box">
+   <div style="text-align: center; margin-bottom: 20px;">
+    <h3 style="font-size: 1.25rem; font-weight: 800;">Atualizar Odômetro</h3>
+    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira a marcação de rodagem atual para calibração.</p>
+   </div>
+   <div class="premium-input-card" style="margin-bottom: 20px;">
+    <label>KM Atual do Painel</label>
+    <input type="text" id="odo-pop-km" placeholder="Ex: 48500" inputmode="numeric">
+   </div>
+   <div style="display: flex; gap: 12px;">
+    <button class="btn-premium-secondary" onclick="closeOdometerUpdateModal()">Ignorar</button>
+    <button class="btn-premium" id="btn-save-odo-popup">Atualizar</button>
+   </div>
+  </div>
+ </div>
+
+ <!-- ================= MODAL CADASTRO MANUTENÇÃO ================= -->
+ <div class="modal-overlay" id="modal-setup-maint">
+  <div class="modal-box">
+   <div style="text-align: center; margin-bottom: 20px;">
+    <h3 style="font-size: 1.25rem; font-weight: 800;" id="maint-popup-title">Troca de Lubrificantes/Filtros</h3>
+    <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira os parâmetros de sua última intervenção de manutenção.</p>
+   </div>
+   <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
+    <div class="premium-input-card">
+     <label>Odômetro no Momento da Troca</label>
+     <input type="text" id="maint-pop-last-km" placeholder="Ex: 40000" inputmode="numeric">
+    </div>
+    <div class="premium-input-card">
+     <label>Prazo Recomendado</label>
+     <div class="premium-input-wrapper">
+      <input type="text" id="maint-pop-interval-km" placeholder="Ex: 10000" inputmode="numeric">
+      <span class="premium-input-unit">km</span>
+     </div>
+    </div>
+   </div>
+   <div style="display: flex; gap: 12px;">
+    <button class="btn-premium-secondary" onclick="closeMaintSetupModal()">Cancelar</button>
+    <button class="btn-premium" id="btn-save-maint-popup">Gravar Parâmetros</button>
+   </div>
+  </div>
+ </div>
+
+ <!-- ================= TELA / MODAL "TORETTO CALCULANDO" ================= -->
+ <div class="modal-overlay" id="modal-toreto-calculating">
+  <div class="modal-box" style="text-align: center; max-width: 320px;">
+   <div class="spinner-premium" style="margin-bottom: 20px;"></div>
+   <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 4px;">Injetando Variáveis...</h3>
+   <p id="toreto-calculation-step" style="font-size: 0.82rem; color: var(--text-muted);">Calibrando as curvas térmicas</p>
+  </div>
+ </div>
+
+ <!-- ================= CHAT FLUTUANTE DO TORETTO (EM APRENDIZADO) ================= -->
+ <button class="toreto-chat-trigger" id="toreto-chat-trigger" title="ECU Assistant">
+  <i class="fa-solid fa-comments"></i>
+ </button>
+ <div class="toreto-chat-panel" id="toreto-chat-panel">
+  <div class="toreto-chat-header">
+   <div style="display: flex; align-items: center; gap: 8px;">
+    <div style="display: flex; flex-direction: column;">
+     <span class="toreto-header-title" style="font-weight: 800;">Filho do Toretto</span>
+     <span style="font-size: 0.65rem; color: var(--accent-gold); font-weight: 600; text-transform: uppercase;">ECU Assistant</span>
+    </div>
+   </div>
+   <button id="btn-close-chat" style="background: transparent; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer;">×</button>
+  </div>
+  <div class="toreto-chat-messages" id="toreto-chat-messages">
+   <div class="chat-msg toreto">Piloto, selecione uma das diretrizes mecânicas para iniciar o mapeamento:</div>
+  </div>
+  <div class="toreto-chat-input-area">
+   <button class="btn-sug-question" onclick="askToretto('combustivel')">Regra de Injeção: 70% vs Real</button>
+   <button class="btn-sug-question" onclick="askToretto('ar')">Carga do Compressor Térmico (A/C)</button>
+   <button class="btn-sug-question" onclick="askToretto('manutencao')">Prevenção Mecânica Básica</button>
+  </div>
+ </div>
+
+ <script>
+ // Cache e Inicialização Global do SPA
+ let appState = {
+  theme: localStorage.getItem('gi_theme') || 'dark',
+  motoristaNome: localStorage.getItem('gi_motorista_nome') || null,
+  motoristaEstado: localStorage.getItem('gi_motorista_estado') || null,
+  motoristaAvatar: localStorage.getItem('gi_motorista_avatar') || '👨‍✈️',
+  veiculos: JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [],
+  veiculoAtivoId: localStorage.getItem('gi_veiculo_ativo_id') || null,
+  veiculoEmEdicaoId: null,
+  financeContract: JSON.parse(localStorage.getItem('gi_financas')) || null
+ };
+
+ let activeMaintKey = '';
+
+ // Sincronização dos Logos com o Tema
+ function applyThemeLogos(themeName) {
+  const introLogo = document.getElementById('intro-logo');
+  const topbarMobileLogo = document.getElementById('topbar-logo-img');
+  const themeIcon = document.getElementById('theme-icon');
+
+  const logoUrl = themeName === 'light' ? 'https://i.imgur.com/eIOAKM0.png' : 'https://i.imgur.com/7S2xQYI.png';
+
+  if (themeName === 'light') {
+   document.body.classList.add('light-theme');
+   if (themeIcon) {
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.add('fa-moon');
+   }
+  } else {
+   document.body.classList.remove('light-theme');
+   if (themeIcon) {
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+   }
+  }
+
+  if (introLogo) introLogo.src = logoUrl;
+  if (topbarMobileLogo) topbarMobileLogo.src = logoUrl;
+ }
+
+ // Inicializador à prova de falhas do DOM
+ function initApp() {
+  applyThemeLogos(appState.theme);
+
+  // Configurações do Avatar no Topbar
+  const avatarEl = document.getElementById('navbar-profile-avatar');
+  if (avatarEl) avatarEl.textContent = appState.motoristaAvatar;
+
+  // Define veículo ativo padrão se houver
+  if (appState.veiculos.length > 0 && !appState.veiculoAtivoId) {
+   setVeiculoAtivo(appState.veiculos[0].id);
+  }
+
+  // Verifica onboarding do motorista
+  if (appState.motoristaNome) {
+   const greetingEl = document.getElementById('welcome-username-greeting');
+   if (greetingEl) greetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
+   const closeBtn = document.getElementById('profile-close-btn');
+   if (closeBtn) closeBtn.style.display = 'block'; // Permite fechar se logado [4]
+   runEcunIntro(false);
+  } else {
+   const closeBtn = document.getElementById('profile-close-btn');
+   if (closeBtn) closeBtn.style.display = 'none'; // Esconde se primeiro login
+   runEcunIntro(true);
+  }
+
+  updateHomeActiveVehicleCard();
+  checkOdometerAgeLimit();
+ }
+
+ // Executa o boot do sistema de forma segura [4]
+ if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+ } else {
+  initApp();
+ }
+
+ // Elementos da UI
+ const screenIntro = document.getElementById('screen-intro');
+ const screenWelcome = document.getElementById('screen-welcome');
+ const screenCalc = document.getElementById('screen-calc');
+ const screenMyVehicles = document.getElementById('screen-my-vehicles');
+ const screenAddVehicle = document.getElementById('screen-add-vehicle');
+ const screenMaintenance = document.getElementById('screen-maintenance');
+ const screenFinance = document.getElementById('screen-finance');
+
+ // Modais
+ const modalRegisterDriver = document.getElementById('modal-register-driver');
+ const modalNoVehicle = document.getElementById('modal-no-vehicle');
+ const modalToretoCalculating = document.getElementById('modal-toreto-calculating');
+ const toretoCalculationStep = document.getElementById('toreto-calculation-step');
+ const modalUpdateOdometer = document.getElementById('modal-update-odometer');
+ const modalSetupMaint = document.getElementById('modal-setup-maint');
+ const modalNews = document.getElementById('modal-news');
+
+ // Cadastro inputs
+ const inputDName = document.getElementById('d-name');
+ const selectDState = document.getElementById('d-state');
+ const btnSaveDriverRegistration = document.getElementById('btn-save-driver-registration');
+ const themeToggleMain = document.getElementById('theme-toggle-main');
+
+ // Veículos inputs
+ const addVehicleScreenTitle = document.getElementById('add-vehicle-screen-title');
+ const inputVkm = document.getElementById('v-km');
+ const inputVplaca = document.getElementById('v-placa');
+ const selectVmarca = document.getElementById('v-marca');
+ const inputVmodelo = document.getElementById('v-modelo');
+ const inputVcor = document.getElementById('v-cor');
+ const inputVEtanolOff = document.getElementById('v-etanol-off');
+ const inputVGasolinaOff = document.getElementById('v-gasolina-off');
+ const inputVEtanolOn = document.getElementById('v-etanol-on');
+ const inputVGasolinaOn = document.getElementById('v-gasolina-on');
+ const vehiclesListContainer = document.getElementById('vehicles-list-container');
+
+ // Abast inputs
+ const inputPriceEtanol = document.getElementById('price-etanol');
+ const inputPriceGasolina = document.getElementById('price-gasolina');
+ const acToggle = document.getElementById('ac-toggle');
+ const acSection = document.getElementById('ac-section');
+ const acStatusDesc = document.getElementById('ac-status-desc');
+ const calculateBtn = document.getElementById('calculate-btn');
+
+ // Resultados
+ const aiRecommendation = document.getElementById('ai-recommendation');
+ const resultCard = document.getElementById('result-card');
+ const veredictoText = document.getElementById('veredicto-text');
+ const economyDetail = document.getElementById('economy-detail');
+ const badgeEfficiency = document.getElementById('badge-efficiency');
+ const btnGenerateReport = document.getElementById('btn-generate-report');
+ const aiReportOutput = document.getElementById('ai-report-output');
+ const aiReportContent = document.getElementById('ai-report-content');
+
+ // Chat do Toretto
+ const toretoChatTrigger = document.getElementById('toreto-chat-trigger');
+ const toretoChatPanel = document.getElementById('toreto-chat-panel');
+ const btnCloseChat = document.getElementById('btn-close-chat');
+ const toretoChatMessages = document.getElementById('toreto-chat-messages');
+
+ // Seleção do Avatar na modal
+ const avatarButtons = document.querySelectorAll('.avatar-option-btn');
+ avatarButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+   avatarButtons.forEach(b => b.classList.remove('selected'));
+   btn.classList.add('selected');
+   appState.motoristaAvatar = btn.getAttribute('data-avatar');
+  });
+ });
+
+ // Acionamento de alteração de perfil ao clicar na topbar
+ const profileTrigger = document.getElementById('navbar-profile-trigger');
+ if (profileTrigger) {
+  profileTrigger.addEventListener('click', () => {
+   document.getElementById('profile-modal-title').textContent = "Atualizar Perfil";
+   if (inputDName) inputDName.value = appState.motoristaNome || '';
+   if (selectDState) selectDState.value = appState.motoristaEstado || '';
+   avatarButtons.forEach(btn => {
+    if(btn.getAttribute('data-avatar') === appState.motoristaAvatar) {
+     btn.classList.add('selected');
+    } else {
+     btn.classList.remove('selected');
+    }
+   });
+   const closeBtn = document.getElementById('profile-close-btn');
+   if (closeBtn) closeBtn.style.display = 'block'; // Permite fechar se logado [4]
+   if (modalRegisterDriver) modalRegisterDriver.classList.add('active');
+  });
+ }
+
+ window.closeProfileModal = function() {
+  if (modalRegisterDriver) modalRegisterDriver.classList.remove('active');
+ };
+
+ window.closeNewsModal = function() {
+  if (modalNews) modalNews.classList.remove('active');
+ };
+
+ const btnOpenNews = document.getElementById('btn-open-news');
+ if (btnOpenNews) {
+  btnOpenNews.addEventListener('click', () => {
+   if (modalNews) modalNews.classList.add('active');
+  });
+ }
+
+ // Mapeamento numérico de inputs
+ function setNumericValidation(inputElement, isDecimal) {
+  if (!inputElement) return;
+  inputElement.addEventListener('input', (e) => {
+   let value = e.target.value;
+   value = value.replace(',', '.');
+   if (isDecimal) {
+    value = value.replace(/[^0-9.]/g, '');
+    const parts = value.split('.');
+    if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
+   } else {
+    value = value.replace(/[^0-9]/g, '');
+   }
+   e.target.value = value;
+  });
+ }
+
+ [inputPriceEtanol, inputPriceGasolina, inputVEtanolOff, inputVGasolinaOff, inputVEtanolOn, inputVGasolinaOn, document.getElementById('home-price-etanol'), document.getElementById('home-price-gasolina')].forEach(inp => setNumericValidation(inp, true));
+ [inputVkm, document.getElementById('odo-pop-km'), document.getElementById('maint-pop-last-km'), document.getElementById('maint-pop-interval-km'), document.getElementById('fin-valor-p'), document.getElementById('fin-vencimento-p'), document.getElementById('fin-atual-p'), document.getElementById('fin-total-p')].forEach(inp => setNumericValidation(inp, false));
+
+ // Inicialização do fluxo de exibição
+ function runEcunIntro(requireOnboarding) {
+  setTimeout(() => {
+   if (screenIntro) screenIntro.classList.remove('active');
+   const shell = document.getElementById('app-shell');
+   if (shell) shell.classList.add('ready');
+   
+   if (requireOnboarding) {
+    if (modalRegisterDriver) modalRegisterDriver.classList.add('active');
+   } else {
+    switchTab('screen-welcome');
+   }
+  }, 1600);
+ }
+
+ // Gravar motorista (Onboarding)
+ if (btnSaveDriverRegistration) {
+  btnSaveDriverRegistration.addEventListener('click', () => {
+   const nome = inputDName ? inputDName.value.trim() : '';
+   const estado = selectDState ? selectDState.value : '';
+
+   if (!nome || !estado) {
+    alert('Forneça a credencial completa do piloto.');
+    return;
+   }
+
+   appState.motoristaNome = nome;
+   appState.motoristaEstado = estado;
+   localStorage.setItem('gi_motorista_nome', nome);
+   localStorage.setItem('gi_motorista_estado', estado);
+   localStorage.setItem('gi_motorista_avatar', appState.motoristaAvatar);
+
+   const greeting = document.getElementById('welcome-username-greeting');
+   if (greeting) greeting.innerHTML = `Olá, <span>${nome}</span>!`;
+   const topAvatar = document.getElementById('navbar-profile-avatar');
+   if (topAvatar) topAvatar.textContent = appState.motoristaAvatar;
+   
+   closeProfileModal();
+   switchTab('screen-welcome');
+  });
+ }
+
+ // Alternar Abas (SPA Tabs Controller sem bugs) [1, 2]
+ function switchTab(screenId) {
+  // Se tentar acessar calculadora ou manutenção sem veículo cadastrado, barramos de forma inteligente
+  if ((screenId === 'screen-calc' || screenId === 'screen-maintenance') && appState.veiculos.length === 0) {
+    if (modalNoVehicle) modalNoVehicle.classList.add('active');
+    return;
+  }
+
+  const screens = [screenWelcome, screenCalc, screenMyVehicles, screenAddVehicle, screenMaintenance, screenFinance];
+  screens.forEach(s => { if (s) s.classList.remove('active'); });
+  
+  // Reseta classes da navegação fixa "Setores da Garagem" [1]
+  const tabs = ['home', 'vehicles', 'calc', 'maint', 'fin'];
+  tabs.forEach(tab => {
+    const el = document.getElementById(`side-tab-${tab}`);
+    if (el) el.classList.remove('active');
+  });
+
+  if (screenId === 'screen-welcome') {
+   if (screenWelcome) screenWelcome.classList.add('active');
+   const el = document.getElementById('side-tab-home');
+   if (el) el.classList.add('active');
+   updateHomeActiveVehicleCard();
+   checkOdometerAgeLimit();
+  } else if (screenId === 'screen-calc') {
+   if (screenCalc) screenCalc.classList.add('active');
+   const el = document.getElementById('side-tab-calc');
+   if (el) el.classList.add('active');
+   updateAiCostAnalysis();
+  } else if (screenId === 'screen-my-vehicles') {
+   if (screenMyVehicles) screenMyVehicles.classList.add('active');
+   const el = document.getElementById('side-tab-vehicles');
+   if (el) el.classList.add('active');
+   renderVehiclesGrid();
+  } else if (screenId === 'screen-add-vehicle') {
+   if (screenAddVehicle) screenAddVehicle.classList.add('active');
+  } else if (screenId === 'screen-maintenance') {
+   if (screenMaintenance) screenMaintenance.classList.add('active');
+   const el = document.getElementById('side-tab-maint');
+   if (el) el.classList.add('active');
+   renderMaintenanceSystem();
+  } else if (screenId === 'screen-finance') {
+   if (screenFinance) screenFinance.classList.add('active');
+   const el = document.getElementById('side-tab-fin');
+   if (el) el.classList.add('active');
+   renderFinanceSystem();
+  }
+ }
+
+ // Atualizar o card do veículo na aba Home
+ function updateHomeActiveVehicleCard() {
+  const v = getVeiculoAtivoObj();
+  const vTitle = document.getElementById('home-vehicle-title');
+  const vDesc = document.getElementById('home-vehicle-desc');
+  const ecuActiveCar = document.getElementById('ecu-active-car');
+  const ecuActivePilot = document.getElementById('ecu-active-pilot');
+  const ecuPulse = document.getElementById('ecu-pulse');
+
+  // Atualiza também os dados na ECU Status Bar [2]
+  if (ecuActivePilot && appState.motoristaNome) ecuActivePilot.textContent = appState.motoristaNome;
+
+  if (v) {
+   if (vTitle && vDesc) {
+     vTitle.innerHTML = `${v.marca} <span style="font-weight: 300;">${v.modelo}</span>`;
+     vDesc.innerHTML = `Telemetria ativa em <span class="vehicle-placa-badge" style="font-size:0.65rem; padding: 1px 6px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
+   }
+   if (ecuActiveCar) ecuActiveCar.textContent = `${v.marca} ${v.modelo}`;
+   if (ecuPulse) ecuPulse.className = "ecu-status-indicator";
+  } else {
+   if (vTitle && vDesc) {
+     vTitle.textContent = "Nenhum Veículo";
+     vDesc.textContent = "Configure seu veículo na garagem para ativar a telemetria.";
+   }
+   if (ecuActiveCar) ecuActiveCar.textContent = "NENHUM";
+   if (ecuPulse) ecuPulse.className = "ecu-status-indicator amber";
+  }
+ }
+
+ // Alternar Tema
+ if (themeToggleMain) {
+  themeToggleMain.addEventListener('click', () => {
+   const nextTheme = appState.theme === 'dark' ? 'light' : 'dark';
+   appState.theme = nextTheme;
+   localStorage.setItem('gi_theme', nextTheme);
+   applyThemeLogos(nextTheme);
+  });
+ }
+
+ // --- BOTÃO SINCRONIZAR APP (PRO-FLUIDEZ) [2] ---
+ const btnSync = document.getElementById('btn-sync-app');
+ if (btnSync) {
+   btnSync.addEventListener('click', () => {
+     const icon = btnSync.querySelector('i');
+     if (icon) icon.classList.add('fa-spin');
+     btnSync.disabled = true;
+     
+     if (modalToretoCalculating) {
+       modalToretoCalculating.classList.add('active');
+       toretoCalculationStep.textContent = "Sincronizando tabelas térmicas...";
+     }
+     
+     setTimeout(() => {
+       if (toretoCalculationStep) toretoCalculationStep.textContent = "Limpando cache de telemetria...";
+     }, 600);
+
+     setTimeout(() => {
+       // Recarrega dados limpos do localStorage
+       appState.veiculos = JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [];
+       appState.veiculoAtivoId = localStorage.getItem('gi_veiculo_ativo_id') || null;
+       appState.financeContract = JSON.parse(localStorage.getItem('gi_financas')) || null;
+       appState.motoristaNome = localStorage.getItem('gi_motorista_nome') || null;
+       appState.motoristaEstado = localStorage.getItem('gi_motorista_estado') || null;
+       appState.motoristaAvatar = localStorage.getItem('gi_motorista_avatar') || '👨‍✈️';
+       
+       // Sincroniza e força re-render
+       applyThemeLogos(appState.theme);
+       updateHomeActiveVehicleCard();
+       checkOdometerAgeLimit();
+       
+       if (screenMaintenance.classList.contains('active')) renderMaintenanceSystem();
+       if (screenFinance.classList.contains('active')) renderFinanceSystem();
+       if (screenMyVehicles.classList.contains('active')) renderVehiclesGrid();
+
+       if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
+       if (icon) icon.classList.remove('fa-spin');
+       btnSync.disabled = false;
+     }, 1200);
+   });
+ }
+
+ // --- CRUD DE GARAGEM ---
+ const btnAddVeh = document.getElementById('btn-add-vehicle-screen');
+ if (btnAddVeh) {
+  btnAddVeh.addEventListener('click', () => {
+   appState.veiculoEmEdicaoId = null;
+   if (addVehicleScreenTitle) addVehicleScreenTitle.textContent = "Nova Calibração";
+   resetAddVehicleForm();
+   switchTab('screen-add-vehicle');
+  });
+ }
+
+ function resetAddVehicleForm() {
+  if (inputVkm) inputVkm.value = '';
+  if (inputVplaca) inputVplaca.value = '';
+  if (selectVmarca) selectVmarca.value = '';
+  if (inputVmodelo) inputVmodelo.value = '';
+  if (inputVcor) inputVcor.value = '';
+  if (inputVEtanolOff) inputVEtanolOff.value = '';
+  if (inputVGasolinaOff) inputVGasolinaOff.value = '';
+  if (inputVEtanolOn) inputVEtanolOn.value = '';
+  if (inputVGasolinaOn) inputVGasolinaOn.value = '';
+ }
+
+ const btnSaveVeh = document.getElementById('btn-save-vehicle');
+ if (btnSaveVeh) {
+  btnSaveVeh.addEventListener('click', () => {
+   const km = parseInt(inputVkm ? inputVkm.value : '0');
+   const placa = inputVplaca ? inputVplaca.value.trim().toUpperCase() : '';
+   const marca = selectVmarca ? selectVmarca.value : '';
+   const modelo = inputVmodelo ? inputVmodelo.value.trim() : '';
+   const cor = inputVcor ? inputVcor.value.trim() : '';
+   const etanolOff = parseFloat(inputVEtanolOff ? inputVEtanolOff.value : '0');
+   const gasolinaOff = parseFloat(inputVGasolinaOff ? inputVGasolinaOff.value : '0');
+   const etanolOn = parseFloat(inputVEtanolOn ? inputVEtanolOn.value : '0');
+   const gasolinaOn = parseFloat(inputVGasolinaOn ? inputVGasolinaOn.value : '0');
+
+   if (!km || !placa || !marca || !modelo || !cor || isNaN(etanolOff) || isNaN(gasolinaOff) || isNaN(etanolOn) || isNaN(gasolinaOn)) {
+    alert('Calibração abortada. Preencha todos os parâmetros mecânicos corretamente.');
+    return;
+   }
+
+   const timestamp = Date.now();
+
+   if (appState.veiculoEmEdicaoId) {
+    const idx = appState.veiculos.findIndex(v => v.id === appState.veiculoEmEdicaoId);
+    if (idx !== -1) {
+     const prev = appState.veiculos[idx];
+     appState.veiculos[idx] = { 
+      id: appState.veiculoEmEdicaoId, km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn,
+      maintOilLast: prev.maintOilLast ?? null, maintOilInt: prev.maintOilInt ?? null,
+      maintFilterLast: prev.maintFilterLast ?? null, maintFilterInt: prev.maintFilterInt ?? null,
+      odoLastUpdated: prev.odoLastUpdated ?? timestamp
+     };
+    }
+   } else {
+    const novo = { 
+     id: String(timestamp), km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn,
+     maintOilLast: null, maintOilInt: null,
+     maintFilterLast: null, maintFilterInt: null,
+     odoLastUpdated: timestamp
+    };
+    appState.veiculos.push(novo);
+    setVeiculoAtivo(novo.id);
+   }
+
+   appState.veiculoEmEdicaoId = null;
+   localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+   switchTab('screen-my-vehicles');
+  });
+ }
+
+ function setVeiculoAtivo(id) {
+  appState.veiculoAtivoId = id;
+  localStorage.setItem('gi_veiculo_ativo_id', id);
+ }
+
+ function getVeiculoAtivoObj() {
+  if (appState.veiculos.length === 0) return null;
+  return appState.veiculos.find(v => v.id === appState.veiculoAtivoId) || appState.veiculos[0];
+ }
+
+ function editVehicle(id, e) {
+  e.stopPropagation();
+  const v = appState.veiculos.find(veh => veh.id === id);
+  if (!v) return;
+
+  appState.veiculoEmEdicaoId = id;
+  if (addVehicleScreenTitle) addVehicleScreenTitle.textContent = "Editar Calibração";
+
+  if (inputVkm) inputVkm.value = v.km;
+  if (inputVplaca) inputVplaca.value = v.placa;
+  if (selectVmarca) selectVmarca.value = v.marca;
+  if (inputVmodelo) inputVmodelo.value = v.modelo;
+  if (inputVcor) inputVcor.value = v.cor;
+  if (inputVEtanolOff) inputVEtanolOff.value = v.etanolOff;
+  if (inputVGasolinaOff) inputVGasolinaOff.value = v.gasolinaOff;
+  if (inputVEtanolOn) inputVEtanolOn.value = v.etanolOn;
+  if (inputVGasolinaOn) inputVGasolinaOn.value = v.gasolinaOn;
+
+  switchTab('screen-add-vehicle');
+ }
+
+ function deleteVehicle(id, e) {
+  e.stopPropagation();
+  if (!confirm('Descartar permanentemente esta calibração do banco de dados?')) return;
+
+  appState.veiculos = appState.veiculos.filter(v => v.id !== id);
+  localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+
+  if (appState.veiculoAtivoId === id) {
+   if (appState.veiculos.length > 0) setVeiculoAtivo(appState.veiculos[0].id);
+   else { appState.veiculoAtivoId = null; localStorage.removeItem('gi_veiculo_ativo_id'); }
+  }
+  renderVehiclesGrid();
+ }
+
+ function renderVehiclesGrid() {
+  if (!vehiclesListContainer) return;
+  vehiclesListContainer.innerHTML = '';
+  if (appState.veiculos.length === 0) {
+   vehiclesListContainer.innerHTML = `
+    <div style="text-align: center; grid-column: span 2; padding: 40px 20px;" class="bento-card">
+     <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhum carro cadastrado no banco da ECU.</p>
+    </div>
+   `;
+   return;
+  }
+
+  const ativo = getVeiculoAtivoObj();
+  appState.veiculos.forEach(v => {
+   const isAtivo = ativo && v.id === ativo.id;
+   const card = document.createElement('div');
+   card.className = `premium-vehicle-card ${isAtivo ? 'active' : ''}`;
+   card.onclick = () => {
+    setVeiculoAtivo(v.id);
+    renderVehiclesGrid();
+   };
+
+   card.innerHTML = `
+    <div class="vehicle-info-block">
+     <span class="vehicle-model-line">${v.marca} <span style="font-weight: 300;">${v.modelo}</span></span>
+     <div class="vehicle-meta-line">
+      <span>${v.cor}</span> • <span>${v.km.toLocaleString()} KM</span> • <span class="vehicle-placa-badge">${v.placa}</span>
+     </div>
+    </div>
+    <div class="vehicle-actions-block">
+     <button class="icon-btn edit"><i class="fa-solid fa-pen"></i></button>
+     <button class="icon-btn delete"><i class="fa-solid fa-trash-can"></i></button>
+    </div>
+   `;
+   
+   const editBtn = card.querySelector('.edit');
+   const deleteBtn = card.querySelector('.delete');
+   if (editBtn) editBtn.addEventListener('click', (ev) => editVehicle(v.id, ev));
+   if (deleteBtn) deleteBtn.addEventListener('click', (ev) => deleteVehicle(v.id, ev));
+
+   vehiclesListContainer.appendChild(card);
+  });
+ }
+
+ // Redirecionamento da modal sem veículo
+ const btnModalGoToVehicles = document.getElementById('btn-modal-go-to-vehicles');
+ if (btnModalGoToVehicles) {
+  btnModalGoToVehicles.addEventListener('click', () => {
+   if (modalNoVehicle) modalNoVehicle.classList.remove('active');
+   switchTab('screen-my-vehicles');
+  });
+ }
+
+ // --- CÁLCULO E CLIMATIZAÇÃO ---
+ if (acToggle) {
+  acToggle.addEventListener('change', () => {
+   updateAiCostAnalysis();
+   if (resultCard) resultCard.style.display = 'none';
+   if (aiReportOutput) aiReportOutput.style.display = 'none';
+  });
+ }
+
+ function updateAiCostAnalysis() {
+  const hasAc = acToggle ? acToggle.checked : false;
+  const v = getVeiculoAtivoObj();
+  if (!v) return;
+
+  const labels = hasAc ? "Compressores Ativados" : "Compressores Desligados";
+  if (acSection) acSection.className = `tesla-switch-card ${hasAc ? 'active' : ''}`;
+  if (acStatusDesc) acStatusDesc.textContent = `Compressor térmico em modo ${labels}`;
+
+  const cE = hasAc ? v.etanolOn : v.etanolOff;
+  const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
+
+  if (aiRecommendation) {
+   aiRecommendation.innerHTML = `Telemetria sintonizada com a ECU para <strong>${v.marca} ${v.modelo}</strong> (${labels}). Desempenho físico calibrado para: <strong>${cE} km/l</strong> no Etanol e <strong>${cG} km/l</strong> na Gasolina.`;
+  }
+ }
+
+ // Executa o cálculo para a tela principal ou calculadora [5]
+ function runDiagnosticCalculation(priceEtanol, priceGasolina, hasAc) {
+   const v = getVeiculoAtivoObj();
+   if (!v) return;
+
+   const cE = hasAc ? v.etanolOn : v.etanolOff;
+   const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
+
+   const eficiencia = cE / cG;
+   const proporcoMercado = priceEtanol / priceGasolina;
+   const kmE = priceEtanol / cE;
+   const kmG = priceGasolina / cG;
+
+   // Redireciona e abre a calculadora com os resultados sintonizados
+   if (inputPriceEtanol) inputPriceEtanol.value = priceEtanol.toFixed(2);
+   if (inputPriceGasolina) inputPriceGasolina.value = priceGasolina.toFixed(2);
+   if (acToggle) acToggle.checked = hasAc;
+
+   switchTab('screen-calc');
+
+   if (resultCard) resultCard.style.display = 'flex';
+   
+   const costEt = document.getElementById('meta-cost-etanol');
+   const costGas = document.getElementById('meta-cost-gasolina');
+   if (costEt) costEt.textContent = `R$ ${kmE.toFixed(2)} / KM`;
+   if (costGas) costGas.textContent = `R$ ${kmG.toFixed(2)} / KM`;
+
+   if (proporcoMercado < eficiencia) {
+    if (veredictoText) {
+     veredictoText.textContent = "ALIMENTE COM ETANOL";
+     veredictoText.className = "diagnostic-verdict etanol-win";
+    }
+    const ecoPorLitro = kmG - kmE;
+    const ecoTanque = ecoPorLitro * cE * 50;
+    if (economyDetail) {
+     economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2)}</span> a cada 50L.`;
+    }
+   } else {
+    if (veredictoText) {
+     veredictoText.textContent = "ALIMENTE COM GASOLINA";
+     veredictoText.className = "diagnostic-verdict gasolina-win";
+    }
+    const precoLimite = priceGasolina * eficiencia;
+    if (economyDetail) {
+     economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2)}</span>.`;
+    }
+   }
+
+   if (badgeEfficiency) badgeEfficiency.textContent = `Eficiência Real: ${(eficiencia*100).toFixed(1)}%`;
+ }
+
+ // Ação do Botão de Cálculo da Calculadora Principal
+ if (calculateBtn) {
+  calculateBtn.addEventListener('click', () => {
+   const pE = parseFloat(inputPriceEtanol ? inputPriceEtanol.value : '0');
+   const pG = parseFloat(inputPriceGasolina ? inputPriceGasolina.value : '0');
+
+   if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
+    alert('Introduza valores de combustíveis válidos.');
+    return;
+   }
+
+   if (modalToretoCalculating) modalToretoCalculating.classList.add('active');
+
+   setTimeout(() => {
+    if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
+    runDiagnosticCalculation(pE, pG, acToggle ? acToggle.checked : false);
+   }, 1400);
+  });
+ }
+
+ // Ação do Botão de Cálculo Rápido Integrado na Home [5]
+ const btnHomeCalculate = document.getElementById('btn-home-calculate');
+ if (btnHomeCalculate) {
+  btnHomeCalculate.addEventListener('click', () => {
+   if (appState.veiculos.length === 0) {
+    if (modalNoVehicle) modalNoVehicle.classList.add('active');
+    return;
+   }
+   const pE = parseFloat(document.getElementById('home-price-etanol').value || '0');
+   const pG = parseFloat(document.getElementById('home-price-gasolina').value || '0');
+   const hasAc = document.getElementById('home-ac-toggle').checked;
+
+   if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
+    alert('Introduza valores de combustíveis válidos no painel expresso.');
+    return;
+   }
+
+   if (modalToretoCalculating) modalToretoCalculating.classList.add('active');
+
+   setTimeout(() => {
+    if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
+    runDiagnosticCalculation(pE, pG, hasAc);
+   }, 1400);
+  });
+ }
+
+ // Relatório IA Premium
+ if (btnGenerateReport) {
+  btnGenerateReport.addEventListener('click', () => {
+   if (aiReportOutput) aiReportOutput.style.display = 'block';
+   if (aiReportContent) aiReportContent.innerHTML = `Processando telemetria...`;
+
+   setTimeout(() => {
+    const pE = parseFloat(inputPriceEtanol ? inputPriceEtanol.value : '0');
+    const pG = parseFloat(inputPriceGasolina ? inputPriceGasolina.value : '0');
+    const hasAc = acToggle ? acToggle.checked : false;
+    const v = getVeiculoAtivoObj();
+    if (!v) return;
+    const cE = hasAc ? v.etanolOn : v.etanolOff;
+    const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
+    
+    const kmE = pE / cE;
+    const kmG = pG / cG;
+    const ratio = pE / pG;
+    const ef = cE / cG;
+
+    let report = '';
+    if (ratio < ef) {
+     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km com Etanol é de <strong>R$ ${kmE.toFixed(2)}</strong> versus <strong>R$ ${kmG.toFixed(2)}</strong> na Gasolina. O Etanol é extremamente vantajoso com as tabelas de preços correntes.</p>
+     <p><strong>Autonomia Preditiva:</strong> Seu reservatório de 50L garante <strong>${(cE*50).toFixed(0)} km</strong> no Etanol. Na Gasolina, garantiria <strong>${(cG*50).toFixed(0)} km</strong>, mas o custo por km percorrido não compensa.</p>`;
+    } else {
+     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km na Gasolina é de <strong>R$ ${kmG.toFixed(2)}</strong> contra <strong>R$ ${kmE.toFixed(2)}</strong> no Etanol. A Gasolina fornece maior poder calórico, compensando a diferença de preço atual.</p>
+     <p><strong>Autonomia Preditiva:</strong> Sua autonomia por tanque de 50L chega a <strong>${(cG*50).toFixed(0)} km</strong>, o que reduz paradas de abastecimento.</p>`;
+    }
+
+    if (aiReportContent) aiReportContent.innerHTML = report;
+   }, 1200);
+  });
+ }
+
+ // --- SISTEMA DE MANUTENÇÃO (REVISADO COM BADGES DE STATUS) --- [1]
+ function renderMaintenanceSystem() {
+  const v = getVeiculoAtivoObj();
+  const container = document.getElementById('maintenance-items-container');
+  if (!container) return;
+  container.innerHTML = '';
+
+  if (!v) return;
+
+  const components = [
+   { key: 'Oil', name: 'Troca de Óleo Lubrificante', icon: 'fa-oil-can' },
+   { key: 'Filter', name: 'Substituição de Filtros', icon: 'fa-filter' }
+  ];
+
+  components.forEach(comp => {
+   const lastChange = v[`maint${comp.key}Last`];
+   const interval = v[`maint${comp.key}Int`];
+
+   const div = document.createElement('div');
+   div.className = 'maint-item';
+
+   if (lastChange !== undefined && lastChange !== null && interval !== undefined && interval !== null) {
+    const nextChange = lastChange + interval;
+    let rest = nextChange - v.km;
+    if (rest < 0) rest = 0;
+
+    const percentage = Math.max(0, Math.min(100, (rest / interval) * 100));
+
+    let barColor = 'var(--accent-blue)';
+    let statusClass = 'healthy';
+    let statusText = 'Saudável';
+
+    if (percentage < 30) {
+      barColor = 'var(--accent-gasolina)';
+      statusClass = 'attention';
+      statusText = 'Atenção';
+    }
+    if (percentage < 10) {
+      barColor = 'var(--accent-red)';
+      statusClass = 'critical';
+      statusText = 'Crítico';
+    }
+
+    div.innerHTML = `
+     <div class="maint-meta">
+      <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
+      <span class="maint-badge ${statusClass}">${statusText}</span>
+     </div>
+     <div class="maint-progress-bar">
+      <div class="maint-progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+     </div>
+     
+     <div class="maint-diagnostic-grid">
+       <div class="maint-diagnostic-col">
+         <span class="maint-diag-lbl">Última Troca</span>
+         <span class="maint-diag-val">${lastChange.toLocaleString()} km</span>
+       </div>
+       <div class="maint-diagnostic-col">
+         <span class="maint-diag-lbl">KM Atual</span>
+         <span class="maint-diag-val">${v.km.toLocaleString()} km</span>
+       </div>
+       <div class="maint-diagnostic-col">
+         <span class="maint-diag-lbl">Próxima Troca</span>
+         <span class="maint-diag-val">${nextChange.toLocaleString()} km</span>
+       </div>
+     </div>
+
+     <div class="maint-meta" style="margin-top: 10px;">
+      <span class="maint-km" style="font-weight:700; color: ${percentage < 10 ? 'var(--accent-red)' : 'inherit'};">
+       ${rest > 0 ? `Intervalo de segurança: Restam ${rest.toLocaleString()} km` : 'COMPONENTE VENCIDO - REALIZE A SUBSTITUIÇÃO'}
+      </span>
+     </div>
+     <button class="maint-action-btn" onclick="openMaintSetupModal('${comp.key}')" style="margin-top: 8px; width: 100%; justify-content: center;"><i class="fa-solid fa-rotate"></i> Registrar Troca</button>
+    `;
+   } else {
+    div.innerHTML = `
+     <div class="maint-meta">
+      <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
+      <button class="btn-premium-secondary" onclick="openMaintSetupModal('${comp.key}')" style="width: auto; height: 36px; padding: 0 14px; font-size: 0.75rem;">Configurar Controle</button>
+     </div>
+     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Nenhum registro de troca localizado para este componente.</p>
+    `;
+   }
+   container.appendChild(div);
+  });
+ }
+
+ window.openMaintSetupModal = function(key) {
+  activeMaintKey = key;
+  const v = getVeiculoAtivoObj();
+  if(!v) return;
+
+  const mTitle = document.getElementById('maint-popup-title');
+  if (mTitle) mTitle.textContent = key === 'Oil' ? 'Configurar Troca de Óleo' : 'Configurar Troca de Filtros';
+  
+  const lastKmIn = document.getElementById('maint-pop-last-km');
+  const intKmIn = document.getElementById('maint-pop-interval-km');
+  if (lastKmIn) lastKmIn.value = v.km;
+  if (intKmIn) intKmIn.value = 10000;
+
+  if (modalSetupMaint) modalSetupMaint.classList.add('active');
+ };
+
+ window.closeMaintSetupModal = function() {
+  if (modalSetupMaint) modalSetupMaint.classList.remove('active');
+ };
+
+ const btnSaveMaintPop = document.getElementById('btn-save-maint-popup');
+ if (btnSaveMaintPop) {
+  btnSaveMaintPop.addEventListener('click', () => {
+   const v = getVeiculoAtivoObj();
+   if(!v) return;
+
+   const lastKmIn = document.getElementById('maint-pop-last-km');
+   const intKmIn = document.getElementById('maint-pop-interval-km');
+   const lastKm = lastKmIn ? parseInt(lastKmIn.value) : NaN;
+   const interval = intKmIn ? parseInt(intKmIn.value) : NaN;
+
+   if (isNaN(lastKm) || isNaN(interval) || lastKm < 0 || interval <= 0) {
+    alert('Dados de quilometragem inválidos.');
+    return;
+   }
+
+   v[`maint${activeMaintKey}Last`] = lastKm;
+   v[`maint${activeMaintKey}Int`] = interval;
+
+   const idx = appState.veiculos.findIndex(veh => veh.id === v.id);
+   if (idx !== -1) {
+    appState.veiculos[idx] = v;
+    localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+   }
+
+   closeMaintSetupModal();
+   renderMaintenanceSystem();
+  });
+ }
+
+ // --- CONTROLE DE IDADE DO ODÔMETRO (VERIFICAÇÃO DE 7 DIAS) --- [1]
+ function checkOdometerAgeLimit() {
+  const v = getVeiculoAtivoObj();
+  const alertBox = document.getElementById('odo-update-container');
+  if (!alertBox) return;
+
+  if (!v) {
+   alertBox.style.display = 'none';
+   return;
+  }
+
+  const lastUpdated = v.odoLastUpdated || Date.now();
+  const diffTime = Math.abs(Date.now() - lastUpdated);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays >= 7) {
+   alertBox.style.display = 'flex';
+  } else {
+   alertBox.style.display = 'none';
+  }
+ }
+
+ window.openOdometerUpdateModal = function() {
+  const v = getVeiculoAtivoObj();
+  if (!v) return;
+  const odoPopKm = document.getElementById('odo-pop-km');
+  if (odoPopKm) odoPopKm.value = v.km;
+  if (modalUpdateOdometer) modalUpdateOdometer.classList.add('active');
+ };
+
+ window.closeOdometerUpdateModal = function() {
+  if (modalUpdateOdometer) modalUpdateOdometer.classList.remove('active');
+ };
+
+ const btnSaveOdoPop = document.getElementById('btn-save-odo-popup');
+ if (btnSaveOdoPop) {
+  btnSaveOdoPop.addEventListener('click', () => {
+   const v = getVeiculoAtivoObj();
+   if(!v) return;
+
+   const odoPopKm = document.getElementById('odo-pop-km');
+   const newKm = odoPopKm ? parseInt(odoPopKm.value) : NaN;
+   if (isNaN(newKm) || newKm < v.km) {
+    alert('O novo odômetro não pode ser menor do que a marcação anterior.');
+    return;
+   }
+
+   v.km = newKm;
+   v.odoLastUpdated = Date.now();
+
+   const idx = appState.veiculos.findIndex(veh => veh.id === v.id);
+   if (idx !== -1) {
+    appState.veiculos[idx] = v;
+    localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+   }
+
+   closeOdometerUpdateModal();
+   updateHomeActiveVehicleCard();
+   checkOdometerAgeLimit();
+  });
+ }
+
+ // --- SISTEMA DE FINANCIAMENTO COM CHECKLIST DE PARCELAS [3] ---
+ const btnSaveFin = document.getElementById('btn-save-finance');
+ if (btnSaveFin) {
+  btnSaveFin.addEventListener('click', () => {
+   const finValorP = document.getElementById('fin-valor-p');
+   const finVencP = document.getElementById('fin-vencimento-p');
+   const finAtualP = document.getElementById('fin-atual-p');
+   const finTotalP = document.getElementById('fin-total-p');
+
+   const valorParcela = finValorP ? parseFloat(finValorP.value) : NaN;
+   const diaVencimento = finVencP ? parseInt(finVencP.value) : NaN;
+   const parcelaAtual = finAtualP ? parseInt(finAtualP.value) : NaN;
+   const totalParcelas = finTotalP ? parseInt(finTotalP.value) : NaN;
+
+   if (isNaN(valorParcela) || valorParcela <= 0 || 
+       isNaN(diaVencimento) || diaVencimento <= 0 || diaVencimento > 31 || 
+       isNaN(totalParcelas) || totalParcelas <= 0 || 
+       isNaN(parcelaAtual) || parcelaAtual < 0 || parcelaAtual > totalParcelas) {
+    alert('Dados do fluxo de pagamento inválidos. Todos os campos devem ser preenchidos corretamente com números válidos.');
+    return;
+   }
+
+   // Gera lista inicial de parcelas com base no número digitado
+   const parcelasStatus = [];
+   for (let i = 1; i <= totalParcelas; i++) {
+    parcelasStatus.push({
+     num: i,
+     paga: i <= parcelaAtual ? true : false
+    });
+   }
+
+   const contract = {
+    valor: valorParcela,
+    dia: diaVencimento,
+    total: totalParcelas,
+    parcelasStatus: parcelasStatus,
+    dataInicioContrato: Date.now()
+   };
+
+   appState.financeContract = contract;
+   localStorage.setItem('gi_financas', JSON.stringify(contract));
+
+   renderFinanceSystem();
+  });
+ }
+
+ const btnToggleFinForm = document.getElementById('btn-toggle-finance-form');
+ if (btnToggleFinForm) {
+  btnToggleFinForm.addEventListener('click', () => {
+   const form = document.getElementById('finance-form-container');
+   if (form.style.display === 'none') {
+    form.style.display = 'flex';
+    btnToggleFinForm.innerHTML = '<i class="fa-solid fa-xmark"></i> Ocultar Form';
+   } else {
+    form.style.display = 'none';
+    btnToggleFinForm.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar Contrato';
+   }
+  });
+ }
+
+ function renderFinanceSystem() {
+  const contract = appState.financeContract;
+  const emptyState = document.getElementById('finance-empty-state');
+  const summaryBox = document.getElementById('finance-summary-container');
+  const checklistContainer = document.getElementById('finance-checklist-container');
+  const editBtn = document.getElementById('btn-toggle-finance-form');
+  const formContainer = document.getElementById('finance-form-container');
+  const checklistContent = document.getElementById('parcelas-checklist-container');
+  const layout = document.getElementById('finance-grid-layout');
+
+  if (!contract) {
+   if (emptyState) emptyState.style.display = 'block';
+   if (summaryBox) summaryBox.style.display = 'none';
+   if (checklistContainer) checklistContainer.style.display = 'none';
+   if (editBtn) editBtn.style.display = 'none';
+   if (formContainer) formContainer.style.display = 'flex';
+   if (layout) layout.classList.remove('active-contract');
+   return;
+  }
+
+  if (emptyState) emptyState.style.display = 'none';
+  if (summaryBox) summaryBox.style.display = 'flex';
+  if (checklistContainer) checklistContainer.style.display = 'flex';
+  if (editBtn) editBtn.style.display = 'flex';
+  if (formContainer) formContainer.style.display = 'none'; // Esconde o formulário para evitar espaços vazios
+  if (layout) layout.classList.add('active-contract');
+  
+  if (editBtn) editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar Contrato';
+
+  // Sincroniza inputs
+  const fVal = document.getElementById('fin-valor-p');
+  const fVenc = document.getElementById('fin-vencimento-p');
+  const fTot = document.getElementById('fin-total-p');
+  const fAt = document.getElementById('fin-atual-p');
+
+  if (fVal) fVal.value = contract.valor;
+  if (fVenc) fVenc.value = contract.dia;
+  if (fTot) fTot.value = contract.total;
+
+  // Calcula parcelas pagas baseado na checklist real
+  const pagasChecklist = contract.parcelasStatus.filter(p => p.paga).length;
+  if (fAt) fAt.value = pagasChecklist;
+
+  const valorPago = pagasChecklist * contract.valor;
+  const parcelasRestantes = contract.total - pagasChecklist;
+  const valorRestante = parcelasRestantes * contract.valor;
+
+  // Data de vencimento da próxima parcela [3]
+  const hoje = new Date();
+  let anoVenc = hoje.getFullYear();
+  let mesVenc = hoje.getMonth();
+  if (hoje.getDate() > contract.dia) {
+   mesVenc += 1;
+   if (mesVenc > 11) { mesVenc = 0; anoVenc += 1; }
+  }
+  const proximoVencimento = new Date(anoVenc, mesVenc, contract.dia);
+  const diffTime = proximoVencimento - hoje;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  // Previsão de quitação
+  const dataQuitacao = new Date(hoje.getFullYear(), hoje.getMonth() + parcelasRestantes, contract.dia);
+  const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+  const finMetaNext = document.getElementById('fin-meta-next');
+  if (finMetaNext) finMetaNext.textContent = `R$ ${contract.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  
+  const finMetaDays = document.getElementById('fin-meta-days');
+  const finMetaPrev = document.getElementById('fin-meta-previsao');
+
+  if (parcelasRestantes === 0) {
+   if (finMetaDays) finMetaDays.textContent = "Contrato Quitado";
+   if (finMetaPrev) finMetaPrev.textContent = "Liquidado";
+  } else {
+   if (finMetaDays) finMetaDays.textContent = `Vence em ${diffDays} dias (${proximoVencimento.toLocaleDateString('pt-BR')})`;
+   if (finMetaPrev) finMetaPrev.textContent = `${mesesNomes[dataQuitacao.getMonth()]} de ${dataQuitacao.getFullYear()}`;
+  }
+
+  document.getElementById('fin-meta-pago').textContent = `R$ ${valorPago.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  document.getElementById('fin-meta-pago-lbl').textContent = `${pagasChecklist} de ${contract.total} quitadas`;
+
+  document.getElementById('fin-meta-restante').textContent = `R$ ${valorRestante.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  document.getElementById('fin-meta-restante-lbl').textContent = `${parcelasRestantes} parcelas restantes`;
+
+  // Renderiza a checklist de parcelas interativas [3]
+  if (checklistContent) {
+   checklistContent.innerHTML = '';
+   contract.parcelasStatus.forEach(p => {
+    const row = document.createElement('div');
+    row.className = `parcela-row ${p.paga ? 'paga' : ''}`;
+
+    const dataParcela = new Date(hoje.getFullYear(), hoje.getMonth() + (p.num - pagasChecklist), contract.dia);
+    const dateString = p.paga ? 'Quitado' : `Vencimento: ${dataParcela.toLocaleDateString('pt-BR')}`;
+
+    row.innerHTML = `
+     <div class="parcela-info">
+      <input type="checkbox" class="parcela-checkbox" ${p.paga ? 'checked' : ''}>
+      <span class="parcela-text">Parcela ${String(p.num).padStart(2, '0')}</span>
+     </div>
+     <span class="parcela-date">${dateString}</span>
+    `;
+    
+    const checkEl = row.querySelector('.parcela-checkbox');
+    if (checkEl) {
+     checkEl.addEventListener('change', (ev) => {
+      toggleParcelaState(p.num, ev.target.checked);
+     });
+    }
+    checklistContent.appendChild(row);
+   });
+  }
+ }
+
+ window.toggleParcelaState = function(num, isChecked) {
+  const contract = appState.financeContract;
+  if (!contract) return;
+
+  const idx = contract.parcelasStatus.findIndex(p => p.num === num);
+  if (idx !== -1) {
+   contract.parcelasStatus[idx].paga = isChecked;
+  }
+  
+  localStorage.setItem('gi_financas', JSON.stringify(contract));
+  renderFinanceSystem();
+ };
+
+ // LOGOUT
+ const btnLogoutTrig = document.getElementById('btn-logout-trigger');
+ if (btnLogoutTrig) {
+  btnLogoutTrig.addEventListener('click', () => {
+   if (confirm('Deseja limpar todos os registros e reiniciar o perfil da central?')) {
+    localStorage.clear();
+    location.reload();
+   }
+  });
+ }
+
+ // --- CHAT TORETTO ---
+ if (toretoChatTrigger) {
+  toretoChatTrigger.addEventListener('click', () => {
+   if (toretoChatPanel) toretoChatPanel.style.display = toretoChatPanel.style.display === 'flex' ? 'none' : 'flex';
+  });
+ }
+
+ if (btnCloseChat) {
+  btnCloseChat.addEventListener('click', () => {
+   if (toretoChatPanel) toretoChatPanel.style.display = 'none';
+  });
+ }
+
+ function askToretto(theme) {
+  let q = ""; let r = "";
+  if (theme === 'combustivel') {
+   q = "Regra de Injeção: 70% vs Real";
+   r = "A regra universal dos 70% está defasada. Motores modernos com injeção multiponto possuem curvas de eficiência dinâmicas. Nós rodamos matemática pura para encontrar o ponto de equilíbrio monetário ideal.";
+  } else if (theme === 'ar') {
+   q = "Carga do Compressor";
+   r = "Ativar o ar-condicionado força o motor a acionar o compressor via correia, drenando de 10% a 15% de torque na cidade. Contudo, em rodovias acima de 80 km/h, o arrasto aerodinâmico causado por janelas abertas drena muito mais combustível.";
+  } else if (theme === 'manutencao') {
+   q = "Prevenção Mecânica Básica";
+   r = "Filtro de ar saturado restringe a passagem de oxigênio, forçando a ECU a injetar mais combustível para manter a queima correta. Velas gastas geram faíscas fracas e queimas incompletas. Mantenha os sensores calibrados.";
+  }
+
+  appendMsg(q, 'user');
+  setTimeout(() => appendMsg(r, 'toreto'), 450);
+ }
+
+ function appendMsg(txt, sender) {
+  if (!toretoChatMessages) return;
+  const div = document.createElement('div');
+  div.className = `chat-msg ${sender}`;
+  div.textContent = txt;
+  toretoChatMessages.appendChild(div);
+  toretoChatMessages.scrollTop = toretoChatMessages.scrollHeight;
+ }
+
+ // Fechamento seguro dos overlays ao clicar fora
+ const overlays = document.querySelectorAll('.modal-overlay');
+ overlays.forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+   if (e.target === overlay) {
+    if (overlay.id === 'modal-register-driver' && !appState.motoristaNome) {
+     return;
+    }
+    overlay.classList.remove('active');
+   }
+  });
+ });
+ </script>
+</body>
+</html>
