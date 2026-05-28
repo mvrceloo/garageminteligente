@@ -4,6 +4,9 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
  <title>Garagem Inteligente - de gearhead para gearhead</title>
+ <link rel="mask-icon" href="https://i.imgur.com/COonmRd.png" color="">
+ <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://i.imgur.com/COonmRd.png">
+ <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://i.imgur.com/COonmRd.png" data-base-href="https://i.imgur.com/COonmRd.png">
  <!-- Importação Oficial da Google Sans Flex (Variable Font) -->
  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
  <!-- Importação do FontAwesome para ícones premium -->
@@ -48,12 +51,12 @@
  --border-glass: 1px solid rgba(0, 0, 0, 0.06);
  --border-glass-glow: rgba(197, 160, 89, 0.15);
   
- --accent-etanol: #059669;
+ --accent-etanol: #119c6e;
  --accent-gasolina: #ea580c;
- --accent-blue: #9f7c50;
- --accent-ai: #9f7c50;
+ --accent-blue: #119c6e;
+ --accent-ai: #119c6e;
  --accent-red: #dc2626;
- --accent-gold: #9f7c50;
+ --accent-gold: #119c6e;
  }
 
  * {
@@ -121,7 +124,7 @@
  gap: 10px;
  cursor: pointer;
  padding: 8px 16px;
- border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ border-radius: var(--radius-sm);
  background: var(--bg-input);
  border: var(--border-glass);
  transition: var(--transition);
@@ -150,7 +153,7 @@
  display: flex;
  gap: 8px;
  align-items: center;
- position: relative; /* Ancoragem segura do Dropdown Mobile */
+ position: relative;
  }
 
  .btn-control-utility {
@@ -158,7 +161,7 @@
  border: var(--border-glass);
  height: 38px;
  padding: 0 16px;
- border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ border-radius: var(--radius-sm);
  display: flex;
  justify-content: center;
  align-items: center;
@@ -180,7 +183,7 @@
  .btn-control-utility.icon-only {
  width: 38px;
  padding: 0;
- border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ border-radius: var(--radius-sm);
  }
 
  /* --- DROPDOWN EXCLUSIVO MOBILE --- */
@@ -263,7 +266,6 @@
  border-color: var(--accent-gold);
  }
 
- /* Destaque luxuoso do botão Cálculos no Dropdown */
  .dropdown-item.highlighted-calc {
  background: rgba(197, 160, 89, 0.15) !important;
  border: 1px solid var(--accent-gold) !important;
@@ -285,31 +287,25 @@
  border-color: var(--accent-red);
  }
 
- /* --- PAINEL DE STATUS DA ECU (SUPORTE DE BORDO - DISCRETO) --- */
+ /* --- PAINEL DE STATUS DA ECU (SIMPLIFICADO) --- */
  .ecu-status-bar {
- display: none;
- background: var(--bg-input);
+ display: none; /* Controlado programaticamente via JS */
+ background: rgba(255, 255, 255, 0.02);
  border: var(--border-glass);
- border-radius: var(--radius-sm);
- padding: 12px 20px;
- margin-bottom: 24px;
+ border-radius: var(--radius-md);
+ padding: 8px 16px;
+ margin-bottom: 20px;
  justify-content: space-between;
  align-items: center;
  gap: 12px;
- flex-wrap: wrap;
  width: 100%;
- border-left: 2px solid var(--accent-gold);
- }
-
- .webapp-shell.ready .ecu-status-bar {
- display: flex;
+ font-size: 0.72rem;
  }
 
  .ecu-status-item {
  display: flex;
  align-items: center;
  gap: 8px;
- font-size: 0.75rem;
  font-weight: 700;
  color: var(--text-muted);
  letter-spacing: 0.5px;
@@ -419,7 +415,7 @@
  min-height: 120px;
  }
 
- /* --- BARRA DE NAVEGAÇÃO FIXA: SETORES DA GARAGEM --- */
+ /* --- BARRA DE NAVEGAÇÃO FIXA --- */
  .setores-garagem-navigation {
  display: none;
  grid-template-columns: repeat(5, 1fr);
@@ -471,7 +467,6 @@
  color: var(--accent-gold);
  }
 
- /* Destaque premium luxuoso para a calculadora na navegação */
  #side-tab-calc {
   background: rgba(197, 160, 89, 0.08) !important;
   border: 1px solid rgba(197, 160, 89, 0.3) !important;
@@ -646,7 +641,7 @@
  color: var(--text-muted);
  }
 
- /* --- SISTEMA DE MANUTENÇÃO (RECURSOS REFINADOS) --- */
+ /* --- SISTEMA DE MANUTENÇÃO --- */
  .maint-status-card {
  display: flex;
  flex-direction: column;
@@ -854,7 +849,7 @@
  color: var(--text-muted);
  }
 
- /* --- CONSOLE DE RESULTADOS (MODERNO E SUTIL) --- */
+ /* --- CONSOLE DE RESULTADOS --- */
  .diagnostic-display {
  background: rgba(255, 255, 255, 0.01);
  border-radius: var(--radius-md);
@@ -1188,7 +1183,7 @@
  .avatar-option-btn {
  background: var(--bg-input);
  border: var(--border-glass);
- border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ border-radius: var(--radius-sm);
  aspect-ratio: 1;
  font-size: 1.3rem;
  display: flex;
@@ -1209,7 +1204,7 @@
  position: fixed;
  bottom: 24px; right: 24px;
  width: 48px; height: 48px;
- border-radius: var(--radius-sm); /* Fim dos botões redondos */
+ border-radius: var(--radius-sm);
  background: var(--text-main);
  color: var(--bg-base);
  border: var(--border-glass);
@@ -1317,10 +1312,10 @@
   box-shadow: var(--shadow-premium);
  }
  .main-viewport {
-  padding-bottom: 140px !important; /* Recuo generoso na base contra conflito de footer e menu */
+  padding-bottom: 140px !important;
  }
  .webapp-shell {
-  padding: 16px 16px 0 16px; /* Desafoga a área de visualização no celular */
+  padding: 16px 16px 0 16px;
  }
  .topbar-shell {
   margin-bottom: 16px;
@@ -1347,10 +1342,9 @@
   gap: 12px;
  }
  .toreto-chat-trigger {
-  bottom: 110px !important; /* Move o chat acima do menu de celular */
+  bottom: 110px !important;
   right: 16px !important;
  }
- /* Esconde botões do cabeçalho no mobile e ativa o acionador de dropdown */
  .topbar-shell .topbar-controls .btn-control-utility:not(#btn-more-controls) {
   display: none;
  }
@@ -1397,12 +1391,12 @@
   <button class="btn-control-utility" id="btn-logout-trigger" title="Sair do Perfil">
    <i class="fa-solid fa-right-from-bracket"></i> Sair
   </button>
-  <!-- Botão Exclusivo Mobile (Aciona o novo Dropdown Premium) -->
+  <!-- Botão Exclusivo Mobile (Aciona o Dropdown Premium) -->
   <button class="btn-control-utility icon-only" id="btn-more-controls" onclick="toggleMobileDropdown(event)" style="display:none;" title="Opções">
    <i class="fa-solid fa-ellipsis-vertical"></i>
   </button>
 
-  <!-- ================= NOVO DROPDOWN MOBILE SUTIL ================= -->
+  <!-- ================= DROPDOWN MOBILE SUTIL ================= -->
   <div class="mobile-dropdown" id="mobile-dropdown-menu">
    <div class="dropdown-user-info">
     <div class="profile-avatar" id="dropdown-profile-avatar">👨‍✈️</div>
@@ -1410,7 +1404,7 @@
    </div>
    <!-- Botão de Cálculos destacado com design Dourado/Cobre -->
    <button class="dropdown-item highlighted-calc" onclick="selectDropdownTab('screen-calc')">
-    <i class="fa-solid fa-gas-pump"></i> Cálculos
+    <i class="fa-solid fa-gas-pump"></i> Calcula.Ai
    </button>
    <button class="dropdown-item" id="btn-dropdown-news">
     <i class="fa-solid fa-bullhorn"></i> Novidades
@@ -1425,20 +1419,19 @@
   </div>
  </header>
 
- <!-- ================= PAINEL DE STATUS DA ECU ================= -->
+ <!-- ================= PAINEL DE STATUS DA ECU (SIMPLIFICADO E DINÂMICO) ================= -->
  <div class="ecu-status-bar" id="app-ecu-status">
-  <div class="ecu-status-item">
-  <span class="ecu-status-indicator" id="ecu-pulse"></span>
-  <span>SISTEMA: <span class="ecu-status-value">NOMINAL</span></span>
+  <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
+   <div class="ecu-status-item">
+    <span class="ecu-status-indicator" id="ecu-pulse"></span>
+    <span>SISTEMA: <span class="ecu-status-value">NORMAL</span></span>
+   </div>
+   <div class="ecu-status-item" style="border-left: var(--border-glass); padding-left: 14px;">
+    <span>VEÍCULO: <span class="ecu-status-value" id="ecu-active-car">NENHUM</span></span>
+   </div>
   </div>
-  <div class="ecu-status-item">
-  <span>VEÍCULO ATIVO: <span class="ecu-status-value" id="ecu-active-car">NENHUM</span></span>
-  </div>
-  <div class="ecu-status-item">
-  <span>VERSÃO: <span class="ecu-status-value" style="color: var(--accent-gold);">GTi v2.6</span></span>
-  </div>
-  <button class="btn-control-utility" id="btn-sync-app" style="height: 28px; padding: 0 12px; font-size: 0.68rem; border-radius: 14px;" title="Sincronizar Banco de Dados">
-  <i class="fa-solid fa-rotate"></i> Sincronizar App
+  <button class="btn-control-utility" id="btn-sync-app" style="height: 26px; padding: 0 10px; font-size: 0.65rem; border-radius: var(--radius-sm); margin: 0;" title="Sincronizar Banco de Dados">
+   <i class="fa-solid fa-rotate"></i> Sincronizar app
   </button>
  </div>
 
@@ -1470,17 +1463,17 @@
    <!-- Bento Garagem Status -->
    <div class="bento-card hero">
    <div style="text-align: left; width: 100%;">
-    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Central Ativa</span>
-    <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum Veículo</h3>
-    <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar a telemetria.</p>
+    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Veículo Ativo</span>
+    <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum</h3>
+    <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar as funcionalidades.</p>
    </div>
    </div>
 
    <!-- Bento Quick Fuel Calculator Integrada na Home -->
    <div class="bento-card">
    <div style="text-align: left; width: 100%;">
-    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Cálculo Expresso</span>
-    <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 4px; margin-bottom: 12px;">Mapeador de Combustível</h3>
+    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Calcula.ai</span>
+    <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 4px; margin-bottom: 12px;">CÁLCULO INSTANTÂNEO</h3>
     
     <div class="input-group-grid" style="margin-bottom: 10px;">
     <div class="premium-input-card" style="padding: 10px 14px;">
@@ -1501,7 +1494,7 @@
 
     <div class="tesla-switch-card" id="home-ac-section" style="margin-bottom: 14px; padding: 10px 14px;">
     <div class="switch-details">
-     <div class="switch-title" style="font-size: 0.85rem;">Climatização (A/C)</div>
+     <div class="switch-title" style="font-size: 0.85rem;">Ar-condicionado (A/C)</div>
     </div>
     <label class="ios-toggle">
      <input type="checkbox" id="home-ac-toggle">
@@ -1509,7 +1502,7 @@
     </label>
     </div>
 
-    <button class="btn-premium" id="btn-home-calculate" style="height: 40px; font-size: 0.8rem;">Analisar Abastecimento</button>
+    <button class="btn-premium" id="btn-home-calculate" style="height: 40px; font-size: 0.8rem;">Calcular Abastecimento</button>
    </div>
    </div>
   </div>
@@ -1518,8 +1511,8 @@
   <!-- ================= TELA 2: ABASTECIMENTO / RESULTADOS ================= -->
   <div id="screen-calc" class="screen">
   <div class="screen-header">
-   <h2 class="screen-title">Injeção Reativa</h2>
-   <p class="screen-desc">Mapeamento em tempo real do combustível e compressores térmicos.</p>
+   <h2 class="screen-title">CALCULA.AI</h2>
+   <p class="screen-desc">Saiba em tempo real se seu veículo desempenha melhor economicamente no etanol ou na gasolina.</p>
   </div>
 
   <div class="bento-grid">
@@ -1544,8 +1537,8 @@
 
    <div class="tesla-switch-card" id="ac-section">
     <div class="switch-details">
-    <div class="switch-title">Climatização Ativa (A/C)</div>
-    <div class="switch-desc" id="ac-status-desc">Simulação com compressor inativo</div>
+    <div class="switch-title">Ar-condicionado</div>
+    <div class="switch-desc" id="ac-status-desc">Simulação com A/C desligado</div>
     </div>
     <label class="ios-toggle">
     <input type="checkbox" id="ac-toggle">
@@ -1553,7 +1546,7 @@
     </label>
    </div>
 
-   <button class="btn-premium" id="calculate-btn">Interrogar Banco de Dados</button>
+   <button class="btn-premium" id="calculate-btn">Calcular</button>
    </div>
 
    <!-- Resultados e Telemetria -->
@@ -1598,10 +1591,10 @@
   <div id="screen-my-vehicles" class="screen">
   <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
    <div>
-   <h2 class="screen-title">Garagem Ativa</h2>
-   <p class="screen-desc">Mapeie e selecione seus veículos para calibração térmica.</p>
+   <h2 class="screen-title">Minha Garagem</h2>
+   <p class="screen-desc">Cadastre e selecione seus veículos.</p>
    </div>
-   <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.8rem;">Adicionar Carro</button>
+   <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.8rem;">Adicionar Veículo</button>
   </div>
 
   <div class="form-content">
@@ -1626,7 +1619,7 @@
    <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Informações da ECU</span>
    <div class="input-group-grid">
     <div class="premium-input-card">
-    <label>Placa Identificadora</label>
+    <label>Placa de Identificação</label>
     <input type="text" id="v-placa" placeholder="ABC1D23" maxlength="7" style="text-transform: uppercase;">
     </div>
     <div class="premium-input-card">
@@ -1640,21 +1633,21 @@
     <label>Fabricante</label>
     <select id="v-marca">
      <option value="" disabled selected>Selecionar...</option>
+     <option value="Volkswagen">Volkswagen</option>
+     <option value="Chevrolet">Chevrolet</option>
+     <option value="Hyundai">Hyundai</option>
      <option value="BYD">BYD</option>
      <option value="Caoa Chery">Caoa Chery</option>
-     <option value="Chevrolet">Chevrolet</option>
      <option value="Citroën">Citroën</option>
      <option value="Fiat">Fiat</option>
      <option value="Ford">Ford</option>
      <option value="GWM">GWM</option>
      <option value="Honda">Honda</option>
-     <option value="Hyundai">Hyundai</option>
      <option value="Jeep">Jeep</option>
      <option value="Nissan">Nissan</option>
      <option value="Peugeot">Peugeot</option>
      <option value="Renault">Renault</option>
      <option value="Toyota">Toyota</option>
-     <option value="Volkswagen">Volkswagen</option>
      <option value="Outro">Outra</option>
     </select>
     </div>
@@ -1669,7 +1662,7 @@
     <input type="text" id="v-modelo" placeholder="Ex: Onix 1.0 Turbo">
    </div>
 
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Padrão (Sem A/C)</span>
+   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Normal (Sem Ar/C)</span>
    <div class="input-group-grid">
     <div class="premium-input-card">
     <label style="color: var(--accent-etanol);">Etanol</label>
@@ -1687,17 +1680,17 @@
     </div>
    </div>
 
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Climatizado (Com A/C)</span>
+   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Elevado (Com Ar/C)</span>
    <div class="input-group-grid">
     <div class="premium-input-card">
-    <label style="color: var(--accent-etanol);">Etanol A/C</label>
+    <label style="color: var(--accent-etanol);">Etanol Ar/C</label>
     <div class="premium-input-wrapper">
      <input type="text" id="v-etanol-on" placeholder="7.2" inputmode="decimal">
      <span class="premium-input-unit">km/l</span>
     </div>
     </div>
     <div class="premium-input-card">
-    <label style="color: var(--accent-gasolina);">Gasolina A/C</label>
+    <label style="color: var(--accent-gasolina);">Gasolina Ar/C</label>
     <div class="premium-input-wrapper">
      <input type="text" id="v-gasolina-on" placeholder="10.2" inputmode="decimal">
      <span class="premium-input-unit">km/l</span>
@@ -1707,14 +1700,14 @@
    </div>
   </div>
 
-  <button class="btn-premium" id="btn-save-vehicle">Mapear Dados</button>
+  <button class="btn-premium" id="btn-save-vehicle">Registrar Consumo</button>
   </div>
 
   <!-- ================= TELA 5: MANUTENÇÃO ================= -->
   <div id="screen-maintenance" class="screen">
   <div class="screen-header">
-   <h2 class="screen-title">Mapeamento de Óleo e Filtros</h2>
-   <p class="screen-desc">Métricas de previsão de trocas e acompanhamento de desgaste real da garagem.</p>
+   <h2 class="screen-title">Registro de Óleo e Filtros</h2>
+   <p class="screen-desc">Métricas de previsão de trocas e acompanhamento de desgaste real da sua garagem.</p>
   </div>
 
   <div class="bento-card" style="justify-content: flex-start; gap: 20px;">
@@ -1728,8 +1721,8 @@
   <div id="screen-finance" class="screen">
   <div class="screen-header" style="display:flex; justify-content:space-between; align-items:center;">
    <div>
-   <h2 class="screen-title">Fluxo de Financiamento</h2>
-   <p class="screen-desc">Controle individual de parcelas quitadas, valores restantes e previsão de liquidação.</p>
+   <h2 class="screen-title">Financiamento do Veículo</h2>
+   <p class="screen-desc">Controle individual de parcelas quitadas, valores restantes e previsão de quitação.</p>
    </div>
    <button class="btn-premium-secondary" id="btn-toggle-finance-form" style="width:auto; height:38px; padding: 0 14px; font-size:0.75rem; display:none;"><i class="fa-solid fa-pen-to-square"></i> Editar Contrato</button>
   </div>
@@ -1738,7 +1731,7 @@
   <div class="bento-grid" id="finance-grid-layout">
    <!-- Coluna de Form de Cadastro de Financiamento -->
    <div class="bento-card" id="finance-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Contrato Operacional</span>
+   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Contrato Atual</span>
     
    <div class="premium-input-card">
     <label>Valor da Parcela</label>
@@ -1764,12 +1757,12 @@
     </div>
    </div>
 
-   <button class="btn-premium" id="btn-save-finance">Gravar Contrato</button>
+   <button class="btn-premium" id="btn-save-finance">Salvar Contrato</button>
    </div>
 
    <!-- Coluna do Resumo de Amortização -->
    <div class="bento-card" id="finance-summary-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Status de Amortização</span>
+   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Status de Quitação</span>
     
    <div class="fin-results-grid" id="finance-summary" style="margin-top: 0; width: 100%;">
     <div class="fin-result-item" style="grid-column: span 2; padding: 14px;">
@@ -1810,15 +1803,15 @@
 
   <!-- ================= FOOTER COMPARTILHADO ================= -->
   <footer class="app-footer">
-  <div>Garagem Inteligente © 2026 GTi Version</div>
+  <div>Garagem Inteligente © 2026 BETA v2</div>
   <div>
-   <a href="#">Privacidade</a> • <a href="#">Termos</a>
+  <a href="https://instagram.com/mv.rcelo">@mv.rcelo</a>
   </div>
   </footer>
 
  </main>
 
- <!-- ================= BARRA DE NAVEGAÇÃO FIXA: SETORES DA GARAGEM ================= -->
+ <!-- ================= BARRA DE NAVEGAÇÃO FIXA ================= -->
  <nav class="setores-garagem-navigation" id="app-setores-nav">
   <button class="setores-btn active" id="side-tab-home" onclick="switchTab('screen-welcome')">
   <i class="fa-solid fa-house"></i>
@@ -1830,11 +1823,11 @@
   </button>
   <button class="setores-btn" id="side-tab-calc" onclick="switchTab('screen-calc')">
   <i class="fa-solid fa-gas-pump"></i>
-  <span>Cálculos</span>
+  <span>Calcula.ai</span>
   </button>
   <button class="setores-btn" id="side-tab-maint" onclick="switchTab('screen-maintenance')">
   <i class="fa-solid fa-screwdriver-wrench"></i>
-  <span>Maint.</span>
+  <span>Manutenção</span>
   </button>
   <button class="setores-btn" id="side-tab-fin" onclick="switchTab('screen-finance')">
   <i class="fa-solid fa-wallet"></i>
@@ -1850,16 +1843,16 @@
   <button class="modal-close-btn" id="profile-close-btn" onclick="closeProfileModal()">×</button>
   <div style="text-align: center; margin-bottom: 24px;">
   <h3 style="font-size: 1.35rem; font-weight: 800;" id="profile-modal-title">Sistemas de Identificação</h3>
-  <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Forneça as credenciais de comando e selecione seu avatar.</p>
+  <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Forneça os dados e selecione seu avatar.</p>
   </div>
   <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
   <div class="premium-input-card">
-   <label>Identificação do Piloto</label>
+   <label>Nome do Piloto(a)</label>
    <input type="text" id="d-name" placeholder="Ex: Toretto, Brian" autocomplete="off">
   </div>
    
   <div class="premium-input-card">
-   <label>Região Operacional (UF)</label>
+   <label>Região (UF)</label>
    <select id="d-state">
    <option value="" disabled selected>Selecionar Região...</option>
    <option value="SP">São Paulo (SP)</option>
@@ -1891,7 +1884,7 @@
    </div>
   </div>
   </div>
-  <button class="btn-premium" id="btn-save-driver-registration">Confirmar Conexão</button>
+  <button class="btn-premium" id="btn-save-driver-registration">Criar Usuário</button>
  </div>
  </div>
 
@@ -1901,16 +1894,16 @@
   <button class="modal-close-btn" onclick="closeNewsModal()">×</button>
   <div style="text-align: center; margin-bottom: 20px;">
   <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-blue);">Atualizações Recentes</h3>
-  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Descubra as novas rotinas implementadas na central.</p>
+  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Descubra as novas funções da Garagem.</p>
   </div>
   <div style="display: flex; flex-direction: column; gap: 16px; max-height: 260px; overflow-y: auto;">
   <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
-   <h4 style="font-size: 0.9rem; font-weight: 700;">Nova Telemetria de Óleo e Filtros</h4>
-   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Insira os parâmetros de sua última intervenção e monitore os KMs restantes de forma ultra precisa baseada no odômetro.</p>
+   <h4 style="font-size: 0.9rem; font-weight: 700;">Registro de Manutenções</h4>
+   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Acompanhe o andamento das manutenções mais importantes do seu veículo.</p>
   </div>
   <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
-   <h4 style="font-size: 0.9rem; font-weight: 700;">Amortização & Checklist</h4>
-   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Controle real e interativo de parcelas quitadas, saldos e datas estimadas de quitação del contrato.</p>
+   <h4 style="font-size: 0.9rem; font-weight: 700;">Financiamento</h4>
+   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Controle os pagamentos de cada parcela do seu financiamento automotivo.</p>
   </div>
   </div>
  </div>
@@ -1919,9 +1912,9 @@
  <!-- ================= OVERLAY ALERTA SEM VEÍCULO ================= -->
  <div class="modal-overlay" id="modal-no-vehicle">
  <div class="modal-box" style="text-align: center;">
-  <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-gasolina);">Tabela de Calibração Vazia</h3>
-  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 24px;">É necessário pelo menos um carro cadastrado para computar telemetrias de injeção e compressor.</p>
-  <button class="btn-premium" id="btn-modal-go-to-vehicles">Calibrar Veículo</button>
+  <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-gasolina);">Sem dados para calcular</h3>
+  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 24px;">É necessário pelo menos um carro cadastrado para calcular o consumo baseado no preço do combustível.</p>
+  <button class="btn-premium" id="btn-modal-go-to-vehicles">Cadastrar Veículo</button>
  </div>
  </div>
 
@@ -1975,7 +1968,7 @@
  <div class="modal-box" style="text-align: center; max-width: 320px;">
   <div class="spinner-premium" style="margin-bottom: 20px;"></div>
   <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 4px;">Injetando Variáveis...</h3>
-  <p id="toreto-calculation-step" style="font-size: 0.82rem; color: var(--text-muted);">Calibrando as curvas térmicas</p>
+  <p id="toreto-calculation-step" style="font-size: 0.82rem; color: var(--text-muted);">Buscando intervenção divina</p>
  </div>
  </div>
 
@@ -1994,11 +1987,11 @@
   <button id="btn-close-chat" style="background: transparent; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer;">×</button>
  </div>
  <div class="toreto-chat-messages" id="toreto-chat-messages">
-  <div class="chat-msg toreto">Piloto, selecione uma das diretrizes mecânicas para iniciar o mapeamento:</div>
+  <div class="chat-msg toreto">Piloto, selecione uma das perguntas mecânicas para iniciar o chat:</div>
  </div>
  <div class="toreto-chat-input-area">
   <button class="btn-sug-question" onclick="askToretto('combustivel')">Regra de Injeção: 70% vs Real</button>
-  <button class="btn-sug-question" onclick="askToretto('ar')">Carga do Compressor Térmico (A/C)</button>
+  <button class="btn-sug-question" onclick="askToretto('ar')">Ar condicionado gasta mais?</button>
   <button class="btn-sug-question" onclick="askToretto('manutencao')">Prevenção Mecânica Básica</button>
  </div>
  </div>
@@ -2078,11 +2071,11 @@
   if (dropGreetingEl) dropGreetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
 
   const closeBtn = document.getElementById('profile-close-btn');
-  if (closeBtn) closeBtn.style.display = 'block'; // Permite fechar se logado
+  if (closeBtn) closeBtn.style.display = 'block'; 
   runEcunIntro(false);
  } else {
   const closeBtn = document.getElementById('profile-close-btn');
-  if (closeBtn) closeBtn.style.display = 'none'; // Esconde se primeiro login
+  if (closeBtn) closeBtn.style.display = 'none'; 
   runEcunIntro(true);
  }
 
@@ -2184,7 +2177,7 @@
   }
   });
   const closeBtn = document.getElementById('profile-close-btn');
-  if (closeBtn) closeBtn.style.display = 'block'; // Permite fechar se logado
+  if (closeBtn) closeBtn.style.display = 'block'; 
   if (modalRegisterDriver) modalRegisterDriver.classList.add('active');
  });
  }
@@ -2276,7 +2269,6 @@
  });
  }
 
- // Sintoniza a máscara premium aos campos corretos
  [inputPriceEtanol, inputPriceGasolina, document.getElementById('home-price-etanol'), document.getElementById('home-price-gasolina'), document.getElementById('fin-valor-p')].forEach(inp => applyATMValueMask(inp));
  
  // Sincronização numérica tradicional nos campos de odômetro e períodos
@@ -2349,7 +2341,7 @@
  });
  }
 
- // Alternar Abas (SPA Tabs Controller)
+ // Alternar Abas (SPA Tabs Controller com controle de barra de status da ECU)
  function switchTab(screenId) {
  if ((screenId === 'screen-calc' || screenId === 'screen-maintenance') && appState.veiculos.length === 0) {
   if (modalNoVehicle) modalNoVehicle.classList.add('active');
@@ -2364,6 +2356,16 @@
   const el = document.getElementById(`side-tab-${tab}`);
   if (el) el.classList.remove('active');
  });
+
+ // VISIBILIDADE DA BARRA DE STATUS: Ativa somente na tela inicial (screen-welcome)
+ const statusBar = document.getElementById('app-ecu-status');
+ if (statusBar) {
+  if (screenId === 'screen-welcome') {
+   statusBar.style.display = 'flex';
+  } else {
+   statusBar.style.display = 'none';
+  }
+ }
 
  if (screenId === 'screen-welcome') {
   if (screenWelcome) screenWelcome.classList.add('active');
@@ -2410,14 +2412,14 @@
  if (v) {
   if (vTitle && vDesc) {
    vTitle.innerHTML = `${v.marca} <span style="font-weight: 300;">${v.modelo}</span>`;
-   vDesc.innerHTML = `Telemetria ativa em <span class="vehicle-placa-badge" style="font-size:0.65rem; padding: 1px 6px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
+   vDesc.innerHTML = `Resultados para <span class="vehicle-placa-badge" style="font-size:0.65rem; padding: 1px 6px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
   }
   if (ecuActiveCar) ecuActiveCar.textContent = `${v.marca} ${v.modelo}`;
   if (ecuPulse) ecuPulse.className = "ecu-status-indicator";
  } else {
   if (vTitle && vDesc) {
-   vTitle.textContent = "Nenhum Veículo";
-   vDesc.textContent = "Configure seu veículo na garagem para ativar a telemetria.";
+   vTitle.textContent = "Nenhum";
+   vDesc.textContent = "Configure seu veículo na garagem para ativar as funcionalidades.";
   }
   if (ecuActiveCar) ecuActiveCar.textContent = "NENHUM";
   if (ecuPulse) ecuPulse.className = "ecu-status-indicator amber";
@@ -2663,15 +2665,15 @@
  const v = getVeiculoAtivoObj();
  if (!v) return;
 
- const labels = hasAc ? "Compressores Ativados" : "Compressores Desligados";
+ const labels = hasAc ? "A/C Ligado" : "A/C Desligado";
  if (acSection) acSection.className = `tesla-switch-card ${hasAc ? 'active' : ''}`;
- if (acStatusDesc) acStatusDesc.textContent = `Compressor térmico em modo ${labels}`;
+ if (acStatusDesc) acStatusDesc.textContent = `Exibindo resultados baseado no ${labels}`;
 
  const cE = hasAc ? v.etanolOn : v.etanolOff;
  const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
 
  if (aiRecommendation) {
-  aiRecommendation.innerHTML = `Telemetria sintonizada com a ECU para <strong>${v.marca} ${v.modelo}</strong>. Desempenho físico calibrado para: <strong>${cE} km/l</strong> no Etanol e <strong>${cG} km/l</strong> na Gasolina.`;
+  aiRecommendation.innerHTML = `Resultados sintonizado com a ECU para <strong>${v.marca} ${v.modelo}</strong>. Desempenho calibrado para: <strong>${cE} km/l</strong> no Etanol e <strong>${cG} km/l</strong> na Gasolina.`;
  }
  }
 
@@ -2706,7 +2708,7 @@
   if (proporcoMercado < eficiencia) {
   if (resultCard) resultCard.classList.add('etanol-won');
   if (veredictoText) {
-   veredictoText.textContent = "ALIMENTE COM ETANOL";
+   veredictoText.textContent = "ABASTEÇA COM ETANOL";
    veredictoText.className = "diagnostic-verdict etanol-win";
   }
   const ecoPorLitro = kmG - kmE;
@@ -2717,7 +2719,7 @@
   } else {
   if (resultCard) resultCard.classList.add('gasolina-won');
   if (veredictoText) {
-   veredictoText.textContent = "ALIMENTE COM GASOLINA";
+   veredictoText.textContent = "ABASTEÇA COM GASOLINA";
    veredictoText.className = "diagnostic-verdict gasolina-win";
   }
   const precoLimite = priceGasolina * eficiencia;
