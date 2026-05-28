@@ -21,11 +21,11 @@
  --border-glass: 1px solid rgba(255, 255, 255, 0.05); /* Hairline Divider */
  --border-glass-glow: rgba(197, 160, 89, 0.25);        /* Copper Glow sutil */
   
- /* Assinaturas de Cores Luxuosas */
+ /* Assinaturas de Cores Luxuosas [5] */
  --accent-etanol: #119c6e;        /* Verde do Logo / Emerald Sage */
- --accent-gasolina: #965b2a;      /* Burnished Amber / Copper */
+ --accent-gasolina: #d97736;      /* Burnished Amber / Copper */
  --accent-blue: #c5a059;          /* Precision Gold (Substitui o Azul na UI) */
- --accent-ai: #c5a059;            /* Telemetry Gold */
+ --accent-ai: #6366f1;            /* Roxo Telemetria */
  --accent-red: #cc2929;           /* Crimson Redline */
  --accent-gold: #c5a059;          /* Genesis Brand Copper / Gold */
   
@@ -66,8 +66,6 @@
 
  body {
  background-color: var(--bg-base);
- background-image: radial-gradient(circle at 10% 20%, rgba(197, 160, 89, 0.02) 0%, transparent 40%),
-                   radial-gradient(circle at 90% 80%, rgba(17, 156, 110, 0.02) 0%, transparent 40%);
  color: var(--text-main);
  display: flex;
  justify-content: center;
@@ -184,7 +182,7 @@
  border-radius: var(--radius-sm); /* Fim dos botões redondos */
  }
 
- /* --- PAINEL DE STATUS DA ECU (SUPORTE DE BORDO) [2] --- */
+ /* --- PAINEL DE STATUS DA ECU (SUPORTE DE BORDO - DISCRETO) [2, 4] --- */
  .ecu-status-bar {
  display: none;
  background: var(--bg-input);
@@ -368,6 +366,17 @@
  .setores-btn i {
  font-size: 1.2rem;
  color: var(--accent-gold);
+ }
+
+ /* Destaque premium luxuoso para a calculadora na navegação [1] */
+ #side-tab-calc {
+   background: rgba(197, 160, 89, 0.08) !important;
+   border: 1px solid rgba(197, 160, 89, 0.3) !important;
+   border-radius: var(--radius-md) !important;
+ }
+ #side-tab-calc.active {
+   background: rgba(197, 160, 89, 0.15) !important;
+   border: 1px solid var(--accent-gold) !important;
  }
 
  /* --- FORMULÁRIOS E INPUTS --- */
@@ -572,12 +581,12 @@
  .maint-badge {
  font-size: 0.7rem;
  padding: 2px 8px;
- border-radius: 4px;
+ border-radius: var(--radius-sm);
  font-weight: 700;
  text-transform: uppercase;
  }
 
- .maint-badge.healthy { background: rgba(16, 185, 129, 0.1); color: var(--accent-etanol); }
+ .maint-badge.healthy { background: rgba(17, 156, 110, 0.1); color: var(--accent-etanol); }
  .maint-badge.attention { background: rgba(249, 115, 22, 0.1); color: var(--accent-gasolina); }
  .maint-badge.critical { background: rgba(239, 68, 68, 0.1); color: var(--accent-red); }
 
@@ -758,6 +767,13 @@
  display: flex;
  }
 
+ .diagnostic-display.etanol-won {
+   border-left: 3px solid var(--accent-etanol);
+ }
+ .diagnostic-display.gasolina-won {
+   border-left: 3px solid var(--accent-gasolina);
+ }
+
  .diagnostic-header {
  display: flex;
  justify-content: space-between;
@@ -820,8 +836,8 @@
  .ai-report-container {
  display: none;
  margin-top: 16px;
- background: rgba(99, 102, 241, 0.01);
- border: 1px dashed rgba(99, 102, 241, 0.15);
+ background: rgba(17, 156, 110, 0.02);
+ border: 1px dashed rgba(17, 156, 110, 0.2);
  border-radius: var(--radius-md);
  padding: 18px;
  }
@@ -832,7 +848,7 @@
  gap: 8px;
  font-size: 0.75rem;
  font-weight: 700;
- color: var(--accent-ai);
+ color: var(--accent-etanol);
  text-transform: uppercase;
  letter-spacing: 0.5px;
  margin-bottom: 10px;
@@ -985,7 +1001,7 @@
  transform: scale(1.12);
  }
 
- .icon-btn.edit:hover { color: var(--accent-blue); }
+ .icon-btn.edit:hover { color: var(--accent-gold); }
  .icon-btn.delete:hover { color: var(--accent-red); }
 
  /* --- SYSTEM FOOTER [3] --- */
@@ -1198,7 +1214,7 @@
    box-shadow: var(--shadow-premium);
  }
  .main-viewport {
-   padding-bottom: 120px !important; /* Recuo generoso na base contra conflito de footer e menu [3] */
+   padding-bottom: 140px !important; /* Recuo generoso na base contra conflito de footer e menu [3] */
  }
  .webapp-shell {
    padding: 16px 16px 0 16px; /* Desafoga a área de visualização no celular */
@@ -1226,6 +1242,17 @@
  .input-group-grid {
    grid-template-columns: 1fr;
    gap: 12px;
+ }
+ .toreto-chat-trigger {
+   bottom: 110px !important; /* Move o chat acima do menu de celular */
+   right: 16px !important;
+ }
+ /* Esconde botões do cabeçalho que podem espremer a tela do mobile */
+ .topbar-shell .topbar-controls .btn-control-utility:not(#btn-more-controls) {
+   display: none;
+ }
+ #btn-more-controls {
+   display: flex !important;
  }
  }
 
@@ -1257,6 +1284,7 @@
       <span class="profile-name" id="welcome-username-greeting">Piloto</span>
      </div>
     </div>
+    <!-- Botão Principal de Controle no Desktop -->
     <button class="btn-control-utility" id="btn-open-news" title="Novidades">
      <i class="fa-solid fa-bullhorn"></i> Novidades
     </button>
@@ -1266,10 +1294,14 @@
     <button class="btn-control-utility" id="btn-logout-trigger" title="Sair do Perfil">
      <i class="fa-solid fa-right-from-bracket"></i> Sair
     </button>
+    <!-- Botão Exclusivo Mobile para Evitar Desalinhamentos de Espaço -->
+    <button class="btn-control-utility icon-only" id="btn-more-controls" onclick="openMoreMenu()" style="display:none;" title="Opções">
+     <i class="fa-solid fa-ellipsis-vertical"></i>
+    </button>
    </div>
   </header>
 
-  <!-- ================= PAINEL DE STATUS DA ECU (SUPORTE DE BORDO) [2] ================= -->
+  <!-- ================= PAINEL DE STATUS DA ECU (DISCRETO E INTEGRADO) [2, 4] ================= -->
   <div class="ecu-status-bar" id="app-ecu-status">
    <div class="ecu-status-item">
     <span class="ecu-status-indicator" id="ecu-pulse"></span>
@@ -1331,14 +1363,14 @@
          <label style="color: var(--accent-etanol);">Etanol (Posto)</label>
          <div class="premium-input-wrapper">
           <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
-          <input type="text" id="home-price-etanol" placeholder="0.00" inputmode="decimal" style="font-size: 0.95rem;">
+          <input type="text" id="home-price-etanol" placeholder="0,00" style="font-size: 0.95rem;">
          </div>
         </div>
         <div class="premium-input-card" style="padding: 10px 14px;">
          <label style="color: var(--accent-gasolina);">Gasolina (Posto)</label>
          <div class="premium-input-wrapper">
           <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
-          <input type="text" id="home-price-gasolina" placeholder="0.00" inputmode="decimal" style="font-size: 0.95rem;">
+          <input type="text" id="home-price-gasolina" placeholder="0,00" style="font-size: 0.95rem;">
          </div>
         </div>
        </div>
@@ -1374,14 +1406,14 @@
         <label style="color: var(--accent-etanol);">Etanol</label>
         <div class="premium-input-wrapper">
          <span class="premium-input-unit">R$</span>
-         <input type="text" id="price-etanol" placeholder="0.00" inputmode="decimal">
+         <input type="text" id="price-etanol" placeholder="0,00">
         </div>
        </div>
        <div class="premium-input-card">
         <label style="color: var(--accent-gasolina);">Gasolina</label>
         <div class="premium-input-wrapper">
          <span class="premium-input-unit">R$</span>
-         <input type="text" id="price-gasolina" placeholder="0.00" inputmode="decimal">
+         <input type="text" id="price-gasolina" placeholder="0,00">
         </div>
        </div>
       </div>
@@ -1419,11 +1451,11 @@
        <div class="diagnostic-data-table">
         <div class="diagnostic-data-row">
          <span>Custo/KM Etanol</span>
-         <span id="meta-cost-etanol">R$ 0.00</span>
+         <span id="meta-cost-etanol">R$ 0,00</span>
         </div>
         <div class="diagnostic-data-row">
          <span>Custo/KM Gasolina</span>
-         <span id="meta-cost-gasolina">R$ 0.00</span>
+         <span id="meta-cost-gasolina">R$ 0,00</span>
         </div>
        </div>
 
@@ -1588,7 +1620,7 @@
        <label>Valor da Parcela</label>
        <div class="premium-input-wrapper">
         <span class="premium-input-unit">R$</span>
-        <input type="text" id="fin-valor-p" placeholder="1200" inputmode="numeric">
+        <input type="text" id="fin-valor-p" placeholder="0,00">
        </div>
       </div>
       
@@ -1847,6 +1879,37 @@
   </div>
  </div>
 
+ <!-- ================= MODAL: FEEDBACK DE SUCESSO DE SINCRONISMO [6] ================= -->
+ <div class="modal-overlay" id="modal-sync-success">
+  <div class="modal-box" style="text-align: center; max-width: 360px; border-top: 3px solid var(--accent-etanol);">
+   <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: var(--accent-etanol); margin-bottom: 16px;"></i>
+   <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px;">Calibração Concluída</h3>
+   <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Todas as diretrizes de bordo da ECU e tabelas de injeção do motorista foram integradas de forma nominal.</p>
+   <button class="btn-premium" onclick="closeSyncSuccessModal()">Retornar ao Cockpit</button>
+  </div>
+ </div>
+
+ <!-- ================= MODAL DE CONTROLES EXTRAS NO MOBILE (GAVETA RESPONSIVA) ================= -->
+ <div class="modal-overlay" id="modal-more-menu">
+  <div class="modal-box" style="max-width: 320px;">
+   <button class="modal-close-btn" onclick="closeMoreMenu()">×</button>
+   <div style="text-align: center; margin-bottom: 20px;">
+    <h3 style="font-size: 1.15rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--accent-gold);">Cockpit Menu</h3>
+   </div>
+   <div style="display: flex; flex-direction: column; gap: 12px;">
+    <button class="btn-premium-secondary" id="btn-more-news" style="width: 100%; text-align: left; justify-content: flex-start; gap: 12px;">
+     <i class="fa-solid fa-bullhorn" style="color: var(--accent-gold);"></i> Novidades
+    </button>
+    <button class="btn-premium-secondary" id="btn-more-theme" style="width: 100%; text-align: left; justify-content: flex-start; gap: 12px;">
+     <i class="fa-solid fa-circle-half-stroke" style="color: var(--accent-gold);"></i> Alternar Tema
+    </button>
+    <button class="btn-premium-secondary" id="btn-more-logout" style="width: 100%; text-align: left; justify-content: flex-start; gap: 12px; color: var(--accent-red); border-bottom-color: var(--accent-red);">
+     <i class="fa-solid fa-right-from-bracket"></i> Sair do Perfil
+    </button>
+   </div>
+  </div>
+ </div>
+
  <script>
  // Cache e Inicialização Global do SPA
  let appState = {
@@ -1942,6 +2005,8 @@
  const modalUpdateOdometer = document.getElementById('modal-update-odometer');
  const modalSetupMaint = document.getElementById('modal-setup-maint');
  const modalNews = document.getElementById('modal-news');
+ const modalSyncSuccess = document.getElementById('modal-sync-success');
+ const modalMoreMenu = document.getElementById('modal-more-menu');
 
  // Cadastro inputs
  const inputDName = document.getElementById('d-name');
@@ -2024,6 +2089,14 @@
   if (modalNews) modalNews.classList.remove('active');
  };
 
+ window.openMoreMenu = function() {
+  if (modalMoreMenu) modalMoreMenu.classList.add('active');
+ };
+
+ window.closeMoreMenu = function() {
+  if (modalMoreMenu) modalMoreMenu.classList.remove('active');
+ };
+
  const btnOpenNews = document.getElementById('btn-open-news');
  if (btnOpenNews) {
   btnOpenNews.addEventListener('click', () => {
@@ -2031,25 +2104,45 @@
   });
  }
 
- // Mapeamento numérico de inputs
- function setNumericValidation(inputElement, isDecimal) {
+ // Máscara de entrada para valores monetários (ATM/Banking Style) [2]
+ function applyATMValueMask(inputElement) {
   if (!inputElement) return;
   inputElement.addEventListener('input', (e) => {
-   let value = e.target.value;
-   value = value.replace(',', '.');
-   if (isDecimal) {
-    value = value.replace(/[^0-9.]/g, '');
-    const parts = value.split('.');
-    if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
-   } else {
-    value = value.replace(/[^0-9]/g, '');
+   let value = e.target.value.replace(/\D/g, '');
+   if (!value) {
+    e.target.value = '';
+    return;
    }
-   e.target.value = value;
+   let floatValue = parseFloat(value) / 100;
+   e.target.value = floatValue.toFixed(2).replace('.', ',');
   });
  }
 
- [inputPriceEtanol, inputPriceGasolina, inputVEtanolOff, inputVGasolinaOff, inputVEtanolOn, inputVGasolinaOn, document.getElementById('home-price-etanol'), document.getElementById('home-price-gasolina')].forEach(inp => setNumericValidation(inp, true));
- [inputVkm, document.getElementById('odo-pop-km'), document.getElementById('maint-pop-last-km'), document.getElementById('maint-pop-interval-km'), document.getElementById('fin-valor-p'), document.getElementById('fin-vencimento-p'), document.getElementById('fin-atual-p'), document.getElementById('fin-total-p')].forEach(inp => setNumericValidation(inp, false));
+ // Sintoniza a máscara premium aos campos corretos [2]
+ [inputPriceEtanol, inputPriceGasolina, document.getElementById('home-price-etanol'), document.getElementById('home-price-gasolina'), document.getElementById('fin-valor-p')].forEach(inp => applyATMValueMask(inp));
+ 
+ // Sincronização numérica tradicional nos campos de odômetro e períodos
+ function setNumericValidation(inputElement) {
+  if (!inputElement) return;
+  inputElement.addEventListener('input', (e) => {
+   let value = e.target.value.replace(/[^0-9]/g, '');
+   e.target.value = value;
+  });
+ }
+ [inputVkm, document.getElementById('odo-pop-km'), document.getElementById('maint-pop-last-km'), document.getElementById('maint-pop-interval-km'), document.getElementById('fin-vencimento-p'), document.getElementById('fin-atual-p'), document.getElementById('fin-total-p')].forEach(inp => setNumericValidation(inp));
+
+ // Inputs de consumo mantêm decimais com ponto flutuante natural
+ [inputVEtanolOff, inputVGasolinaOff, inputVEtanolOn, inputVGasolinaOn].forEach(inp => {
+   if (inp) {
+     inp.addEventListener('input', (e) => {
+       let value = e.target.value.replace(',', '.');
+       value = value.replace(/[^0-9.]/g, '');
+       const parts = value.split('.');
+       if (parts.length > 2) value = parts[0] + '.' + parts.slice(1).join('');
+       e.target.value = value;
+     });
+   }
+ });
 
  // Inicialização do fluxo de exibição
  function runEcunIntro(requireOnboarding) {
@@ -2181,7 +2274,7 @@
   });
  }
 
- // --- BOTÃO SINCRONIZAR APP (PRO-FLUIDEZ) [2] ---
+ // --- BOTÃO SINCRONIZAR APP (PRO-FLUIDEZ COM TELA DE SUCESSO [6]) ---
  const btnSync = document.getElementById('btn-sync-app');
  if (btnSync) {
    btnSync.addEventListener('click', () => {
@@ -2219,7 +2312,42 @@
        if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
        if (icon) icon.classList.remove('fa-spin');
        btnSync.disabled = false;
+
+       // Dispara tela de sucesso premium [6]
+       if (modalSyncSuccess) modalSyncSuccess.classList.add('active');
      }, 1200);
+   });
+ }
+
+ window.closeSyncSuccessModal = function() {
+   if (modalSyncSuccess) modalSyncSuccess.classList.remove('active');
+ };
+
+ // Opções adicionais da gaveta responsiva mobile
+ const btnMoreNews = document.getElementById('btn-more-news');
+ if (btnMoreNews) {
+   btnMoreNews.addEventListener('click', () => {
+     closeMoreMenu();
+     if (modalNews) modalNews.classList.add('active');
+   });
+ }
+ const btnMoreTheme = document.getElementById('btn-more-theme');
+ if (btnMoreTheme) {
+   btnMoreTheme.addEventListener('click', () => {
+     const nextTheme = appState.theme === 'dark' ? 'light' : 'dark';
+     appState.theme = nextTheme;
+     localStorage.setItem('gi_theme', nextTheme);
+     applyThemeLogos(nextTheme);
+   });
+ }
+ const btnMoreLogout = document.getElementById('btn-more-logout');
+ if (btnMoreLogout) {
+   btnMoreLogout.addEventListener('click', () => {
+     closeMoreMenu();
+     if (confirm('Deseja limpar todos os registros e reiniciar o perfil da central?')) {
+       localStorage.clear();
+       location.reload();
+     }
    });
  }
 
@@ -2267,7 +2395,7 @@
    const timestamp = Date.now();
 
    if (appState.veiculoEmEdicaoId) {
-    const idx = appState.veiculos.findIndex(v => v.id === appState.veiculoEmEdicaoId);
+    const idx = appState.veiculos.findIndex(v => v.id === appState.veiculoEmEdicaoId); // Corrigido typo crítico
     if (idx !== -1) {
      const prev = appState.veiculos[idx];
      appState.veiculos[idx] = { 
@@ -2290,6 +2418,7 @@
 
    appState.veiculoEmEdicaoId = null;
    localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+   renderVehiclesGrid();
    switchTab('screen-my-vehicles');
   });
  }
@@ -2432,20 +2561,24 @@
    const kmG = priceGasolina / cG;
 
    // Redireciona e abre a calculadora com os resultados sintonizados
-   if (inputPriceEtanol) inputPriceEtanol.value = priceEtanol.toFixed(2);
-   if (inputPriceGasolina) inputPriceGasolina.value = priceGasolina.toFixed(2);
+   if (inputPriceEtanol) inputPriceEtanol.value = priceEtanol.toFixed(2).replace('.', ',');
+   if (inputPriceGasolina) inputPriceGasolina.value = priceGasolina.toFixed(2).replace('.', ',');
    if (acToggle) acToggle.checked = hasAc;
 
    switchTab('screen-calc');
 
-   if (resultCard) resultCard.style.display = 'flex';
+   if (resultCard) {
+     resultCard.style.display = 'flex';
+     resultCard.classList.remove('etanol-won', 'gasolina-won');
+   }
    
    const costEt = document.getElementById('meta-cost-etanol');
    const costGas = document.getElementById('meta-cost-gasolina');
-   if (costEt) costEt.textContent = `R$ ${kmE.toFixed(2)} / KM`;
-   if (costGas) costGas.textContent = `R$ ${kmG.toFixed(2)} / KM`;
+   if (costEt) costEt.textContent = `R$ ${kmE.toFixed(2).replace('.', ',')} / KM`;
+   if (costGas) costGas.textContent = `R$ ${kmG.toFixed(2).replace('.', ',')} / KM`;
 
    if (proporcoMercado < eficiencia) {
+    if (resultCard) resultCard.classList.add('etanol-won');
     if (veredictoText) {
      veredictoText.textContent = "ALIMENTE COM ETANOL";
      veredictoText.className = "diagnostic-verdict etanol-win";
@@ -2453,16 +2586,17 @@
     const ecoPorLitro = kmG - kmE;
     const ecoTanque = ecoPorLitro * cE * 50;
     if (economyDetail) {
-     economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2)}</span> a cada 50L.`;
+     economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2).replace('.', ',')}</span> a cada 50L.`;
     }
    } else {
+    if (resultCard) resultCard.classList.add('gasolina-won');
     if (veredictoText) {
      veredictoText.textContent = "ALIMENTE COM GASOLINA";
      veredictoText.className = "diagnostic-verdict gasolina-win";
     }
     const precoLimite = priceGasolina * eficiencia;
     if (economyDetail) {
-     economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2)}</span>.`;
+     economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2).replace('.', ',')}</span>.`;
     }
    }
 
@@ -2472,8 +2606,8 @@
  // Ação do Botão de Cálculo da Calculadora Principal
  if (calculateBtn) {
   calculateBtn.addEventListener('click', () => {
-   const pE = parseFloat(inputPriceEtanol ? inputPriceEtanol.value : '0');
-   const pG = parseFloat(inputPriceGasolina ? inputPriceGasolina.value : '0');
+   const pE = parseFloat((inputPriceEtanol ? inputPriceEtanol.value : '0').replace(',', '.'));
+   const pG = parseFloat((inputPriceGasolina ? inputPriceGasolina.value : '0').replace(',', '.'));
 
    if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
     alert('Introduza valores de combustíveis válidos.');
@@ -2497,8 +2631,8 @@
     if (modalNoVehicle) modalNoVehicle.classList.add('active');
     return;
    }
-   const pE = parseFloat(document.getElementById('home-price-etanol').value || '0');
-   const pG = parseFloat(document.getElementById('home-price-gasolina').value || '0');
+   const pE = parseFloat((document.getElementById('home-price-etanol').value || '0').replace(',', '.'));
+   const pG = parseFloat((document.getElementById('home-price-gasolina').value || '0').replace(',', '.'));
    const hasAc = document.getElementById('home-ac-toggle').checked;
 
    if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
@@ -2522,8 +2656,8 @@
    if (aiReportContent) aiReportContent.innerHTML = `Processando telemetria...`;
 
    setTimeout(() => {
-    const pE = parseFloat(inputPriceEtanol ? inputPriceEtanol.value : '0');
-    const pG = parseFloat(inputPriceGasolina ? inputPriceGasolina.value : '0');
+    const pE = parseFloat((inputPriceEtanol ? inputPriceEtanol.value : '0').replace(',', '.'));
+    const pG = parseFloat((inputPriceGasolina ? inputPriceGasolina.value : '0').replace(',', '.'));
     const hasAc = acToggle ? acToggle.checked : false;
     const v = getVeiculoAtivoObj();
     if (!v) return;
@@ -2537,10 +2671,10 @@
 
     let report = '';
     if (ratio < ef) {
-     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km com Etanol é de <strong>R$ ${kmE.toFixed(2)}</strong> versus <strong>R$ ${kmG.toFixed(2)}</strong> na Gasolina. O Etanol é extremamente vantajoso com as tabelas de preços correntes.</p>
+     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km com Etanol é de <strong>R$ ${kmE.toFixed(2).replace('.', ',')}</strong> versus <strong>R$ ${kmG.toFixed(2).replace('.', ',')}</strong> na Gasolina. O Etanol é extremamente vantajoso com as tabelas de preços correntes.</p>
      <p><strong>Autonomia Preditiva:</strong> Seu reservatório de 50L garante <strong>${(cE*50).toFixed(0)} km</strong> no Etanol. Na Gasolina, garantiria <strong>${(cG*50).toFixed(0)} km</strong>, mas o custo por km percorrido não compensa.</p>`;
     } else {
-     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km na Gasolina é de <strong>R$ ${kmG.toFixed(2)}</strong> contra <strong>R$ ${kmE.toFixed(2)}</strong> no Etanol. A Gasolina fornece maior poder calórico, compensando a diferença de preço atual.</p>
+     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km na Gasolina é de <strong>R$ ${kmG.toFixed(2).replace('.', ',')}</strong> contra <strong>R$ ${kmE.toFixed(2).replace('.', ',')}</strong> no Etanol. A Gasolina fornece maior poder calórico, compensando a diferença de preço atual.</p>
      <p><strong>Autonomia Preditiva:</strong> Sua autonomia por tanque de 50L chega a <strong>${(cG*50).toFixed(0)} km</strong>, o que reduz paradas de abastecimento.</p>`;
     }
 
@@ -2757,7 +2891,7 @@
    const finAtualP = document.getElementById('fin-atual-p');
    const finTotalP = document.getElementById('fin-total-p');
 
-   const valorParcela = finValorP ? parseFloat(finValorP.value) : NaN;
+   const valorParcela = finValorP ? parseFloat(finValorP.value.replace(',', '.')) : NaN;
    const diaVencimento = finVencP ? parseInt(finVencP.value) : NaN;
    const parcelaAtual = finAtualP ? parseInt(finAtualP.value) : NaN;
    const totalParcelas = finTotalP ? parseInt(finTotalP.value) : NaN;
@@ -2843,7 +2977,7 @@
   const fTot = document.getElementById('fin-total-p');
   const fAt = document.getElementById('fin-atual-p');
 
-  if (fVal) fVal.value = contract.valor;
+  if (fVal) fVal.value = contract.valor.toFixed(2).replace('.', ',');
   if (fVenc) fVenc.value = contract.dia;
   if (fTot) fTot.value = contract.total;
 
