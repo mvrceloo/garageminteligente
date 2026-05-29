@@ -4,9 +4,8 @@
  <meta charset="UTF-8">
  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
  <title>Garagem Inteligente - de gearhead para gearhead</title>
- <link rel="mask-icon" href="https://i.imgur.com/COonmRd.png" color="">
- <link rel="alternate icon" class="js-site-favicon" type="image/png" href="https://i.imgur.com/COonmRd.png">
- <link rel="icon" class="js-site-favicon" type="image/svg+xml" href="https://i.imgur.com/COonmRd.png" data-base-href="https://i.imgur.com/COonmRd.png">
+ <link class="js-site-favicon" rel="alternate icon" type="image/png" href="https://i.imgur.com/COonmRd.png">
+ <link class="js-site-favicon" rel="icon" type="image/svg+xml" href="https://i.imgur.com/COonmRd.png" data-base-href="https://i.imgur.com/COonmRd.png">
  <!-- Importação Oficial da Google Sans Flex (Variable Font) -->
  <link href="https://fonts.googleapis.com/css2?family=Google+Sans+Flex:wght@100..900&display=swap" rel="stylesheet">
  <!-- Importação do FontAwesome para ícones premium -->
@@ -14,25 +13,25 @@
  <style>
  :root {
  /* Paleta Genesis Obsidian Slates (Luxo Minimalista Moderno) */
- --bg-base: #050608;       /* Obsidian Deep Velvet */
- --bg-app: #0c0d12;        /* Graphite Matte */
- --bg-surface: #111216;      /* Slate Titanium Sólido */
- --bg-input: #171921;       /* Input Jateado / Charcoal */
- --bg-input-focus: #1e212d;    /* Foco Selecionado */
- --text-main: #f3f4f6;      /* Platinum Off-White */
- --text-muted: #7e84a2;      /* Cinza Muted Fino */
+ --bg-base: #050608;    /* Obsidian Deep Velvet */
+ --bg-app: #0c0d12;    /* Graphite Matte */
+ --bg-surface: #111216;   /* Slate Titanium Sólido */
+ --bg-input: #171921;    /* Input Jateado / Charcoal */
+ --bg-input-focus: #1e212d;  /* Foco Selecionado */
+ --text-main: #f3f4f6;   /* Platinum Off-White */
+ --text-muted: #7e84a2;   /* Cinza Muted Fino */
  --border-glass: 1px solid rgba(255, 255, 255, 0.05); /* Hairline Divider */
- --border-glass-glow: rgba(197, 160, 89, 0.25);    /* Copper Glow sutil */
+ --border-glass-glow: rgba(197, 160, 89, 0.25);  /* Copper Glow sutil */
   
  /* Assinaturas de Cores Luxuosas */
- --accent-etanol: #119c6e;    /* Verde do Logo / Emerald Sage */
- --accent-gasolina: #d97736;   /* Burnished Amber / Copper */
- --accent-blue: #c5a059;     /* Precision Gold (Substitui o Azul na UI) */
- --accent-ai: #6366f1;      /* Roxo Telemetria */
- --accent-red: #cc2929;      /* Crimson Redline */
- --accent-gold: #c5a059;     /* Genesis Brand Copper / Gold */
+ --accent-etanol: #119c6e;  /* Verde do Logo / Emerald Sage */
+ --accent-gasolina: #d97736;  /* Burnished Amber / Copper */
+ --accent-blue: #c5a059;   /* Precision Gold (Substitui o Azul na UI) */
+ --accent-ai: #6366f1;   /* Roxo Telemetria */
+ --accent-red: #cc2929;   /* Crimson Redline */
+ --accent-gold: #c5a059;   /* Genesis Brand Copper / Gold */
   
- --radius-lg: 4px;        /* Cantos retos e lapidados estilo Genesis */
+ --radius-lg: 4px;    /* Cantos retos e lapidados estilo Genesis */
  --radius-md: 4px;
  --radius-sm: 2px;
  --shadow-premium: 0 16px 48px rgba(0, 0, 0, 0.7);
@@ -116,6 +115,7 @@
  height: 38px;
  width: auto;
  transition: var(--transition);
+ cursor: pointer;
  }
 
  .topbar-profile {
@@ -287,19 +287,17 @@
  border-color: var(--accent-red);
  }
 
- /* --- PAINEL DE STATUS DA ECU (SIMPLIFICADO) --- */
- .ecu-status-bar {
- display: none; /* Controlado programaticamente via JS */
- background: rgba(255, 255, 255, 0.02);
- border: var(--border-glass);
- border-radius: var(--radius-md);
- padding: 8px 16px;
- margin-bottom: 20px;
- justify-content: space-between;
+ /* --- PAINEL DE STATUS DA ECU (INTEGRADO AO HERO) --- */
+ .ecu-status-panel {
+ display: flex;
  align-items: center;
- gap: 12px;
+ justify-content: space-between;
+ border-top: var(--border-glass);
+ padding-top: 12px;
+ margin-top: 12px;
+ flex-wrap: wrap;
+ gap: 10px;
  width: 100%;
- font-size: 0.72rem;
  }
 
  .ecu-status-item {
@@ -309,6 +307,7 @@
  font-weight: 700;
  color: var(--text-muted);
  letter-spacing: 0.5px;
+ font-size: 0.72rem;
  }
 
  .ecu-status-indicator {
@@ -330,6 +329,83 @@
  font-weight: 800;
  text-transform: uppercase;
  }
+
+ /* --- GRID DE SELEÇÃO DE DIA (METAS SEMANAIS) --- */
+ .day-selector-grid {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 8px;
+ width: 100%;
+ margin-bottom: 8px;
+ }
+
+ .day-chip {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ background: var(--bg-input);
+ border: var(--border-glass);
+ padding: 10px 14px;
+ border-radius: var(--radius-sm);
+ cursor: pointer;
+ font-size: 0.8rem;
+ font-weight: 700;
+ color: var(--text-muted);
+ transition: var(--transition);
+ user-select: none;
+ text-align: center;
+ }
+
+ .day-chip input {
+ display: none;
+ }
+
+ .day-chip:has(input:checked) {
+ border-color: var(--accent-gold);
+ background: rgba(197, 160, 89, 0.1);
+ color: var(--text-main);
+ }
+
+ /* --- DASHBOARD DE METAS --- */
+ .goals-stats-dashboard {
+ display: grid;
+ grid-template-columns: repeat(4, 1fr);
+ gap: 12px;
+ width: 100%;
+ margin-bottom: 20px;
+ }
+
+ .goals-stat-card {
+ background: var(--bg-surface);
+ border: var(--border-glass);
+ border-radius: var(--radius-md);
+ padding: 14px;
+ display: flex;
+ flex-direction: column;
+ gap: 4px;
+ text-align: left;
+ }
+
+ .goals-stat-lbl {
+ font-size: 0.65rem;
+ font-weight: 700;
+ color: var(--text-muted);
+ text-transform: uppercase;
+ letter-spacing: 0.5px;
+ }
+
+ .goals-stat-val {
+ font-size: 1.05rem;
+ font-weight: 800;
+ color: var(--text-main);
+ white-space: nowrap;
+ overflow: hidden;
+ text-overflow: ellipsis;
+ }
+
+ .goals-stat-val.gold { color: var(--accent-gold); }
+ .goals-stat-val.green { color: var(--accent-etanol); }
+ .goals-stat-val.orange { color: var(--accent-gasolina); }
 
  /* --- ÁREA DE TRABALHO DAS TELAS --- */
  .main-viewport {
@@ -418,8 +494,8 @@
  /* --- BARRA DE NAVEGAÇÃO FIXA --- */
  .setores-garagem-navigation {
  display: none;
- grid-template-columns: repeat(5, 1fr);
- gap: 12px;
+ grid-template-columns: repeat(7, 1fr);
+ gap: 8px;
  width: 100%;
  margin-top: 16px;
  margin-bottom: 8px;
@@ -435,7 +511,7 @@
  .setores-btn {
  background: transparent;
  border: none;
- padding: 14px 6px;
+ padding: 14px 4px;
  text-align: center;
  cursor: pointer;
  display: flex;
@@ -446,10 +522,10 @@
  color: var(--text-muted);
  transition: var(--transition);
  text-decoration: none;
- font-size: 0.75rem;
+ font-size: 0.72rem;
  font-weight: 700;
  text-transform: uppercase;
- letter-spacing: 1.5px;
+ letter-spacing: 1px;
  border-bottom: 2px solid transparent;
  }
 
@@ -463,18 +539,18 @@
  }
 
  .setores-btn i {
- font-size: 1.2rem;
+ font-size: 1.15rem;
  color: var(--accent-gold);
  }
 
  #side-tab-calc {
-  background: rgba(197, 160, 89, 0.08) !important;
-  border: 1px solid rgba(197, 160, 89, 0.3) !important;
-  border-radius: var(--radius-md) !important;
+ background: rgba(197, 160, 89, 0.08) !important;
+ border: 1px solid rgba(197, 160, 89, 0.3) !important;
+ border-radius: var(--radius-md) !important;
  }
  #side-tab-calc.active {
-  background: rgba(197, 160, 89, 0.15) !important;
-  border: 1px solid var(--accent-gold) !important;
+ background: rgba(197, 160, 89, 0.15) !important;
+ border: 1px solid var(--accent-gold) !important;
  }
 
  /* --- FORMULÁRIOS E INPUTS --- */
@@ -866,10 +942,10 @@
  }
 
  .diagnostic-display.etanol-won {
-  border-left: 3px solid var(--accent-etanol);
+ border-left: 3px solid var(--accent-etanol);
  }
  .diagnostic-display.gasolina-won {
-  border-left: 3px solid var(--accent-gasolina);
+ border-left: 3px solid var(--accent-gasolina);
  }
 
  .diagnostic-header {
@@ -1199,88 +1275,6 @@
  transform: scale(1.06);
  }
 
- /* TORETTO CHAT */
- .toreto-chat-trigger {
- position: fixed;
- bottom: 24px; right: 24px;
- width: 48px; height: 48px;
- border-radius: var(--radius-sm);
- background: var(--text-main);
- color: var(--bg-base);
- border: var(--border-glass);
- box-shadow: var(--shadow-premium);
- display: flex;
- align-items: center;
- justify-content: center;
- font-size: 1.15rem;
- cursor: pointer;
- z-index: 999;
- transition: var(--transition);
- }
-
- .toreto-chat-trigger:hover {
- transform: scale(1.1) rotate(5deg);
- border-color: var(--accent-gold);
- }
-
- .toreto-chat-panel {
- position: fixed;
- bottom: 84px; right: 24px;
- width: 330px; height: 420px;
- background: var(--bg-app);
- border: var(--border-glass);
- border-radius: var(--radius-lg);
- box-shadow: var(--shadow-premium);
- display: none;
- flex-direction: column;
- overflow: hidden;
- z-index: 1001;
- }
-
- .toreto-chat-header {
- background: rgba(255, 255, 255, 0.02);
- padding: 14px 18px;
- border-bottom: var(--border-glass);
- display: flex;
- justify-content: space-between;
- align-items: center;
- }
-
- .toreto-chat-messages {
- flex-grow: 1;
- padding: 14px;
- overflow-y: auto;
- display: flex;
- flex-direction: column;
- gap: 10px;
- }
-
- .toreto-chat-input-area {
- padding: 12px;
- border-top: var(--border-glass);
- background: rgba(0,0,0,0.2);
- display: flex;
- flex-direction: column;
- gap: 6px;
- }
-
- .btn-sug-question {
- background: var(--bg-input);
- border: var(--border-glass);
- border-radius: 8px;
- padding: 8px 12px;
- color: var(--text-main);
- font-size: 0.75rem;
- text-align: left;
- cursor: pointer;
- transition: var(--transition);
- }
-
- .btn-sug-question:hover {
- border-color: var(--accent-gold);
- background: var(--bg-input-focus);
- }
-
  .spinner-premium {
  border: 2px solid rgba(255, 255, 255, 0.05);
  width: 40px;
@@ -1299,68 +1293,78 @@
 
  @media (max-width: 900px) {
  .setores-garagem-navigation {
-  position: fixed;
-  bottom: 0; left: 0; right: 0;
-  background: rgba(12, 13, 20, 0.95);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-top: var(--border-glass);
-  padding: 12px 16px 20px 16px;
-  margin: 0;
-  grid-template-columns: repeat(5, 1fr);
-  border-radius: 0;
-  box-shadow: var(--shadow-premium);
+ position: fixed;
+ bottom: 0; left: 0; right: 0;
+ background: rgba(12, 13, 20, 0.95);
+ backdrop-filter: blur(20px);
+ -webkit-backdrop-filter: blur(20px);
+ border-top: var(--border-glass);
+ padding: 12px 6px 20px 6px;
+ margin: 0;
+ grid-template-columns: repeat(7, 1fr);
+ border-radius: 0;
+ box-shadow: var(--shadow-premium);
  }
  .main-viewport {
-  padding-bottom: 140px !important;
+ padding-bottom: 140px !important;
  }
  .webapp-shell {
-  padding: 16px 16px 0 16px;
+ padding: 16px 16px 0 16px;
  }
  .topbar-shell {
-  margin-bottom: 16px;
+ margin-bottom: 16px;
  }
  .setores-btn {
-  padding: 8px 4px;
-  font-size: 0.65rem;
-  gap: 4px;
-  background: transparent;
-  border: none;
+ padding: 6px 2px;
+ font-size: 0.58rem;
+ gap: 4px;
+ background: transparent;
+ border: none;
+ letter-spacing: 0.3px;
+ }
+ .setores-btn span {
+ font-size: 0.52rem;
  }
  .setores-btn i {
-  font-size: 1rem;
+ font-size: 1rem;
  }
  .setores-btn.active {
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: var(--radius-sm);
+ background: rgba(255, 255, 255, 0.05);
+ border-radius: var(--radius-sm);
  }
  .fin-results-grid {
-  grid-template-columns: 1fr;
+ grid-template-columns: 1fr;
  }
  .input-group-grid {
-  grid-template-columns: 1fr;
-  gap: 12px;
+ grid-template-columns: 1fr;
+ gap: 12px;
  }
- .toreto-chat-trigger {
-  bottom: 110px !important;
-  right: 16px !important;
+ .day-selector-grid {
+  grid-template-columns: repeat(3, 1fr);
+ }
+ .goals-stats-dashboard {
+ grid-template-columns: repeat(2, 1fr);
+ gap: 8px;
  }
  .topbar-shell .topbar-controls .btn-control-utility:not(#btn-more-controls) {
-  display: none;
+ display: none;
  }
  #btn-more-controls {
-  display: flex !important;
+ display: flex !important;
  }
  }
 
  @media (min-width: 768px) {
  .bento-grid {
-  grid-template-columns: 1.1fr 1fr;
-  gap: 24px;
+ grid-template-columns: 1.1fr 1fr;
+ gap: 24px;
  }
  .vehicles-grid {
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
+ grid-template-columns: 1fr 1fr;
+ gap: 16px;
+ }
+ .bento-card.hero {
+  grid-column: span 2;
  }
  }
  </style>
@@ -1371,468 +1375,737 @@
 
  <!-- ================= TOPBAR (AÇÕES & PERFIL) ================= -->
  <header class="topbar-shell" id="app-topbar">
-  <div class="topbar-logo-block">
+ <div class="topbar-logo-block">
   <img id="topbar-logo-img" src="https://i.imgur.com/7S2xQYI.png" alt="Garagem" class="topbar-logo-img">
+ </div>
+ <div class="topbar-controls">
+ <div class="topbar-profile" id="navbar-profile-trigger">
+  <div class="profile-avatar" id="navbar-profile-avatar">👨‍✈️</div>
+  <div class="profile-meta">
+  <span class="profile-name" id="welcome-username-greeting">Piloto</span>
   </div>
-  <div class="topbar-controls">
-  <div class="topbar-profile" id="navbar-profile-trigger">
-   <div class="profile-avatar" id="navbar-profile-avatar">👨‍✈️</div>
-   <div class="profile-meta">
-   <span class="profile-name" id="welcome-username-greeting">Piloto</span>
-   </div>
-  </div>
-  <!-- Botão Principal de Controle no Desktop -->
-  <button class="btn-control-utility" id="btn-open-news" title="Novidades">
-   <i class="fa-solid fa-bullhorn"></i> Novidades
-  </button>
-  <button class="btn-control-utility icon-only" id="theme-toggle-main" title="Alternar Tema">
-   <i class="fa-solid fa-sun" id="theme-icon"></i>
-  </button>
-  <button class="btn-control-utility" id="btn-logout-trigger" title="Sair do Perfil">
-   <i class="fa-solid fa-right-from-bracket"></i> Sair
-  </button>
-  <!-- Botão Exclusivo Mobile (Aciona o Dropdown Premium) -->
-  <button class="btn-control-utility icon-only" id="btn-more-controls" onclick="toggleMobileDropdown(event)" style="display:none;" title="Opções">
-   <i class="fa-solid fa-ellipsis-vertical"></i>
-  </button>
+ </div>
+ <!-- Botão Principal de Controle no Desktop -->
+ <button class="btn-control-utility" id="btn-open-news" title="Novidades">
+  <i class="fa-solid fa-bullhorn"></i> Novidades
+ </button>
+ <button class="btn-control-utility icon-only" id="theme-toggle-main" title="Alternar Tema">
+  <i class="fa-solid fa-sun" id="theme-icon"></i>
+ </button>
+ <button class="btn-control-utility" id="btn-logout-trigger" title="Sair do Perfil">
+  <i class="fa-solid fa-right-from-bracket"></i> Sair
+ </button>
+ <!-- Botão Exclusivo Mobile (Aciona o Dropdown Premium) -->
+ <button class="btn-control-utility icon-only" id="btn-more-controls" onclick="toggleMobileDropdown(event)" style="display:none;" title="Opções">
+  <i class="fa-solid fa-ellipsis-vertical"></i>
+ </button>
 
-  <!-- ================= DROPDOWN MOBILE SUTIL ================= -->
-  <div class="mobile-dropdown" id="mobile-dropdown-menu">
-   <div class="dropdown-user-info">
-    <div class="profile-avatar" id="dropdown-profile-avatar">👨‍✈️</div>
-    <span class="dropdown-greeting" id="dropdown-username-greeting">Piloto</span>
-   </div>
-   <!-- Botão de Cálculos destacado com design Dourado/Cobre -->
-   <button class="dropdown-item highlighted-calc" onclick="selectDropdownTab('screen-calc')">
-    <i class="fa-solid fa-gas-pump"></i> Calcula.Ai
-   </button>
-   <button class="dropdown-item" id="btn-dropdown-news">
-    <i class="fa-solid fa-bullhorn"></i> Novidades
-   </button>
-   <button class="dropdown-item" id="btn-dropdown-theme">
-    <i class="fa-solid fa-circle-half-stroke"></i> Alternar Tema
-   </button>
-   <button class="dropdown-item logout" id="btn-dropdown-logout">
-    <i class="fa-solid fa-right-from-bracket"></i> Sair do Perfil
-   </button>
+ <!-- ================= DROPDOWN MOBILE SUTIL ================= -->
+ <div class="mobile-dropdown" id="mobile-dropdown-menu">
+  <div class="dropdown-user-info">
+  <div class="profile-avatar" id="dropdown-profile-avatar">👨‍✈️</div>
+  <span class="dropdown-greeting" id="dropdown-username-greeting">Piloto</span>
   </div>
-  </div>
- </header>
-
- <!-- ================= PAINEL DE STATUS DA ECU (SIMPLIFICADO E DINÂMICO) ================= -->
- <div class="ecu-status-bar" id="app-ecu-status">
-  <div style="display: flex; align-items: center; gap: 14px; flex-wrap: wrap;">
-   <div class="ecu-status-item">
-    <span class="ecu-status-indicator" id="ecu-pulse"></span>
-    <span>SISTEMA: <span class="ecu-status-value">NORMAL</span></span>
-   </div>
-   <div class="ecu-status-item" style="border-left: var(--border-glass); padding-left: 14px;">
-    <span>VEÍCULO: <span class="ecu-status-value" id="ecu-active-car">NENHUM</span></span>
-   </div>
-  </div>
-  <button class="btn-control-utility" id="btn-sync-app" style="height: 26px; padding: 0 10px; font-size: 0.65rem; border-radius: var(--radius-sm); margin: 0;" title="Sincronizar Banco de Dados">
-   <i class="fa-solid fa-rotate"></i> Sincronizar app
+  <!-- Botões de Ações rápidas no mobile -->
+  <button class="dropdown-item highlighted-calc" onclick="selectDropdownTab('screen-calc')">
+  <i class="fa-solid fa-gas-pump"></i> Calcula.Ai
+  </button>
+  <button class="dropdown-item" onclick="selectDropdownTab('screen-goals')">
+  <i class="fa-solid fa-bullseye"></i> Metas
+  </button>
+  <button class="dropdown-item" onclick="selectDropdownTab('screen-support')">
+  <i class="fa-solid fa-headset"></i> Suporte
+  </button>
+  <button class="dropdown-item" id="btn-dropdown-news">
+  <i class="fa-solid fa-bullhorn"></i> Novidades
+  </button>
+  <button class="dropdown-item" id="btn-dropdown-theme">
+  <i class="fa-solid fa-circle-half-stroke"></i> Alternar Tema
+  </button>
+  <button class="dropdown-item logout" id="btn-dropdown-logout">
+  <i class="fa-solid fa-right-from-bracket"></i> Sair do Perfil
   </button>
  </div>
+ </div>
+ </header>
 
  <!-- ================= VIEWPORT PRINCIPAL ================= -->
  <main class="main-viewport">
 
-  <!-- ================= TELA 0: INTRO CARREGAMENTO ================= -->
-  <div id="screen-intro" class="screen active" style="justify-content: center; align-items: center; text-align: center; flex-grow: 1;">
-  <div class="intro-spinner-wrapper" style="margin-bottom: 32px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
-   <img id="intro-logo" src="https://i.imgur.com/7S2xQYI.png" alt="Garagem" style="width: 260px; height: auto; margin-bottom: 24px; animation: pulse 2s infinite ease-in-out;">
-   <div class="spinner-premium" style="width: 32px; height: 32px; border-width: 2px;"></div>
+ <!-- ================= TELA 0: INTRO CARREGAMENTO ================= -->
+ <div id="screen-intro" class="screen active" style="justify-content: center; align-items: center; text-align: center; flex-grow: 1;">
+ <div class="intro-spinner-wrapper" style="margin-bottom: 32px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+  <img id="intro-logo" src="https://i.imgur.com/7S2xQYI.png" alt="Garagem" style="width: 260px; height: auto; margin-bottom: 24px; animation: pulse 2s infinite ease-in-out;">
+  <div class="spinner-premium" style="width: 32px; height: 32px; border-width: 2px;"></div>
+ </div>
+ <div class="intro-status-text" id="intro-status-text" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 6px;">Conectando ECU...</div>
+ <span class="intro-sub" style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.5px; text-transform: uppercase;">Carregando calibrações térmicas</span>
+ </div>
+
+ <!-- ================= TELA 1: HOME ================= -->
+ <div id="screen-welcome" class="screen">
+ <!-- Alerta de Atualização de Odômetro -->
+ <div class="odometer-update-alert" id="odo-update-container">
+  <div class="odo-alert-text">
+  <span class="odo-alert-title">Sistemas Requerem Leitura</span>
+  <span class="odo-alert-desc">Faz mais de 7 dias desde a última leitura de KM. Atualize para calibrar os desgastes.</span>
   </div>
-  <div class="intro-status-text" id="intro-status-text" style="font-size: 1.15rem; font-weight: 700; margin-bottom: 6px;">Conectando ECU...</div>
-  <span class="intro-sub" style="color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.5px; text-transform: uppercase;">Carregando calibrações térmicas</span>
+  <button class="maint-action-btn" onclick="openOdometerUpdateModal()" style="border-color: var(--accent-gasolina); color: var(--accent-gasolina); min-width: 100px;">Atualizar</button>
+ </div>
+
+ <div class="bento-grid">
+  <!-- Bento Garagem Status com Painel de Status Integrado -->
+  <div class="bento-card hero">
+  <div style="text-align: left; width: 100%;">
+  <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Veículo Ativo</span>
+  <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum</h3>
+  <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar as funcionalidades.</p>
+  
+  <!-- ================= PAINEL DE STATUS DA ECU ================= -->
+  <div class="ecu-status-panel" id="app-ecu-status">
+   <div class="ecu-status-item">
+    <span class="ecu-status-indicator" id="ecu-pulse"></span>
+    <span>ECU: <span class="ecu-status-value">CONECTADO</span></span>
+   </div>
+   <button class="btn-control-utility" id="btn-sync-app" style="height: 26px; padding: 0 10px; font-size: 0.65rem; border-radius: var(--radius-sm); margin: 0; background: rgba(255,255,255,0.03);" title="Sincronizar Central">
+    <i class="fa-solid fa-rotate"></i> Sincronizar Central
+   </button>
+  </div>
+  </div>
   </div>
 
-  <!-- ================= TELA 1: HOME ================= -->
-  <div id="screen-welcome" class="screen">
-  <!-- Alerta de Atualização de Odômetro -->
-  <div class="odometer-update-alert" id="odo-update-container">
-   <div class="odo-alert-text">
-   <span class="odo-alert-title">Sistemas Requerem Leitura</span>
-   <span class="odo-alert-desc">Faz mais de 7 dias desde a última leitura de KM. Atualize para calibrar os desgastes.</span>
+  <!-- Bento Quick Fuel Calculator Integrada na Home -->
+  <div class="bento-card">
+  <div style="text-align: left; width: 100%;">
+  <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Calcula.ai</span>
+  <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 4px; margin-bottom: 12px;">CÁLCULO INSTANTÂNEO</h3>
+   
+  <div class="input-group-grid" style="margin-bottom: 10px;">
+  <div class="premium-input-card" style="padding: 10px 14px;">
+   <label style="color: var(--accent-etanol);">Etanol (Posto)</label>
+   <div class="premium-input-wrapper">
+   <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
+   <input type="text" id="home-price-etanol" placeholder="0,00" style="font-size: 0.95rem;">
    </div>
-   <button class="maint-action-btn" onclick="openOdometerUpdateModal()" style="border-color: var(--accent-gasolina); color: var(--accent-gasolina); min-width: 100px;">Atualizar</button>
+  </div>
+  <div class="premium-input-card" style="padding: 10px 14px;">
+   <label style="color: var(--accent-gasolina);">Gasolina (Posto)</label>
+   <div class="premium-input-wrapper">
+   <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
+   <input type="text" id="home-price-gasolina" placeholder="0,00" style="font-size: 0.95rem;">
+   </div>
+  </div>
   </div>
 
-  <div class="bento-grid">
-   <!-- Bento Garagem Status -->
-   <div class="bento-card hero">
-   <div style="text-align: left; width: 100%;">
-    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Veículo Ativo</span>
-    <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum</h3>
-    <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar as funcionalidades.</p>
-   </div>
-   </div>
+  <div class="tesla-switch-card" id="home-ac-section" style="margin-bottom: 14px; padding: 10px 14px;">
+  <div class="switch-details">
+   <div class="switch-title" style="font-size: 0.85rem;">Ar-condicionado (A/C)</div>
+  </div>
+  <label class="ios-toggle">
+   <input type="checkbox" id="home-ac-toggle">
+   <span class="ios-slider"></span>
+  </label>
+  </div>
 
-   <!-- Bento Quick Fuel Calculator Integrada na Home -->
-   <div class="bento-card">
-   <div style="text-align: left; width: 100%;">
-    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Calcula.ai</span>
-    <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 4px; margin-bottom: 12px;">CÁLCULO INSTANTÂNEO</h3>
+  <button class="btn-premium" id="btn-home-calculate" style="height: 40px; font-size: 0.8rem;">Calcular Abastecimento</button>
+  </div>
+  </div>
+
+  <!-- ================= NOVO: BENTO CARD META.AI INSTANTÂNEO ================= -->
+  <div class="bento-card" id="home-goal-card">
+   <div style="text-align: left; width: 100%; display: flex; flex-direction: column; gap: 8px;">
+    <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Meta.Ai</span>
+    <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;">PROGRESSO RÁPIDO</h3>
     
-    <div class="input-group-grid" style="margin-bottom: 10px;">
-    <div class="premium-input-card" style="padding: 10px 14px;">
-     <label style="color: var(--accent-etanol);">Etanol (Posto)</label>
-     <div class="premium-input-wrapper">
-     <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
-     <input type="text" id="home-price-etanol" placeholder="0,00" style="font-size: 0.95rem;">
+    <!-- Estado Ativo (Meta Cadastrada) -->
+    <div id="home-goal-active-view" style="display: none; flex-direction: column; gap: 12px; width: 100%;">
+     <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-size: 0.9rem; font-weight: 700; color: var(--text-main);" id="home-goal-day-title">Segunda-feira</span>
+      <span class="maint-badge healthy" id="home-goal-status-badge" style="font-size:0.65rem;">Pendente</span>
+     </div>
+
+     <!-- Barra de progresso -->
+     <div class="maint-progress-bar" style="height: 6px; background: rgba(255,255,255,0.03);">
+      <div class="maint-progress-fill" id="home-goal-progress-fill" style="width: 0%; background-color: var(--accent-gold);"></div>
+     </div>
+
+     <!-- Métricas Rápidas -->
+     <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 0.75rem; color: var(--text-muted); background: rgba(0,0,0,0.15); padding: 10px; border-radius: var(--radius-sm); border: var(--border-glass);">
+      <div>Lançado: <strong style="color: var(--text-main);" id="home-goal-val-launched">R$ 0,00</strong></div>
+      <div>Meta: <strong style="color: var(--text-main);" id="home-goal-val-target">R$ 0,00</strong></div>
+      <div>Faltante: <strong style="color: var(--accent-gasolina);" id="home-goal-val-remaining">R$ 0,00</strong></div>
+      <div>Bônus: <strong style="color: var(--accent-etanol);" id="home-goal-val-bonus">R$ 0,00</strong></div>
+     </div>
+
+     <!-- Entrada rápida de faturamento -->
+     <div style="display: flex; gap: 10px; align-items: center; width: 100%; margin-top: 4px;">
+      <div class="premium-input-card" style="padding: 10px 14px; flex-grow: 1; margin-bottom: 0;">
+       <label>Adicionar Faturamento (R$)</label>
+       <div class="premium-input-wrapper">
+        <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
+        <input type="text" id="home-goal-aporte-valor" placeholder="0,00" style="font-size: 0.95rem;">
+       </div>
+      </div>
+      <button class="btn-premium" id="btn-home-add-aporte" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.75rem; background: var(--accent-gold); color: #000;">
+       Lançar
+      </button>
      </div>
     </div>
-    <div class="premium-input-card" style="padding: 10px 14px;">
-     <label style="color: var(--accent-gasolina);">Gasolina (Posto)</label>
-     <div class="premium-input-wrapper">
-     <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
-     <input type="text" id="home-price-gasolina" placeholder="0,00" style="font-size: 0.95rem;">
-     </div>
-    </div>
-    </div>
 
-    <div class="tesla-switch-card" id="home-ac-section" style="margin-bottom: 14px; padding: 10px 14px;">
-    <div class="switch-details">
-     <div class="switch-title" style="font-size: 0.85rem;">Ar-condicionado (A/C)</div>
+    <!-- Estado Vazio (Sem Metas Cadastradas) -->
+    <div id="home-goal-empty-view" style="display: flex; flex-direction: column; gap: 12px; width: 100%; text-align: center; padding: 10px 0;">
+     <p style="color: var(--text-muted); font-size: 0.85rem;">Nenhuma meta ativa para esta semana.</p>
+     <button class="btn-premium-secondary" style="height: 38px; font-size: 0.75rem;" onclick="switchTab('screen-goals')">
+      Configurar Metas Semanais
+     </button>
     </div>
-    <label class="ios-toggle">
-     <input type="checkbox" id="home-ac-toggle">
-     <span class="ios-slider"></span>
-    </label>
-    </div>
-
-    <button class="btn-premium" id="btn-home-calculate" style="height: 40px; font-size: 0.8rem;">Calcular Abastecimento</button>
-   </div>
    </div>
   </div>
+ </div>
+ </div>
+
+ <!-- ================= TELA 2: ABASTECIMENTO / RESULTADOS ================= -->
+ <div id="screen-calc" class="screen">
+ <div class="screen-header">
+  <h2 class="screen-title">CALCULA.AI</h2>
+  <p class="screen-desc">Saiba em tempo real se seu veículo desempenha melhor economicamente no etanol ou na gasolina.</p>
+ </div>
+
+ <div class="bento-grid">
+  <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
+  <span class="category-title" style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted); font-weight: 700;">Valores do Posto</span>
+  <div class="input-group-grid" style="margin-bottom: 0;">
+  <div class="premium-input-card">
+  <label style="color: var(--accent-etanol);">Etanol</label>
+  <div class="premium-input-wrapper">
+   <span class="premium-input-unit">R$</span>
+   <input type="text" id="price-etanol" placeholder="0,00">
   </div>
-
-  <!-- ================= TELA 2: ABASTECIMENTO / RESULTADOS ================= -->
-  <div id="screen-calc" class="screen">
-  <div class="screen-header">
-   <h2 class="screen-title">CALCULA.AI</h2>
-   <p class="screen-desc">Saiba em tempo real se seu veículo desempenha melhor economicamente no etanol ou na gasolina.</p>
   </div>
-
-  <div class="bento-grid">
-   <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
-   <span class="category-title" style="font-size: 0.75rem; letter-spacing: 1px; color: var(--text-muted); font-weight: 700;">Valores do Posto</span>
-   <div class="input-group-grid" style="margin-bottom: 0;">
-    <div class="premium-input-card">
-    <label style="color: var(--accent-etanol);">Etanol</label>
-    <div class="premium-input-wrapper">
-     <span class="premium-input-unit">R$</span>
-     <input type="text" id="price-etanol" placeholder="0,00">
-    </div>
-    </div>
-    <div class="premium-input-card">
-    <label style="color: var(--accent-gasolina);">Gasolina</label>
-    <div class="premium-input-wrapper">
-     <span class="premium-input-unit">R$</span>
-     <input type="text" id="price-gasolina" placeholder="0,00">
-    </div>
-    </div>
-   </div>
-
-   <div class="tesla-switch-card" id="ac-section">
-    <div class="switch-details">
-    <div class="switch-title">Ar-condicionado</div>
-    <div class="switch-desc" id="ac-status-desc">Simulação com A/C desligado</div>
-    </div>
-    <label class="ios-toggle">
-    <input type="checkbox" id="ac-toggle">
-    <span class="ios-slider"></span>
-    </label>
-   </div>
-
-   <button class="btn-premium" id="calculate-btn">Calcular</button>
-   </div>
-
-   <!-- Resultados e Telemetria -->
-   <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
-   <div class="ai-assistant-card" style="margin-bottom: 0; background: rgba(0, 112, 243, 0.02); border: 1px solid rgba(0, 112, 243, 0.06); padding: 16px; border-radius: var(--radius-md); display: flex; gap: 12px;">
-    <div class="ai-text" id="ai-recommendation" style="font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);">Sintonizando telemetria...</div>
-   </div>
-
-   <div class="diagnostic-display" id="result-card">
-    <div class="diagnostic-header">
-    <span class="diagnostic-tag">Veredicto de Injeção</span>
-    <span class="badge-pill" id="badge-efficiency" style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 700;">Eficiência: --%</span>
-    </div>
-    <div class="diagnostic-verdict-box">
-    <div class="diagnostic-verdict" id="veredicto-text">---</div>
-    </div>
-    <p class="diagnostic-desc" id="economy-detail">---</p>
-    
-    <div class="diagnostic-data-table">
-    <div class="diagnostic-data-row">
-     <span>Custo/KM Etanol</span>
-     <span id="meta-cost-etanol">R$ 0,00</span>
-    </div>
-    <div class="diagnostic-data-row">
-     <span>Custo/KM Gasolina</span>
-     <span id="meta-cost-gasolina">R$ 0,00</span>
-    </div>
-    </div>
-
-    <button class="btn-premium-secondary" id="btn-generate-report" style="margin-top: 10px; height: 42px; font-size: 0.82rem; font-weight: 700;">Girar Analítico AI</button>
-    
-    <div class="ai-report-container" id="ai-report-output">
-    <div class="ai-report-header">⚙️ Copilot Toretto Analytics</div>
-    <div class="ai-report-body" id="ai-report-content"></div>
-    </div>
-   </div>
-   </div>
+  <div class="premium-input-card">
+  <label style="color: var(--accent-gasolina);">Gasolina</label>
+  <div class="premium-input-wrapper">
+   <span class="premium-input-unit">R$</span>
+   <input type="text" id="price-gasolina" placeholder="0,00">
+  </div>
   </div>
   </div>
 
-  <!-- ================= TELA 3: MEUS VEÍCULOS ================= -->
-  <div id="screen-my-vehicles" class="screen">
-  <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
-   <div>
-   <h2 class="screen-title">Minha Garagem</h2>
-   <p class="screen-desc">Cadastre e selecione seus veículos.</p>
-   </div>
-   <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.8rem;">Adicionar Veículo</button>
+  <div class="tesla-switch-card" id="ac-section">
+  <div class="switch-details">
+  <div class="switch-title">Ar-condicionado</div>
+  <div class="switch-desc" id="ac-status-desc">Simulação com A/C desligado</div>
+  </div>
+  <label class="ios-toggle">
+  <input type="checkbox" id="ac-toggle">
+  <span class="ios-slider"></span>
+  </label>
   </div>
 
-  <div class="form-content">
-   <div class="vehicles-grid" id="vehicles-list-container">
-   <!-- Injetado Dinamicamente -->
-   </div>
-  </div>
+  <button class="btn-premium" id="calculate-btn">Calcular</button>
   </div>
 
-  <!-- ================= TELA 4: ADICIONAR / EDITAR VEÍCULO ================= -->
-  <div id="screen-add-vehicle" class="screen">
-  <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-   <div>
-   <h2 class="screen-title" id="add-vehicle-screen-title">Ficha Técnica</h2>
-   <p class="screen-desc">Introduza os dados corretos no banco de dados da ECU.</p>
-   </div>
-   <button class="btn-premium-secondary" id="back-add-to-list" style="width: auto; height: 40px; padding: 0 16px;">Cancelar</button>
+  <!-- Resultados e Telemetria -->
+  <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
+  <div class="ai-assistant-card" style="margin-bottom: 0; background: rgba(0, 112, 243, 0.02); border: 1px solid rgba(0, 112, 243, 0.06); padding: 16px; border-radius: var(--radius-md); display: flex; gap: 12px;">
+  <div class="ai-text" id="ai-recommendation" style="font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);">Sintonizando telemetria...</div>
   </div>
 
-  <div class="form-content" style="gap: 16px;">
-   <div class="form-scrollable">
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Informações da ECU</span>
-   <div class="input-group-grid">
-    <div class="premium-input-card">
-    <label>Placa de Identificação</label>
-    <input type="text" id="v-placa" placeholder="ABC1D23" maxlength="7" style="text-transform: uppercase;">
-    </div>
-    <div class="premium-input-card">
-    <label>Odômetro Atual</label>
-    <input type="text" id="v-km" placeholder="45000" inputmode="numeric">
-    </div>
-   </div>
-
-   <div class="input-group-grid">
-    <div class="premium-input-card">
-    <label>Fabricante</label>
-    <select id="v-marca">
-     <option value="" disabled selected>Selecionar...</option>
-     <option value="Volkswagen">Volkswagen</option>
-     <option value="Chevrolet">Chevrolet</option>
-     <option value="Hyundai">Hyundai</option>
-     <option value="BYD">BYD</option>
-     <option value="Caoa Chery">Caoa Chery</option>
-     <option value="Citroën">Citroën</option>
-     <option value="Fiat">Fiat</option>
-     <option value="Ford">Ford</option>
-     <option value="GWM">GWM</option>
-     <option value="Honda">Honda</option>
-     <option value="Jeep">Jeep</option>
-     <option value="Nissan">Nissan</option>
-     <option value="Peugeot">Peugeot</option>
-     <option value="Renault">Renault</option>
-     <option value="Toyota">Toyota</option>
-     <option value="Outro">Outra</option>
-    </select>
-    </div>
-    <div class="premium-input-card">
-    <label>Pintura / Cor</label>
-    <input type="text" id="v-cor" placeholder="Ex: Cinza Nardo">
-    </div>
-   </div>
-
-   <div class="premium-input-card" style="margin-bottom: 12px;">
-    <label>Modelo & Motorização</label>
-    <input type="text" id="v-modelo" placeholder="Ex: Onix 1.0 Turbo">
-   </div>
-
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Normal (Sem Ar/C)</span>
-   <div class="input-group-grid">
-    <div class="premium-input-card">
-    <label style="color: var(--accent-etanol);">Etanol</label>
-    <div class="premium-input-wrapper">
-     <input type="text" id="v-etanol-off" placeholder="8.5" inputmode="decimal">
-     <span class="premium-input-unit">km/l</span>
-    </div>
-    </div>
-    <div class="premium-input-card">
-    <label style="color: var(--accent-gasolina);">Gasolina</label>
-    <div class="premium-input-wrapper">
-     <input type="text" id="v-gasolina-off" placeholder="12.0" inputmode="decimal">
-     <span class="premium-input-unit">km/l</span>
-    </div>
-    </div>
-   </div>
-
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Elevado (Com Ar/C)</span>
-   <div class="input-group-grid">
-    <div class="premium-input-card">
-    <label style="color: var(--accent-etanol);">Etanol Ar/C</label>
-    <div class="premium-input-wrapper">
-     <input type="text" id="v-etanol-on" placeholder="7.2" inputmode="decimal">
-     <span class="premium-input-unit">km/l</span>
-    </div>
-    </div>
-    <div class="premium-input-card">
-    <label style="color: var(--accent-gasolina);">Gasolina Ar/C</label>
-    <div class="premium-input-wrapper">
-     <input type="text" id="v-gasolina-on" placeholder="10.2" inputmode="decimal">
-     <span class="premium-input-unit">km/l</span>
-    </div>
-    </div>
-   </div>
-   </div>
+  <div class="diagnostic-display" id="result-card">
+  <div class="diagnostic-header">
+  <span class="diagnostic-tag">Veredicto de Injeção</span>
+  <span class="badge-pill" id="badge-efficiency" style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 700;">Eficiência: --%</span>
   </div>
-
-  <button class="btn-premium" id="btn-save-vehicle">Registrar Consumo</button>
+  <div class="diagnostic-verdict-box">
+  <div class="diagnostic-verdict" id="veredicto-text">---</div>
   </div>
-
-  <!-- ================= TELA 5: MANUTENÇÃO ================= -->
-  <div id="screen-maintenance" class="screen">
-  <div class="screen-header">
-   <h2 class="screen-title">Registro de Óleo e Filtros</h2>
-   <p class="screen-desc">Métricas de previsão de trocas e acompanhamento de desgaste real da sua garagem.</p>
+  <p class="diagnostic-desc" id="economy-detail">---</p>
+   
+  <div class="diagnostic-data-table">
+  <div class="diagnostic-data-row">
+   <span>Custo/KM Etanol</span>
+   <span id="meta-cost-etanol">R$ 0,00</span>
   </div>
-
-  <div class="bento-card" style="justify-content: flex-start; gap: 20px;">
-   <div class="maint-status-card" id="maintenance-items-container">
-   <!-- Injetado Dinamicamente -->
-   </div>
+  <div class="diagnostic-data-row">
+   <span>Custo/KM Gasolina</span>
+   <span id="meta-cost-gasolina">R$ 0,00</span>
   </div>
   </div>
 
-  <!-- ================= TELA 6: FINANCIAMENTO COM CHECKLIST ================= -->
-  <div id="screen-finance" class="screen">
-  <div class="screen-header" style="display:flex; justify-content:space-between; align-items:center;">
-   <div>
-   <h2 class="screen-title">Financiamento do Veículo</h2>
-   <p class="screen-desc">Controle individual de parcelas quitadas, valores restantes e previsão de quitação.</p>
-   </div>
-   <button class="btn-premium-secondary" id="btn-toggle-finance-form" style="width:auto; height:38px; padding: 0 14px; font-size:0.75rem; display:none;"><i class="fa-solid fa-pen-to-square"></i> Editar Contrato</button>
-  </div>
-
-  <!-- Layout Grid Refatorado Sem Espaços Vazios -->
-  <div class="bento-grid" id="finance-grid-layout">
-   <!-- Coluna de Form de Cadastro de Financiamento -->
-   <div class="bento-card" id="finance-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Contrato Atual</span>
-    
-   <div class="premium-input-card">
-    <label>Valor da Parcela</label>
-    <div class="premium-input-wrapper">
-    <span class="premium-input-unit">R$</span>
-    <input type="text" id="fin-valor-p" placeholder="0,00">
-    </div>
-   </div>
-    
-   <div class="premium-input-card">
-    <label>Dia do Vencimento</label>
-    <input type="text" id="fin-vencimento-p" placeholder="10" inputmode="numeric" maxlength="2">
-   </div>
-
-   <div class="input-group-grid" style="margin-bottom: 0;">
-    <div class="premium-input-card">
-    <label>Parcela Atualmente Paga</label>
-    <input type="text" id="fin-atual-p" placeholder="8" inputmode="numeric">
-    </div>
-    <div class="premium-input-card">
-    <label>Total de Parcelas</label>
-    <input type="text" id="fin-total-p" placeholder="48" inputmode="numeric">
-    </div>
-   </div>
-
-   <button class="btn-premium" id="btn-save-finance">Salvar Contrato</button>
-   </div>
-
-   <!-- Coluna do Resumo de Amortização -->
-   <div class="bento-card" id="finance-summary-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Status de Quitação</span>
-    
-   <div class="fin-results-grid" id="finance-summary" style="margin-top: 0; width: 100%;">
-    <div class="fin-result-item" style="grid-column: span 2; padding: 14px;">
-    <div class="fin-result-label">Próxima Parcela</div>
-    <div class="fin-result-value" id="fin-meta-next" style="color: var(--accent-gold); font-size: 1.15rem;">R$ 0,00</div>
-    <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-days">Calculando...</div>
-    </div>
-    <div class="fin-result-item" style="padding: 12px;">
-    <div class="fin-result-label" style="font-size: 0.65rem;">Total já Pago</div>
-    <div class="fin-result-value" id="fin-meta-pago" style="color: var(--accent-etanol); font-size: 1.05rem;">R$ 0,00</div>
-    <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-pago-lbl">-- pagas</div>
-    </div>
-    <div class="fin-result-item" style="padding: 12px;">
-    <div class="fin-result-label" style="font-size: 0.65rem;">Saldo Restante</div>
-    <div class="fin-result-value" id="fin-meta-restante" style="font-size: 1.05rem;">R$ 0,00</div>
-    <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-restante-lbl">-- restantes</div>
-    </div>
-    <div class="fin-result-item" style="grid-column: span 2; padding: 12px;">
-    <div class="fin-result-label">Previsão de Quitação</div>
-    <div class="fin-result-value" id="fin-meta-previsao" style="font-size: 1rem;">--</div>
-    </div>
-   </div>
-
-   <div id="finance-empty-state" style="text-align: center; padding: 40px 10px;">
-    <p style="color: var(--text-muted); font-size: 0.85rem;">Preencha os dados operacionais do contrato para computar o checklist.</p>
-   </div>
-   </div>
-
-   <!-- Checklist de Parcelas Interativas (Aparece ao Lado no Desktop) -->
-   <div class="bento-card" id="finance-checklist-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
-   <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Histórico de Parcelas</span>
-   <div class="parcelas-checklist-container" id="parcelas-checklist-container">
-    <!-- Injetado via JS de forma dinâmica -->
-   </div>
-   </div>
+  <button class="btn-premium-secondary" id="btn-generate-report" style="margin-top: 10px; height: 42px; font-size: 0.82rem; font-weight: 700;">Girar Analítico AI</button>
+   
+  <div class="ai-report-container" id="ai-report-output">
+  <div class="ai-report-header">⚙️ Copilot Toretto Analytics</div>
+  <div class="ai-report-body" id="ai-report-content"></div>
   </div>
   </div>
+  </div>
+ </div>
+ </div>
 
-  <!-- ================= FOOTER COMPARTILHADO ================= -->
-  <footer class="app-footer">
-  <div>Garagem Inteligente © 2026 BETA v2</div>
+ <!-- ================= TELA 7: METAS FINANCEIRAS ================= -->
+ <div id="screen-goals" class="screen">
+ <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
   <div>
-  <a href="https://instagram.com/mv.rcelo">@mv.rcelo</a>
+  <h2 class="screen-title">Metas Semanais</h2>
+  <p class="screen-desc">Projete sua escala de trabalho, defina metas globais ou individuais e controle o saldo bônus.</p>
   </div>
-  </footer>
+  <button class="btn-premium-secondary" id="btn-reset-weekly-system" style="width: auto; height: 38px; padding: 0 14px; font-size: 0.75rem; border-color: var(--accent-red); color: var(--accent-red); display: none;">
+  <i class="fa-solid fa-arrow-rotate-left"></i> Reiniciar Semana
+  </button>
+ </div>
+
+ <!-- DASHBOARD DE SALDOS -->
+ <div class="goals-stats-dashboard" id="goals-dashboard" style="display: none;">
+  <div class="goals-stat-card">
+   <span class="goals-stat-lbl">Saldo da Semana</span>
+   <div class="goals-stat-val green" id="goal-stat-week-total">R$ 0,00</div>
+  </div>
+  <div class="goals-stat-card">
+   <span class="goals-stat-lbl">Saldo do Dia (Focado)</span>
+   <div class="goals-stat-val gold" id="goal-stat-day-capped">R$ 0,00</div>
+  </div>
+  <div class="goals-stat-card">
+   <span class="goals-stat-lbl">Valor Faltante</span>
+   <div class="goals-stat-val orange" id="goal-stat-day-remaining">R$ 0,00</div>
+  </div>
+  <div class="goals-stat-card">
+   <span class="goals-stat-lbl">Saldo Bônus (Total)</span>
+   <div class="goals-stat-val" style="color: var(--accent-ai);" id="goal-stat-week-bonus">R$ 0,00</div>
+  </div>
+ </div>
+
+ <div class="bento-grid" id="goals-grid-layout">
+  <!-- Formulário de Configuração Semanal -->
+  <div class="bento-card" id="goals-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">1. Selecione os Dias de Trabalho</span>
+   
+  <!-- GRID DE SELEÇÃO DE DIA CALIBRADO -->
+  <div class="day-selector-grid" id="g-days-selector">
+   <label class="day-chip"><input type="checkbox" id="chk-seg" checked>Seg</label>
+   <label class="day-chip"><input type="checkbox" id="chk-ter" checked>Ter</label>
+   <label class="day-chip"><input type="checkbox" id="chk-qua" checked>Qua</label>
+   <label class="day-chip"><input type="checkbox" id="chk-qui" checked>Qui</label>
+   <label class="day-chip"><input type="checkbox" id="chk-sex" checked>Sex</label>
+   <label class="day-chip"><input type="checkbox" id="chk-sab" checked>Sáb</label>
+   <label class="day-chip"><input type="checkbox" id="chk-dom">Dom</label>
+  </div>
+
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">2. Método de Distribuição</span>
+  <div style="display: flex; gap: 10px; margin-bottom: 8px;">
+   <button type="button" class="btn-premium-secondary" id="btn-method-equal" style="flex: 1;">Dividir Igual</button>
+   <button type="button" class="btn-premium-secondary" id="btn-method-indiv" style="flex: 1;">Meta por Dia</button>
+  </div>
+
+  <!-- Contêiner Método: Dividir Igual (Preenchimento Rápido) -->
+  <div id="goals-equal-container" class="premium-input-card" style="margin-bottom: 8px;">
+   <label style="color: var(--accent-gold);">Meta Semanal Total (R$)</label>
+   <div class="premium-input-wrapper">
+    <span class="premium-input-unit">R$</span>
+    <input type="text" id="g-val-weekly-total" placeholder="0,00">
+   </div>
+   <span style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">O valor digitado acima será dividido de forma exata e igualitária entre os dias de trabalho selecionados.</span>
+  </div>
+
+  <!-- Contêiner Método: Individual por Dia -->
+  <div id="goals-indiv-container" class="input-group-grid" style="margin-bottom: 8px; display: none;">
+   <div class="premium-input-card" id="g-input-card-seg">
+    <label>Meta Segunda-feira</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-seg" placeholder="0,00">
+    </div>
+   </div>
+   <div class="premium-input-card" id="g-input-card-ter">
+    <label>Meta Terça-feira</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-ter" placeholder="0,00">
+    </div>
+   </div>
+   <div class="premium-input-card" id="g-input-card-qua">
+    <label>Meta Quarta-feira</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-qua" placeholder="0,00">
+    </div>
+   </div>
+   <div class="premium-input-card" id="g-input-card-qui">
+    <label>Meta Quinta-feira</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-qui" placeholder="0,00">
+    </div>
+   </div>
+   <div class="premium-input-card" id="g-input-card-sex">
+    <label>Meta Sexta-feira</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-sex" placeholder="0,00">
+    </div>
+   </div>
+   <div class="premium-input-card" id="g-input-card-sab">
+    <label>Meta Sábado</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-sab" placeholder="0,00">
+    </div>
+   </div>
+   <div class="premium-input-card" id="g-input-card-dom">
+    <label>Meta Domingo</label>
+    <div class="premium-input-wrapper">
+     <span class="premium-input-unit">R$</span>
+     <input type="text" id="g-val-dom" placeholder="0,00">
+    </div>
+   </div>
+  </div>
+
+  <button class="btn-premium" id="btn-save-goal">Ativar Metas da Semana</button>
+  </div>
+
+  <!-- Lista das Metas da Semana Ativa -->
+  <div class="bento-card" id="goals-list-container" style="justify-content: flex-start; gap: 16px; width: 100%; display: none;">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Gabarito da Semana</span>
+  <div style="display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto;" id="goals-list-wrapper">
+   <!-- Injetado dinamicamente via JS -->
+  </div>
+  </div>
+
+  <!-- Painel Meta Focada (Aportes/Ganhos Diários) -->
+  <div class="bento-card" id="active-goal-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Lançar Ganhos de Hoje</span>
+   
+  <div class="premium-input-card" style="margin-bottom: 4px;">
+   <label id="g-aporte-label-foco">Valor do Aporte / Faturamento</label>
+   <div class="premium-input-wrapper">
+    <span class="premium-input-unit">R$</span>
+    <input type="text" id="g-aporte-valor" placeholder="0,00">
+   </div>
+  </div>
+  <button class="btn-premium" id="btn-add-aporte">Registrar Entrada</button>
+
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-top: 8px;">Aportes Lançados</span>
+  <div class="parcelas-checklist-container" id="g-aportes-history-container" style="max-height: 180px; margin-top: 0; padding-top: 0; border: none;">
+   <!-- Histórico de aportes do dia -->
+  </div>
+  </div>
+ </div>
+ </div>
+
+ <!-- ================= TELA 3: MEUS VEÍCULOS ================= -->
+ <div id="screen-my-vehicles" class="screen">
+ <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+  <div>
+  <h2 class="screen-title">Minha Garagem</h2>
+  <p class="screen-desc">Cadastre e selecione seus veículos.</p>
+  </div>
+  <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.8rem;">Adicionar Veículo</button>
+ </div>
+
+ <div class="form-content">
+  <div class="vehicles-grid" id="vehicles-list-container">
+  <!-- Injetado Dinamicamente -->
+  </div>
+ </div>
+ </div>
+
+ <!-- ================= TELA 4: ADICIONAR / EDITAR VEÍCULO ================= -->
+ <div id="screen-add-vehicle" class="screen">
+ <div class="screen-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+  <div>
+  <h2 class="screen-title" id="add-vehicle-screen-title">Ficha Técnica</h2>
+  <p class="screen-desc">Introduza os dados corretos no banco de dados da ECU.</p>
+  </div>
+  <button class="btn-premium-secondary" id="back-add-to-list" style="width: auto; height: 40px; padding: 0 16px;">Cancelar</button>
+ </div>
+
+ <div class="form-content" style="gap: 16px;">
+  <div class="form-scrollable">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Informações da ECU</span>
+  <div class="input-group-grid">
+  <div class="premium-input-card">
+  <label>Placa de Identificação</label>
+  <input type="text" id="v-placa" placeholder="ABC1D23" maxlength="7" style="text-transform: uppercase;">
+  </div>
+  <div class="premium-input-card">
+  <label>Odômetro Atual</label>
+  <input type="text" id="v-km" placeholder="45000" inputmode="numeric">
+  </div>
+  </div>
+
+  <div class="input-group-grid">
+  <div class="premium-input-card">
+  <label>Fabricante</label>
+  <select id="v-marca">
+   <option value="" disabled selected>Selecionar...</option>
+   <option value="Volkswagen">Volkswagen</option>
+   <option value="Chevrolet">Chevrolet</option>
+   <option value="Hyundai">Hyundai</option>
+   <option value="BYD">BYD</option>
+   <option value="Caoa Chery">Caoa Chery</option>
+   <option value="Citroën">Citroën</option>
+   <option value="Fiat">Fiat</option>
+   <option value="Ford">Ford</option>
+   <option value="GWM">GWM</option>
+   <option value="Honda">Honda</option>
+   <option value="Jeep">Jeep</option>
+   <option value="Nissan">Nissan</option>
+   <option value="Peugeot">Peugeot</option>
+   <option value="Renault">Renault</option>
+   <option value="Toyota">Toyota</option>
+   <option value="Outro">Outra</option>
+  </select>
+  </div>
+  <div class="premium-input-card">
+  <label>Pintura / Cor</label>
+  <input type="text" id="v-cor" placeholder="Ex: Cinza Nardo">
+  </div>
+  </div>
+
+  <div class="premium-input-card" style="margin-bottom: 12px;">
+  <label>Modelo & Motorização</label>
+  <input type="text" id="v-modelo" placeholder="Ex: Onix 1.0 Turbo">
+  </div>
+
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Normal (Sem Ar/C)</span>
+  <div class="input-group-grid">
+  <div class="premium-input-card">
+  <label style="color: var(--accent-etanol);">Etanol</label>
+  <div class="premium-input-wrapper">
+   <input type="text" id="v-etanol-off" placeholder="8.5" inputmode="decimal">
+   <span class="premium-input-unit">km/l</span>
+  </div>
+  </div>
+  <div class="premium-input-card">
+  <label style="color: var(--accent-gasolina);">Gasolina</label>
+  <div class="premium-input-wrapper">
+   <input type="text" id="v-gasolina-off" placeholder="12.0" inputmode="decimal">
+   <span class="premium-input-unit">km/l</span>
+  </div>
+  </div>
+  </div>
+
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Elevado (Com Ar/C)</span>
+  <div class="input-group-grid">
+  <div class="premium-input-card">
+  <label style="color: var(--accent-etanol);">Etanol Ar/C</label>
+  <div class="premium-input-wrapper">
+   <input type="text" id="v-etanol-on" placeholder="7.2" inputmode="decimal">
+   <span class="premium-input-unit">km/l</span>
+  </div>
+  </div>
+  <div class="premium-input-card">
+  <label style="color: var(--accent-gasolina);">Gasolina Ar/C</label>
+  <div class="premium-input-wrapper">
+   <input type="text" id="v-gasolina-on" placeholder="10.2" inputmode="decimal">
+   <span class="premium-input-unit">km/l</span>
+  </div>
+  </div>
+  </div>
+  </div>
+ </div>
+
+ <button class="btn-premium" id="btn-save-vehicle">Registrar Consumo</button>
+ </div>
+
+ <!-- ================= TELA 5: MANUTENÇÃO ================= -->
+ <div id="screen-maintenance" class="screen">
+ <div class="screen-header">
+  <h2 class="screen-title">Controle de Manutenção <span style="font-size: 0.75rem; vertical-align: super; color: var(--accent-gold); font-weight: 800;">BETA</span></h2>
+  <p class="screen-desc">Acompanhe e preveja trocas de óleos, filtros, pneus, alinhamento e ar-condicionado de acordo com sua rodagem.</p>
+ </div>
+
+ <div class="bento-card" style="justify-content: flex-start; gap: 20px;">
+  <div class="maint-status-card" id="maintenance-items-container">
+  <!-- Injetado Dinamicamente -->
+  </div>
+ </div>
+ </div>
+
+ <!-- ================= TELA 6: FINANCIAMENTO COM CHECKLIST ================= -->
+ <div id="screen-finance" class="screen">
+ <div class="screen-header" style="display:flex; justify-content:space-between; align-items:center;">
+  <div>
+  <h2 class="screen-title">Financiamento do Veículo</h2>
+  <p class="screen-desc">Controle individual de parcelas quitadas, valores restantes e previsão de quitação.</p>
+  </div>
+  <button class="btn-premium-secondary" id="btn-toggle-finance-form" style="width:auto; height:38px; padding: 0 14px; font-size:0.75rem; display:none;"><i class="fa-solid fa-pen-to-square"></i> Editar Contrato</button>
+ </div>
+
+ <div class="bento-grid" id="finance-grid-layout">
+  <!-- Coluna de Form de Cadastro de Financiamento -->
+  <div class="bento-card" id="finance-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Contrato Atual</span>
+   
+  <div class="premium-input-card">
+  <label>Valor da Parcela</label>
+  <div class="premium-input-wrapper">
+  <span class="premium-input-unit">R$</span>
+  <input type="text" id="fin-valor-p" placeholder="0,00">
+  </div>
+  </div>
+   
+  <div class="premium-input-card">
+  <label>Dia do Vencimento</label>
+  <input type="text" id="fin-vencimento-p" placeholder="10" inputmode="numeric" maxlength="2">
+  </div>
+
+  <div class="input-group-grid" style="margin-bottom: 0;">
+  <div class="premium-input-card">
+  <label>Parcela Atualmente Paga</label>
+  <input type="text" id="fin-atual-p" placeholder="8" inputmode="numeric">
+  </div>
+  <div class="premium-input-card">
+  <label>Total de Parcelas</label>
+  <input type="text" id="fin-total-p" placeholder="48" inputmode="numeric">
+  </div>
+  </div>
+
+  <button class="btn-premium" id="btn-save-finance">Salvar Contrato</button>
+  </div>
+
+  <!-- Coluna do Resumo de Amortização -->
+  <div class="bento-card" id="finance-summary-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Status de Quitação</span>
+   
+  <div class="fin-results-grid" id="finance-summary" style="margin-top: 0; width: 100%;">
+  <div class="fin-result-item" style="grid-column: span 2; padding: 14px;">
+  <div class="fin-result-label">Próxima Parcela</div>
+  <div class="fin-result-value" id="fin-meta-next" style="color: var(--accent-gold); font-size: 1.15rem;">R$ 0,00</div>
+  <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-days">Calculando...</div>
+  </div>
+  <div class="fin-result-item" style="padding: 12px;">
+  <div class="fin-result-label" style="font-size: 0.65rem;">Total já Pago</div>
+  <div class="fin-result-value" id="fin-meta-pago" style="color: var(--accent-etanol); font-size: 1.05rem;">R$ 0,00</div>
+  <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-pago-lbl">-- pagas</div>
+  </div>
+  <div class="fin-result-item" style="padding: 12px;">
+  <div class="fin-result-label" style="font-size: 0.65rem;">Saldo Restante</div>
+  <div class="fin-result-value" id="fin-meta-restante" style="font-size: 1.05rem;">R$ 0,00</div>
+  <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-restante-lbl">-- restantes</div>
+  </div>
+  <div class="fin-result-item" style="grid-column: span 2; padding: 12px;">
+  <div class="fin-result-label">Previsão de Quitação</div>
+  <div class="fin-result-value" id="fin-meta-previsao" style="font-size: 1rem;">--</div>
+  </div>
+  </div>
+
+  <div id="finance-empty-state" style="text-align: center; padding: 40px 10px;">
+  <p style="color: var(--text-muted); font-size: 0.85rem;">Preencha os dados operacionais do contrato para computar o checklist.</p>
+  </div>
+  </div>
+
+  <!-- Checklist de Parcelas Interativas (Aparece ao Lado no Desktop) -->
+  <div class="bento-card" id="finance-checklist-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
+  <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Histórico de Parcelas</span>
+  <div class="parcelas-checklist-container" id="parcelas-checklist-container">
+  <!-- Injetado via JS de forma dinâmica -->
+  </div>
+  </div>
+ </div>
+ </div>
+
+ <!-- ================= TELA 8: SUPORTE ================= -->
+ <div id="screen-support" class="screen">
+  <div class="screen-header">
+   <h2 class="screen-title">Painel de Suporte</h2>
+   <p class="screen-desc">Informações operacionais da central de bordo, licenças e canais diretos de ajuda.</p>
+  </div>
+
+  <div class="bento-grid">
+   <!-- Card de Informações da Central -->
+   <div class="bento-card" style="justify-content: flex-start; gap: 16px;">
+    <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Diretrizes do Sistema</span>
+    
+    <div class="fin-result-item" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
+     <div style="display: flex; justify-content: space-between; align-items: center;">
+      <span style="font-size: 0.85rem; font-weight: 700;">Cockpit Central</span>
+      <span class="maint-badge healthy" style="font-size: 0.65rem;">Versão v2.8 BETA</span>
+     </div>
+     <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
+      Estrutura de software de alta performance desenvolvida com a paleta minimalista Genesis Obsidian Slates, fornecendo telemetria térmica avançada e monitoramento analítico de dados locais.
+     </div>
+    </div>
+
+    <div style="display: flex; flex-direction: column; gap: 8px;">
+     <div class="diagnostic-data-row">
+      <span>Desenvolvedor Principal</span>
+      <span>Marcelo Victor</span>
+     </div>
+     <div class="diagnostic-data-row">
+      <span>Última Calibração</span>
+      <span id="support-sync-time">Nominal</span>
+     </div>
+     <div class="diagnostic-data-row">
+      <span>Banco de Dados Local</span>
+      <span style="color: var(--accent-etanol); font-weight: 700;">CONECTADO (ECU local)</span>
+     </div>
+    </div>
+   </div>
+
+   <!-- Card de Canais de Contato -->
+   <div class="bento-card" style="justify-content: flex-start; gap: 16px;">
+    <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Canais Oficiais</span>
+
+    <a href="https://instagram.com/mv.rcelo" target="_blank" style="text-decoration: none;" class="dropdown-item">
+     <i class="fa-brands fa-instagram" style="color: var(--accent-gold); font-size: 1.1rem;"></i> Direct: @mv.rcelo
+    </a>
+    <a href="mailto:suporte@garageminteligente.com" style="text-decoration: none;" class="dropdown-item">
+     <i class="fa-solid fa-envelope" style="color: var(--accent-gold); font-size: 1.1rem;"></i> suporte@garageminteligente.com
+    </a>
+    <a href="https://wa.me/5511999999999" target="_blank" style="text-decoration: none;" class="dropdown-item">
+     <i class="fa-brands fa-whatsapp" style="color: var(--accent-gold); font-size: 1.1rem;"></i> Central de Atendimento Whatsapp
+    </a>
+
+    <div style="border-top: var(--border-glass); padding-top: 16px; text-align: center; margin-top: auto;">
+     <span style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">
+      Garagem Inteligente © 2026 • Design lapidado de gearhead para gearhead.
+     </span>
+    </div>
+   </div>
+  </div>
+ </div>
+
+ <!-- ================= FOOTER COMPARTILHADO ================= -->
+ <footer class="app-footer">
+ <div>Garagem Inteligente © 2026 BETA v2</div>
+ <div>
+  <a href="https://instagram.com/mv.rcelo" target="_blank">@mv.rcelo</a>
+ </div>
+ </footer>
 
  </main>
 
- <!-- ================= BARRA DE NAVEGAÇÃO FIXA ================= -->
+ <!-- ================= BARRA DE NAVEGAÇÃO FIXA (7 BOTÕES) ================= -->
  <nav class="setores-garagem-navigation" id="app-setores-nav">
-  <button class="setores-btn active" id="side-tab-home" onclick="switchTab('screen-welcome')">
-  <i class="fa-solid fa-house"></i>
-  <span>Home</span>
-  </button>
-  <button class="setores-btn" id="side-tab-vehicles" onclick="switchTab('screen-my-vehicles')">
-  <i class="fa-solid fa-warehouse"></i>
-  <span>Garagem</span>
-  </button>
-  <button class="setores-btn" id="side-tab-calc" onclick="switchTab('screen-calc')">
-  <i class="fa-solid fa-gas-pump"></i>
-  <span>Calcula.ai</span>
-  </button>
-  <button class="setores-btn" id="side-tab-maint" onclick="switchTab('screen-maintenance')">
-  <i class="fa-solid fa-screwdriver-wrench"></i>
-  <span>Manutenção</span>
-  </button>
-  <button class="setores-btn" id="side-tab-fin" onclick="switchTab('screen-finance')">
-  <i class="fa-solid fa-wallet"></i>
-  <span>Finanças</span>
-  </button>
+ <button class="setores-btn active" id="side-tab-home" onclick="switchTab('screen-welcome')">
+ <i class="fa-solid fa-house"></i>
+ <span>Home</span>
+ </button>
+ <button class="setores-btn" id="side-tab-vehicles" onclick="switchTab('screen-my-vehicles')">
+ <i class="fa-solid fa-warehouse"></i>
+ <span>Garagem</span>
+ </button>
+ <button class="setores-btn" id="side-tab-calc" onclick="switchTab('screen-calc')">
+ <i class="fa-solid fa-gas-pump"></i>
+ <span>Calcula.ai</span>
+ </button>
+ <button class="setores-btn" id="side-tab-goals" onclick="switchTab('screen-goals')">
+ <i class="fa-solid fa-bullseye"></i>
+ <span>Metas</span>
+ </button>
+ <button class="setores-btn" id="side-tab-maint" onclick="switchTab('screen-maintenance')">
+ <i class="fa-solid fa-screwdriver-wrench"></i>
+ <span>Manutenções</span>
+ </button>
+ <button class="setores-btn" id="side-tab-fin" onclick="switchTab('screen-finance')">
+ <i class="fa-solid fa-wallet"></i>
+ <span>Finanças</span>
+ </button>
+ <button class="setores-btn" id="side-tab-support" onclick="switchTab('screen-support')">
+  <i class="fa-solid fa-headset"></i>
+  <span>Suporte</span>
+ </button>
  </nav>
 
  </div>
@@ -1840,78 +2113,87 @@
  <!-- ================= MODAL: CONFIGURAÇÃO DE PROFILE ================= -->
  <div class="modal-overlay" id="modal-register-driver">
  <div class="modal-box">
-  <button class="modal-close-btn" id="profile-close-btn" onclick="closeProfileModal()">×</button>
-  <div style="text-align: center; margin-bottom: 24px;">
-  <h3 style="font-size: 1.35rem; font-weight: 800;" id="profile-modal-title">Sistemas de Identificação</h3>
-  <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Forneça os dados e selecione seu avatar.</p>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
-  <div class="premium-input-card">
-   <label>Nome do Piloto(a)</label>
-   <input type="text" id="d-name" placeholder="Ex: Toretto, Brian" autocomplete="off">
-  </div>
-   
-  <div class="premium-input-card">
-   <label>Região (UF)</label>
-   <select id="d-state">
-   <option value="" disabled selected>Selecionar Região...</option>
-   <option value="SP">São Paulo (SP)</option>
-   <option value="RJ">Rio de Janeiro (RJ)</option>
-   <option value="MG">Minas Gerais (MG)</option>
-   <option value="RS">Rio Grande do Sul (RS)</option>
-   <option value="PR">Paraná (PR)</option>
-   <option value="SC">Santa Catarina (SC)</option>
-   <option value="BA">Bahia (BA)</option>
-   <option value="PE">Pernambuco (PE)</option>
-   <option value="CE">Ceará (CE)</option>
-   <option value="GO">Goiás (GO)</option>
-   <option value="DF">Distrito Federal (DF)</option>
-   <option value="Outro">Outra</option>
-   </select>
-  </div>
+ <button class="modal-close-btn" id="profile-close-btn" onclick="closeProfileModal()">×</button>
+ <div style="text-align: center; margin-bottom: 24px;">
+ <h3 style="font-size: 1.35rem; font-weight: 800;" id="profile-modal-title">Sistemas de Identificação</h3>
+ <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Forneça os dados e selecione seu avatar.</p>
+ </div>
+ <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
+ <div class="premium-input-card">
+  <label>Nome do Piloto(a)</label>
+  <input type="text" id="d-name" placeholder="Ex: Toretto, Brian" autocomplete="off">
+ </div>
+  
+ <div class="premium-input-card">
+  <label>Região (UF)</label>
+  <select id="d-state">
+  <option value="" disabled selected>Selecionar Região...</option>
+  <option value="SP">São Paulo (SP)</option>
+  <option value="RJ">Rio de Janeiro (RJ)</option>
+  <option value="MG">Minas Gerais (MG)</option>
+  <option value="RS">Rio Grande do Sul (RS)</option>
+  <option value="PR">Paraná (PR)</option>
+  <option value="SC">Santa Catarina (SC)</option>
+  <option value="BA">Bahia (BA)</option>
+  <option value="PE">Pernambuco (PE)</option>
+  <option value="CE">Ceará (CE)</option>
+  <option value="GO">Goiás (GO)</option>
+  <option value="DF">Distrito Federal (DF)</option>
+  <option value="Outro">Outra</option>
+  </select>
+ </div>
 
-  <div style="display: flex; flex-direction: column; gap: 6px;">
-   <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Avatar de Preferência</span>
-   <div class="avatar-selector-grid">
-   <button class="avatar-option-btn selected" data-avatar="👨‍✈️">👨‍✈️</button>
-   <button class="avatar-option-btn" data-avatar="🚀">🚀</button>
-   <button class="avatar-option-btn" data-avatar="🏎️">🏎️</button>
-   <button class="avatar-option-btn" data-avatar="⚙️">⚙️</button>
-   <button class="avatar-option-btn" data-avatar="🦸">🦸</button>
-   <button class="avatar-option-btn" data-avatar="🚥">🚥</button>
-   <button class="avatar-option-btn" data-avatar="🏁">🏁</button>
-   <button class="avatar-option-btn" data-avatar="⚡">⚡</button>
-   </div>
+ <div style="display: flex; flex-direction: column; gap: 6px;">
+  <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Avatar de Preferência</span>
+  <div class="avatar-selector-grid">
+  <button class="avatar-option-btn selected" data-avatar="👨‍✈️">👨‍✈️</button>
+  <button class="avatar-option-btn" data-avatar="🚀">🚀</button>
+  <button class="avatar-option-btn" data-avatar="🏎️">🏎️</button>
+  <button class="avatar-option-btn" data-avatar="⚙️">⚙️</button>
+  <button class="avatar-option-btn" data-avatar="🦸">🦸</button>
+  <button class="avatar-option-btn" data-avatar="🚥">🚥</button>
+  <button class="avatar-option-btn" data-avatar="🏁">🏁</button>
+  <button class="avatar-option-btn" data-avatar="⚡">⚡</button>
   </div>
-  </div>
-  <button class="btn-premium" id="btn-save-driver-registration">Criar Usuário</button>
+ </div>
+ </div>
+ <button class="btn-premium" id="btn-save-driver-registration">Criar Usuário</button>
  </div>
  </div>
 
  <!-- ================= OVERLAY: MODAL DE NOVIDADES ================= -->
  <div class="modal-overlay" id="modal-news">
  <div class="modal-box">
-  <button class="modal-close-btn" onclick="closeNewsModal()">×</button>
-  <div style="text-align: center; margin-bottom: 20px;">
-  <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-blue);">Atualizações Recentes</h3>
-  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Descubra as novas funções da Garagem.</p>
-  </div>
-  <div style="display: flex; flex-direction: column; gap: 16px; max-height: 260px; overflow-y: auto;">
-  <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
-   <h4 style="font-size: 0.9rem; font-weight: 700;">Registro de Manutenções</h4>
-   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Acompanhe o andamento das manutenções mais importantes do seu veículo.</p>
-  </div>
-  <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
-   <h4 style="font-size: 0.9rem; font-weight: 700;">Financiamento</h4>
-   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Controle os pagamentos de cada parcela do seu financiamento automotivo.</p>
-  </div>
-  </div>
+ <button class="modal-close-btn" onclick="closeNewsModal()">×</button>
+ <div style="text-align: center; margin-bottom: 20px;">
+  <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-blue);">Novidades do Cockpit</h3>
+  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">O que mudou na sua central de bordo.</p>
+ </div>
+ <div style="display: flex; flex-direction: column; gap: 16px; max-height: 280px; overflow-y: auto;">
+ <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
+  <h4 style="font-size: 0.9rem; font-weight: 700;">🎯 Painel de Metas Semanais Flexível</h4>
+  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Escolha livremente seus dias de trabalho e folga. Defina metas semanais que se dividem sozinhas de forma igualitária (arredondadas para cima) ou configure valores específicos por dia de forma individual.</p>
+ </div>
+ <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
+  <h4 style="font-size: 0.9rem; font-weight: 700;">💰 Saldo Bônus e Lucro Extra</h4>
+  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Todo o faturamento que ultrapassar a meta configurada do dia selecionado é acumulado separadamente na dashboard como Saldo Bônus!</p>
+ </div>
+ <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
+  <h4 style="font-size: 0.9rem; font-weight: 700;">📞 Seção de Suporte Profissional</h4>
+  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Centralize suas dúvidas, verifique canais diretos de contato do suporte (WhatsApp, Email e Instagram) e confira os créditos do sistema.</p>
+ </div>
+ <div style="border-left: 2px solid var(--accent-blue); padding-left: 12px; text-align: left;">
+  <h4 style="font-size: 0.9rem; font-weight: 700;">⚡ Atalhos de Computação Instantânea</h4>
+  <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 2px;">Lançamentos muito mais rápidos! Pressione "Enter" no teclado para confirmar as informações em qualquer formulário de todas as seções do app.</p>
+ </div>
+ </div>
  </div>
  </div>
 
  <!-- ================= OVERLAY ALERTA SEM VEÍCULO ================= -->
  <div class="modal-overlay" id="modal-no-vehicle">
  <div class="modal-box" style="text-align: center;">
+  <button class="modal-close-btn" onclick="closeNoVehicleModal()">×</button>
   <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-gasolina);">Sem dados para calcular</h3>
   <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 24px;">É necessário pelo menos um carro cadastrado para calcular o consumo baseado no preço do combustível.</p>
   <button class="btn-premium" id="btn-modal-go-to-vehicles">Cadastrar Veículo</button>
@@ -1921,17 +2203,18 @@
  <!-- ================= MODAL ATUALIZAR ODÔMETRO ================= -->
  <div class="modal-overlay" id="modal-update-odometer">
  <div class="modal-box">
+  <button class="modal-close-btn" onclick="closeOdometerUpdateModal()">×</button>
   <div style="text-align: center; margin-bottom: 20px;">
-  <h3 style="font-size: 1.25rem; font-weight: 800;">Atualizar Odômetro</h3>
-  <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira a marcação de rodagem atual para calibração.</p>
+   <h3 style="font-size: 1.25rem; font-weight: 800;">Atualizar Odômetro</h3>
+   <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira a marcação de rodagem atual para calibração.</p>
   </div>
   <div class="premium-input-card" style="margin-bottom: 20px;">
-  <label>KM Atual do Painel</label>
-  <input type="text" id="odo-pop-km" placeholder="Ex: 48500" inputmode="numeric">
+   <label>KM Atual do Painel</label>
+   <input type="text" id="odo-pop-km" placeholder="Ex: 48500" inputmode="numeric">
   </div>
   <div style="display: flex; gap: 12px;">
-  <button class="btn-premium-secondary" onclick="closeOdometerUpdateModal()">Ignorar</button>
-  <button class="btn-premium" id="btn-save-odo-popup">Atualizar</button>
+   <button class="btn-premium-secondary" onclick="closeOdometerUpdateModal()">Ignorar</button>
+   <button class="btn-premium" id="btn-save-odo-popup">Atualizar</button>
   </div>
  </div>
  </div>
@@ -1939,26 +2222,27 @@
  <!-- ================= MODAL CADASTRO MANUTENÇÃO ================= -->
  <div class="modal-overlay" id="modal-setup-maint">
  <div class="modal-box">
+  <button class="modal-close-btn" onclick="closeMaintSetupModal()">×</button>
   <div style="text-align: center; margin-bottom: 20px;">
-  <h3 style="font-size: 1.25rem; font-weight: 800;" id="maint-popup-title">Troca de Lubrificantes/Filtros</h3>
-  <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira os parâmetros de sua última intervenção de manutenção.</p>
+   <h3 style="font-size: 1.25rem; font-weight: 800;" id="maint-popup-title">Troca de Lubrificantes/Filtros</h3>
+   <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira os parâmetros de sua última intervenção de manutenção.</p>
   </div>
   <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
-  <div class="premium-input-card">
-   <label>Odômetro no Momento da Troca</label>
-   <input type="text" id="maint-pop-last-km" placeholder="Ex: 40000" inputmode="numeric">
-  </div>
-  <div class="premium-input-card">
-   <label>Prazo Recomendado</label>
-   <div class="premium-input-wrapper">
-   <input type="text" id="maint-pop-interval-km" placeholder="Ex: 10000" inputmode="numeric">
-   <span class="premium-input-unit">km</span>
+   <div class="premium-input-card">
+    <label>Odômetro no Momento da Troca</label>
+    <input type="text" id="maint-pop-last-km" placeholder="Ex: 40000" inputmode="numeric">
+   </div>
+   <div class="premium-input-card">
+    <label>Prazo Recomendado</label>
+    <div class="premium-input-wrapper">
+    <input type="text" id="maint-pop-interval-km" placeholder="Ex: 10000" inputmode="numeric">
+    <span class="premium-input-unit">km</span>
+    </div>
    </div>
   </div>
-  </div>
   <div style="display: flex; gap: 12px;">
-  <button class="btn-premium-secondary" onclick="closeMaintSetupModal()">Cancelar</button>
-  <button class="btn-premium" id="btn-save-maint-popup">Gravar Parâmetros</button>
+   <button class="btn-premium-secondary" onclick="closeMaintSetupModal()">Cancelar</button>
+   <button class="btn-premium" id="btn-save-maint-popup">Gravar Parâmetros</button>
   </div>
  </div>
  </div>
@@ -1966,131 +2250,60 @@
  <!-- ================= TELA / MODAL "TORETTO CALCULANDO" ================= -->
  <div class="modal-overlay" id="modal-toreto-calculating">
  <div class="modal-box" style="text-align: center; max-width: 320px;">
-  <div class="spinner-premium" style="margin-bottom: 20px;"></div>
-  <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 4px;">Injetando Variáveis...</h3>
-  <p id="toreto-calculation-step" style="font-size: 0.82rem; color: var(--text-muted);">Buscando intervenção divina</p>
- </div>
- </div>
-
- <!-- ================= CHAT FLUTUANTE DO TORETTO (EM APRENDIZADO) ================= -->
- <button class="toreto-chat-trigger" id="toreto-chat-trigger" title="ECU Assistant">
- <i class="fa-solid fa-comments"></i>
- </button>
- <div class="toreto-chat-panel" id="toreto-chat-panel">
- <div class="toreto-chat-header">
-  <div style="display: flex; align-items: center; gap: 8px;">
-  <div style="display: flex; flex-direction: column;">
-   <span class="toreto-header-title" style="font-weight: 800;">Filho do Toretto</span>
-   <span style="font-size: 0.65rem; color: var(--accent-gold); font-weight: 600; text-transform: uppercase;">ECU Assistant</span>
-  </div>
-  </div>
-  <button id="btn-close-chat" style="background: transparent; border: none; color: var(--text-muted); font-size: 1.3rem; cursor: pointer;">×</button>
- </div>
- <div class="toreto-chat-messages" id="toreto-chat-messages">
-  <div class="chat-msg toreto">Piloto, selecione uma das perguntas mecânicas para iniciar o chat:</div>
- </div>
- <div class="toreto-chat-input-area">
-  <button class="btn-sug-question" onclick="askToretto('combustivel')">Regra de Injeção: 70% vs Real</button>
-  <button class="btn-sug-question" onclick="askToretto('ar')">Ar condicionado gasta mais?</button>
-  <button class="btn-sug-question" onclick="askToretto('manutencao')">Prevenção Mecânica Básica</button>
+ <div class="spinner-premium" style="margin-bottom: 20px;"></div>
+ <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 4px;">Injetando Variáveis...</h3>
+ <p id="toreto-calculation-step" style="font-size: 0.82rem; color: var(--text-muted);">Buscando intervenção divina</p>
  </div>
  </div>
 
  <!-- ================= MODAL: FEEDBACK DE SUCESSO DE SINCRONISMO ================= -->
  <div class="modal-overlay" id="modal-sync-success">
  <div class="modal-box" style="text-align: center; max-width: 360px; border-top: 3px solid var(--accent-etanol);">
-  <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: var(--accent-etanol); margin-bottom: 16px;"></i>
-  <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px;">Calibração Concluída</h3>
-  <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Todas as diretrizes de bordo da ECU e tabelas de injeção do motorista foram integradas de forma nominal.</p>
-  <button class="btn-premium" onclick="closeSyncSuccessModal()">Retornar ao Cockpit</button>
+ <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: var(--accent-etanol); margin-bottom: 16px;"></i>
+ <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px;">Calibração Concluída</h3>
+ <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Todas as diretrizes de bordo da ECU e tabelas de injeção do motorista foram integradas de forma nominal.</p>
+ <button class="btn-premium" onclick="closeSyncSuccessModal()">Retornar ao Cockpit</button>
  </div>
  </div>
 
  <script>
- // Cache e Inicialização Global do SPA
+ // --- SISTEMA DE PERSISTÊNCIA ROBUSTO (try-catch de blindagem contra crashes) ---
+ let savedVeiculos = [];
+ let savedFinancas = null;
+ let savedMetas = [];
+ try {
+  savedVeiculos = JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [];
+ } catch (e) {
+  console.error("Erro ao ler veículos do banco local:", e);
+ }
+ try {
+  savedFinancas = JSON.parse(localStorage.getItem('gi_financas')) || null;
+ } catch (e) {
+  console.error("Erro ao ler finanças do banco local:", e);
+ }
+ try {
+  savedMetas = JSON.parse(localStorage.getItem('gi_metas')) || [];
+ } catch (e) {
+  console.error("Erro ao ler metas do banco local:", e);
+ }
+
  let appState = {
- theme: localStorage.getItem('gi_theme') || 'dark',
- motoristaNome: localStorage.getItem('gi_motorista_nome') || null,
- motoristaEstado: localStorage.getItem('gi_motorista_estado') || null,
- motoristaAvatar: localStorage.getItem('gi_motorista_avatar') || '👨‍✈️',
- veiculos: JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [],
- veiculoAtivoId: localStorage.getItem('gi_veiculo_ativo_id') || null,
- veiculoEmEdicaoId: null,
- financeContract: JSON.parse(localStorage.getItem('gi_financas')) || null
+  theme: localStorage.getItem('gi_theme') || 'dark',
+  motoristaNome: localStorage.getItem('gi_motorista_nome') || null,
+  motoristaEstado: localStorage.getItem('gi_motorista_estado') || null,
+  motoristaAvatar: localStorage.getItem('gi_motorista_avatar') || '👨‍✈️',
+  veiculos: savedVeiculos,
+  veiculoAtivoId: localStorage.getItem('gi_veiculo_ativo_id') || null,
+  veiculoEmEdicaoId: null,
+  financeContract: savedFinancas,
+  metas: savedMetas,
+  metaAtivaId: localStorage.getItem('gi_meta_ativa_id') || null,
+  goalMethod: 'equal'
  };
 
  let activeMaintKey = '';
 
- // Sincronização dos Logos com o Tema
- function applyThemeLogos(themeName) {
- const introLogo = document.getElementById('intro-logo');
- const topbarMobileLogo = document.getElementById('topbar-logo-img');
- const themeIcon = document.getElementById('theme-icon');
-
- const logoUrl = themeName === 'light' ? 'https://i.imgur.com/eIOAKM0.png' : 'https://i.imgur.com/7S2xQYI.png';
-
- if (themeName === 'light') {
-  document.body.classList.add('light-theme');
-  if (themeIcon) {
-  themeIcon.classList.remove('fa-sun');
-  themeIcon.classList.add('fa-moon');
-  }
- } else {
-  document.body.classList.remove('light-theme');
-  if (themeIcon) {
-  themeIcon.classList.remove('fa-moon');
-  themeIcon.classList.add('fa-sun');
-  }
- }
-
- if (introLogo) introLogo.src = logoUrl;
- if (topbarMobileLogo) topbarMobileLogo.src = logoUrl;
- }
-
- // Inicializador do DOM
- function initApp() {
- applyThemeLogos(appState.theme);
-
- // Configurações do Avatar no Topbar e Dropdown
- const avatarEl = document.getElementById('navbar-profile-avatar');
- if (avatarEl) avatarEl.textContent = appState.motoristaAvatar;
- const dropAvatarEl = document.getElementById('dropdown-profile-avatar');
- if (dropAvatarEl) dropAvatarEl.textContent = appState.motoristaAvatar;
-
- // Define veículo ativo padrão se houver
- if (appState.veiculos.length > 0 && !appState.veiculoAtivoId) {
-  setVeiculoAtivo(appState.veiculos[0].id);
- }
-
- // Verifica onboarding do motorista
- if (appState.motoristaNome) {
-  const greetingEl = document.getElementById('welcome-username-greeting');
-  if (greetingEl) greetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
-  
-  const dropGreetingEl = document.getElementById('dropdown-username-greeting');
-  if (dropGreetingEl) dropGreetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
-
-  const closeBtn = document.getElementById('profile-close-btn');
-  if (closeBtn) closeBtn.style.display = 'block'; 
-  runEcunIntro(false);
- } else {
-  const closeBtn = document.getElementById('profile-close-btn');
-  if (closeBtn) closeBtn.style.display = 'none'; 
-  runEcunIntro(true);
- }
-
- updateHomeActiveVehicleCard();
- checkOdometerAgeLimit();
- }
-
- // Executa o boot do sistema de forma segura
- if (document.readyState === 'loading') {
- document.addEventListener('DOMContentLoaded', initApp);
- } else {
- initApp();
- }
-
- // Elementos da UI
+ // --- CAPTURA DE ELEMENTOS DOM GLOBAIS ---
  const screenIntro = document.getElementById('screen-intro');
  const screenWelcome = document.getElementById('screen-welcome');
  const screenCalc = document.getElementById('screen-calc');
@@ -2098,8 +2311,9 @@
  const screenAddVehicle = document.getElementById('screen-add-vehicle');
  const screenMaintenance = document.getElementById('screen-maintenance');
  const screenFinance = document.getElementById('screen-finance');
+ const screenGoals = document.getElementById('screen-goals');
+ const screenSupport = document.getElementById('screen-support');
 
- // Modais
  const modalRegisterDriver = document.getElementById('modal-register-driver');
  const modalNoVehicle = document.getElementById('modal-no-vehicle');
  const modalToretoCalculating = document.getElementById('modal-toreto-calculating');
@@ -2109,13 +2323,11 @@
  const modalNews = document.getElementById('modal-news');
  const modalSyncSuccess = document.getElementById('modal-sync-success');
 
- // Cadastro inputs
  const inputDName = document.getElementById('d-name');
  const selectDState = document.getElementById('d-state');
  const btnSaveDriverRegistration = document.getElementById('btn-save-driver-registration');
  const themeToggleMain = document.getElementById('theme-toggle-main');
 
- // Veículos inputs
  const addVehicleScreenTitle = document.getElementById('add-vehicle-screen-title');
  const inputVkm = document.getElementById('v-km');
  const inputVplaca = document.getElementById('v-placa');
@@ -2128,7 +2340,6 @@
  const inputVGasolinaOn = document.getElementById('v-gasolina-on');
  const vehiclesListContainer = document.getElementById('vehicles-list-container');
 
- // Abast inputs
  const inputPriceEtanol = document.getElementById('price-etanol');
  const inputPriceGasolina = document.getElementById('price-gasolina');
  const acToggle = document.getElementById('ac-toggle');
@@ -2136,7 +2347,6 @@
  const acStatusDesc = document.getElementById('ac-status-desc');
  const calculateBtn = document.getElementById('calculate-btn');
 
- // Resultados
  const aiRecommendation = document.getElementById('ai-recommendation');
  const resultCard = document.getElementById('result-card');
  const veredictoText = document.getElementById('veredicto-text');
@@ -2146,64 +2356,190 @@
  const aiReportOutput = document.getElementById('ai-report-output');
  const aiReportContent = document.getElementById('ai-report-content');
 
- // Chat do Toretto
- const toretoChatTrigger = document.getElementById('toreto-chat-trigger');
- const toretoChatPanel = document.getElementById('toreto-chat-panel');
- const btnCloseChat = document.getElementById('btn-close-chat');
- const toretoChatMessages = document.getElementById('toreto-chat-messages');
+ // --- DECLARAÇÕES DE FUNÇÕES GLOBAIS COM HOISTING NATUAL (Blindado contra crashes de ordem) ---
 
- // Seleção do Avatar na modal
- const avatarButtons = document.querySelectorAll('.avatar-option-btn');
- avatarButtons.forEach(btn => {
- btn.addEventListener('click', () => {
-  avatarButtons.forEach(b => b.classList.remove('selected'));
-  btn.classList.add('selected');
-  appState.motoristaAvatar = btn.getAttribute('data-avatar');
- });
- });
+ function applyThemeLogos(themeName) {
+  const introLogo = document.getElementById('intro-logo');
+  const topbarMobileLogo = document.getElementById('topbar-logo-img');
+  const themeIcon = document.getElementById('theme-icon');
+  const logoUrl = themeName === 'light' ? 'https://i.imgur.com/eIOAKM0.png' : 'https://i.imgur.com/7S2xQYI.png';
 
- // Acionamento de alteração de perfil ao clicar na topbar
- const profileTrigger = document.getElementById('navbar-profile-trigger');
- if (profileTrigger) {
- profileTrigger.addEventListener('click', () => {
-  document.getElementById('profile-modal-title').textContent = "Atualizar Perfil";
-  if (inputDName) inputDName.value = appState.motoristaNome || '';
-  if (selectDState) selectDState.value = appState.motoristaEstado || '';
-  avatarButtons.forEach(btn => {
-  if(btn.getAttribute('data-avatar') === appState.motoristaAvatar) {
-   btn.classList.add('selected');
+  if (themeName === 'light') {
+   document.body.classList.add('light-theme');
+   if (themeIcon) {
+    themeIcon.classList.remove('fa-sun');
+    themeIcon.classList.add('fa-moon');
+   }
   } else {
-   btn.classList.remove('selected');
+   document.body.classList.remove('light-theme');
+   if (themeIcon) {
+    themeIcon.classList.remove('fa-moon');
+    themeIcon.classList.add('fa-sun');
+   }
   }
-  });
-  const closeBtn = document.getElementById('profile-close-btn');
-  if (closeBtn) closeBtn.style.display = 'block'; 
-  if (modalRegisterDriver) modalRegisterDriver.classList.add('active');
- });
+  if (introLogo) introLogo.src = logoUrl;
+  if (topbarMobileLogo) topbarMobileLogo.src = logoUrl;
  }
 
- window.closeProfileModal = function() {
- if (modalRegisterDriver) modalRegisterDriver.classList.remove('active');
- };
+ function bindEnterKey(inputsArray, buttonId) {
+  inputsArray.forEach(id => {
+   const input = document.getElementById(id);
+   if (input) {
+    input.addEventListener('keydown', (e) => {
+     if (e.key === 'Enter') {
+      e.preventDefault();
+      const btn = document.getElementById(buttonId);
+      if (btn) btn.click();
+     }
+    });
+   }
+  });
+ }
 
- window.closeNewsModal = function() {
- if (modalNews) modalNews.classList.remove('active');
- };
+ function runEcunIntro(requireOnboarding) {
+  setTimeout(() => {
+   if (screenIntro) screenIntro.classList.remove('active');
+   const shell = document.getElementById('app-shell');
+   if (shell) shell.classList.add('ready');
+    
+   if (requireOnboarding) {
+    if (modalRegisterDriver) modalRegisterDriver.classList.add('active');
+   } else {
+    switchTab('screen-welcome');
+   }
+  }, 1600);
+ }
 
- // LÓGICA DO DROPDOWN MOBILE
- window.toggleMobileDropdown = function(e) {
+ function toggleGoalDayFields() {
+  const days = ['seg', 'ter', 'qua', 'qui', 'sex', 'sab', 'dom'];
+  days.forEach(day => {
+   const chk = document.getElementById('chk-' + day);
+   const card = document.getElementById('g-input-card-' + day);
+   if (chk && card) {
+    card.style.display = chk.checked ? 'flex' : 'none';
+   }
+  });
+ }
+
+ function setGoalMethod(method) {
+  appState.goalMethod = method;
+  const btnEqual = document.getElementById('btn-method-equal');
+  const btnIndiv = document.getElementById('btn-method-indiv');
+  const eqContainer = document.getElementById('goals-equal-container');
+  const indivContainer = document.getElementById('goals-indiv-container');
+
+  if (method === 'equal') {
+   if (btnEqual) {
+    btnEqual.style.borderColor = 'var(--accent-gold)';
+    btnEqual.style.background = 'rgba(197, 160, 89, 0.1)';
+   }
+   if (btnIndiv) {
+    btnIndiv.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+    btnIndiv.style.background = 'var(--bg-input)';
+   }
+   if (eqContainer) eqContainer.style.display = 'flex';
+   if (indivContainer) indivContainer.style.display = 'none';
+  } else {
+   if (btnIndiv) {
+    btnIndiv.style.borderColor = 'var(--accent-gold)';
+    btnIndiv.style.background = 'rgba(197, 160, 89, 0.1)';
+   }
+   if (btnEqual) {
+    btnEqual.style.borderColor = 'rgba(255, 255, 255, 0.05)';
+    btnEqual.style.background = 'var(--bg-input)';
+   }
+   if (eqContainer) eqContainer.style.display = 'none';
+   if (indivContainer) indivContainer.style.display = 'grid';
+  }
+ }
+
+ function initApp() {
+  applyThemeLogos(appState.theme);
+
+  const avatarEl = document.getElementById('navbar-profile-avatar');
+  if (avatarEl) avatarEl.textContent = appState.motoristaAvatar;
+  const dropAvatarEl = document.getElementById('dropdown-profile-avatar');
+  if (dropAvatarEl) dropAvatarEl.textContent = appState.motoristaAvatar;
+
+  if (appState.veiculos.length > 0 && !appState.veiculoAtivoId) {
+   setVeiculoAtivo(appState.veiculos[0].id);
+  }
+
+  // Binds universais para computar formulários apertando "ENTER"
+  bindEnterKey(['d-name', 'd-state'], 'btn-save-driver-registration');
+  bindEnterKey(['home-price-etanol', 'home-price-gasolina'], 'btn-home-calculate');
+  bindEnterKey(['price-etanol', 'price-gasolina'], 'calculate-btn');
+  bindEnterKey(['v-placa', 'v-km', 'v-cor', 'v-modelo', 'v-etanol-off', 'v-gasolina-off', 'v-etanol-on', 'v-gasolina-on'], 'btn-save-vehicle');
+  bindEnterKey(['fin-valor-p', 'fin-vencimento-p', 'fin-atual-p', 'fin-total-p'], 'btn-save-finance');
+  bindEnterKey(['g-val-weekly-total', 'g-val-seg', 'g-val-ter', 'g-val-qua', 'g-val-qui', 'g-val-sex', 'g-val-sab', 'g-val-dom'], 'btn-save-goal');
+  bindEnterKey(['g-aporte-valor'], 'btn-add-aporte');
+  bindEnterKey(['home-goal-aporte-valor'], 'btn-home-add-aporte');
+  bindEnterKey(['odo-pop-km'], 'btn-save-odo-popup');
+  bindEnterKey(['maint-pop-last-km', 'maint-pop-interval-km'], 'btn-save-maint-popup');
+
+  // Inicializa campos de metas
+  toggleGoalDayFields();
+  setGoalMethod('equal');
+
+  const topLogo = document.getElementById('topbar-logo-img');
+  if (topLogo) {
+   topLogo.addEventListener('click', () => {
+    switchTab('screen-welcome');
+   });
+  }
+
+  if (appState.motoristaNome) {
+   const greetingEl = document.getElementById('welcome-username-greeting');
+   if (greetingEl) greetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
+   
+   const dropGreetingEl = document.getElementById('dropdown-username-greeting');
+   if (dropGreetingEl) dropGreetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
+
+   const closeBtn = document.getElementById('profile-close-btn');
+   if (closeBtn) closeBtn.style.display = 'block'; 
+   runEcunIntro(false);
+  } else {
+   const closeBtn = document.getElementById('profile-close-btn');
+   if (closeBtn) closeBtn.style.display = 'none'; 
+   runEcunIntro(true);
+  }
+
+  updateHomeActiveVehicleCard();
+  checkOdometerAgeLimit();
+  updateHomeGoalWidget();
+ }
+
+ // Executa o boot do sistema de forma segura
+ if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', initApp);
+ } else {
+  initApp();
+ }
+
+ function closeProfileModal() {
+  if (modalRegisterDriver) modalRegisterDriver.classList.remove('active');
+ }
+
+ function closeNewsModal() {
+  if (modalNews) modalNews.classList.remove('active');
+ }
+
+ function closeNoVehicleModal() {
+  if (modalNoVehicle) modalNoVehicle.classList.remove('active');
+ }
+
+ function toggleMobileDropdown(e) {
   if (e) e.stopPropagation();
   const dropdown = document.getElementById('mobile-dropdown-menu');
   if (dropdown) dropdown.classList.toggle('active');
- };
+ }
 
- window.selectDropdownTab = function(screenId) {
+ function selectDropdownTab(screenId) {
   switchTab(screenId);
   const dropdown = document.getElementById('mobile-dropdown-menu');
   if (dropdown) dropdown.classList.remove('active');
- };
+ }
 
- // Fechar o dropdown caso clique em qualquer outro lugar da página
  document.addEventListener('click', (e) => {
   const dropdown = document.getElementById('mobile-dropdown-menu');
   const btnControls = document.getElementById('btn-more-controls');
@@ -2214,7 +2550,6 @@
   }
  });
 
- // Ações do Dropdown Mobile
  const btnDropdownNews = document.getElementById('btn-dropdown-news');
  if (btnDropdownNews) {
   btnDropdownNews.addEventListener('click', () => {
@@ -2250,38 +2585,51 @@
 
  const btnOpenNews = document.getElementById('btn-open-news');
  if (btnOpenNews) {
- btnOpenNews.addEventListener('click', () => {
-  if (modalNews) modalNews.classList.add('active');
- });
+  btnOpenNews.addEventListener('click', () => {
+   if (modalNews) modalNews.classList.add('active');
+  });
  }
 
- // Máscara de entrada para valores monetários
  function applyATMValueMask(inputElement) {
- if (!inputElement) return;
- inputElement.addEventListener('input', (e) => {
-  let value = e.target.value.replace(/\D/g, '');
-  if (!value) {
-  e.target.value = '';
-  return;
-  }
-  let floatValue = parseFloat(value) / 100;
-  e.target.value = floatValue.toFixed(2).replace('.', ',');
- });
+  if (!inputElement) return;
+  inputElement.addEventListener('input', (e) => {
+   let value = e.target.value.replace(/\D/g, '');
+   if (!value) {
+    e.target.value = '';
+    return;
+   }
+   let floatValue = parseFloat(value) / 100;
+   e.target.value = floatValue.toFixed(2).replace('.', ',');
+  });
  }
 
- [inputPriceEtanol, inputPriceGasolina, document.getElementById('home-price-etanol'), document.getElementById('home-price-gasolina'), document.getElementById('fin-valor-p')].forEach(inp => applyATMValueMask(inp));
+ [
+  inputPriceEtanol, 
+  inputPriceGasolina, 
+  document.getElementById('home-price-etanol'), 
+  document.getElementById('home-price-gasolina'), 
+  document.getElementById('fin-valor-p'),
+  document.getElementById('g-val-weekly-total'),
+  document.getElementById('g-val-seg'),
+  document.getElementById('g-val-ter'),
+  document.getElementById('g-val-qua'),
+  document.getElementById('g-val-qui'),
+  document.getElementById('g-val-sex'),
+  document.getElementById('g-val-sab'),
+  document.getElementById('g-val-dom'),
+  document.getElementById('g-aporte-valor'),
+  document.getElementById('home-goal-aporte-valor')
+ ].forEach(inp => applyATMValueMask(inp));
  
- // Sincronização numérica tradicional nos campos de odômetro e períodos
  function setNumericValidation(inputElement) {
- if (!inputElement) return;
- inputElement.addEventListener('input', (e) => {
-  let value = e.target.value.replace(/[^0-9]/g, '');
-  e.target.value = value;
- });
+  if (!inputElement) return;
+  inputElement.addEventListener('input', (e) => {
+   let value = e.target.value.replace(/[^0-9]/g, '');
+   e.target.value = value;
+  });
  }
  [inputVkm, document.getElementById('odo-pop-km'), document.getElementById('maint-pop-last-km'), document.getElementById('maint-pop-interval-km'), document.getElementById('fin-vencimento-p'), document.getElementById('fin-atual-p'), document.getElementById('fin-total-p')].forEach(inp => setNumericValidation(inp));
 
- // Inputs de consumo mantêm decimais com ponto flutuante natural
  [inputVEtanolOff, inputVGasolinaOff, inputVEtanolOn, inputVGasolinaOn].forEach(inp => {
   if (inp) {
    inp.addEventListener('input', (e) => {
@@ -2294,149 +2642,94 @@
   }
  });
 
- // Inicialização do fluxo de exibição
- function runEcunIntro(requireOnboarding) {
- setTimeout(() => {
-  if (screenIntro) screenIntro.classList.remove('active');
-  const shell = document.getElementById('app-shell');
-  if (shell) shell.classList.add('ready');
-  
-  if (requireOnboarding) {
-  if (modalRegisterDriver) modalRegisterDriver.classList.add('active');
-  } else {
-  switchTab('screen-welcome');
-  }
- }, 1600);
- }
-
- // Gravar motorista (Onboarding)
- if (btnSaveDriverRegistration) {
- btnSaveDriverRegistration.addEventListener('click', () => {
-  const nome = inputDName ? inputDName.value.trim() : '';
-  const estado = selectDState ? selectDState.value : '';
-
-  if (!nome || !estado) {
-  alert('Forneça a credencial completa do piloto.');
-  return;
-  }
-
-  appState.motoristaNome = nome;
-  appState.motoristaEstado = estado;
-  localStorage.setItem('gi_motorista_nome', nome);
-  localStorage.setItem('gi_motorista_estado', estado);
-  localStorage.setItem('gi_motorista_avatar', appState.motoristaAvatar);
-
-  const greeting = document.getElementById('welcome-username-greeting');
-  if (greeting) greeting.innerHTML = `Olá, <span>${nome}</span>!`;
-  const dropGreeting = document.getElementById('dropdown-username-greeting');
-  if (dropGreeting) dropGreeting.innerHTML = `Olá, <span>${nome}</span>!`;
-
-  const topAvatar = document.getElementById('navbar-profile-avatar');
-  if (topAvatar) topAvatar.textContent = appState.motoristaAvatar;
-  const dropAvatar = document.getElementById('dropdown-profile-avatar');
-  if (dropAvatar) dropAvatar.textContent = appState.motoristaAvatar;
-  
-  closeProfileModal();
-  switchTab('screen-welcome');
- });
- }
-
- // Alternar Abas (SPA Tabs Controller com controle de barra de status da ECU)
  function switchTab(screenId) {
- if ((screenId === 'screen-calc' || screenId === 'screen-maintenance') && appState.veiculos.length === 0) {
-  if (modalNoVehicle) modalNoVehicle.classList.add('active');
-  return;
- }
+  if ((screenId === 'screen-calc' || screenId === 'screen-maintenance') && appState.veiculos.length === 0) {
+   if (modalNoVehicle) modalNoVehicle.classList.add('active');
+   return;
+  }
 
- const screens = [screenWelcome, screenCalc, screenMyVehicles, screenAddVehicle, screenMaintenance, screenFinance];
- screens.forEach(s => { if (s) s.classList.remove('active'); });
-  
- const tabs = ['home', 'vehicles', 'calc', 'maint', 'fin'];
- tabs.forEach(tab => {
-  const el = document.getElementById(`side-tab-${tab}`);
-  if (el) el.classList.remove('active');
- });
+  const screens = [screenWelcome, screenCalc, screenMyVehicles, screenAddVehicle, screenMaintenance, screenFinance, screenGoals, screenSupport];
+  screens.forEach(s => { if (s) s.classList.remove('active'); });
+   
+  const tabs = ['home', 'vehicles', 'calc', 'goals', 'maint', 'fin', 'support'];
+  tabs.forEach(tab => {
+   const el = document.getElementById(`side-tab-${}`);
+   if (el) el.classList.remove('active');
+  });
 
- // VISIBILIDADE DA BARRA DE STATUS: Ativa somente na tela inicial (screen-welcome)
- const statusBar = document.getElementById('app-ecu-status');
- if (statusBar) {
   if (screenId === 'screen-welcome') {
-   statusBar.style.display = 'flex';
-  } else {
-   statusBar.style.display = 'none';
+   if (screenWelcome) screenWelcome.classList.add('active');
+   const el = document.getElementById('side-tab-home');
+   if (el) el.classList.add('active');
+   updateHomeActiveVehicleCard();
+   checkOdometerAgeLimit();
+   updateHomeGoalWidget();
+  } else if (screenId === 'screen-calc') {
+   if (screenCalc) screenCalc.classList.add('active');
+   const el = document.getElementById('side-tab-calc');
+   if (el) el.classList.add('active');
+   updateAiCostAnalysis();
+  } else if (screenId === 'screen-my-vehicles') {
+   if (screenMyVehicles) screenMyVehicles.classList.add('active');
+   const el = document.getElementById('side-tab-vehicles');
+   if (el) el.classList.add('active');
+   renderVehiclesGrid();
+  } else if (screenId === 'screen-add-vehicle') {
+   if (screenAddVehicle) screenAddVehicle.classList.add('active');
+  } else if (screenId === 'screen-maintenance') {
+   if (screenMaintenance) screenMaintenance.classList.add('active');
+   const el = document.getElementById('side-tab-maint');
+   if (el) el.classList.add('active');
+   renderMaintenanceSystem();
+  } else if (screenId === 'screen-finance') {
+   if (screenFinance) screenFinance.classList.add('active');
+   const el = document.getElementById('side-tab-fin');
+   if (el) el.classList.add('active');
+   renderFinanceSystem();
+  } else if (screenId === 'screen-goals') {
+   if (screenGoals) screenGoals.classList.add('active');
+   const el = document.getElementById('side-tab-goals');
+   if (el) el.classList.add('active');
+   renderGoalsSystem();
+  } else if (screenId === 'screen-support') {
+   if (screenSupport) screenSupport.classList.add('active');
+   const el = document.getElementById('side-tab-support');
+   if (el) el.classList.add('active');
+   const syncTime = document.getElementById('support-sync-time');
+   if (syncTime) syncTime.textContent = new Date().toLocaleString('pt-BR');
   }
  }
 
- if (screenId === 'screen-welcome') {
-  if (screenWelcome) screenWelcome.classList.add('active');
-  const el = document.getElementById('side-tab-home');
-  if (el) el.classList.add('active');
-  updateHomeActiveVehicleCard();
-  checkOdometerAgeLimit();
- } else if (screenId === 'screen-calc') {
-  if (screenCalc) screenCalc.classList.add('active');
-  const el = document.getElementById('side-tab-calc');
-  if (el) el.classList.add('active');
-  updateAiCostAnalysis();
- } else if (screenId === 'screen-my-vehicles') {
-  if (screenMyVehicles) screenMyVehicles.classList.add('active');
-  const el = document.getElementById('side-tab-vehicles');
-  if (el) el.classList.add('active');
-  renderVehiclesGrid();
- } else if (screenId === 'screen-add-vehicle') {
-  if (screenAddVehicle) screenAddVehicle.classList.add('active');
- } else if (screenId === 'screen-maintenance') {
-  if (screenMaintenance) screenMaintenance.classList.add('active');
-  const el = document.getElementById('side-tab-maint');
-  if (el) el.classList.add('active');
-  renderMaintenanceSystem();
- } else if (screenId === 'screen-finance') {
-  if (screenFinance) screenFinance.classList.add('active');
-  const el = document.getElementById('side-tab-fin');
-  if (el) el.classList.add('active');
-  renderFinanceSystem();
- }
- }
-
- // Atualizar o card do veículo na aba Home
  function updateHomeActiveVehicleCard() {
- const v = getVeiculoAtivoObj();
- const vTitle = document.getElementById('home-vehicle-title');
- const vDesc = document.getElementById('home-vehicle-desc');
- const ecuActiveCar = document.getElementById('ecu-active-car');
- const ecuActivePilot = document.getElementById('ecu-active-pilot');
- const ecuPulse = document.getElementById('ecu-pulse');
+  const v = getVeiculoAtivoObj();
+  const vTitle = document.getElementById('home-vehicle-title');
+  const vDesc = document.getElementById('home-vehicle-desc');
+  const ecuPulse = document.getElementById('ecu-pulse');
 
- if (ecuActivePilot && appState.motoristaNome) ecuActivePilot.textContent = appState.motoristaNome;
-
- if (v) {
-  if (vTitle && vDesc) {
-   vTitle.innerHTML = `${v.marca} <span style="font-weight: 300;">${v.modelo}</span>`;
-   vDesc.innerHTML = `Resultados para <span class="vehicle-placa-badge" style="font-size:0.65rem; padding: 1px 6px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
+  if (v) {
+   if (vTitle && vDesc) {
+    vTitle.innerHTML = `${v.marca} <span style="font-weight: 300;">${v.modelo}</span>`;
+    vDesc.innerHTML = `Resultados para <span class="vehicle-placa-badge" style="font-size:0.65rem; padding: 1px 6px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
+   }
+   if (ecuPulse) ecuPulse.className = "ecu-status-indicator";
+  } else {
+   if (vTitle && vDesc) {
+    vTitle.textContent = "Nenhum";
+    vDesc.textContent = "Configure seu veículo na garagem para ativar as funcionalidades.";
+   }
+   if (ecuPulse) ecuPulse.className = "ecu-status-indicator amber";
   }
-  if (ecuActiveCar) ecuActiveCar.textContent = `${v.marca} ${v.modelo}`;
-  if (ecuPulse) ecuPulse.className = "ecu-status-indicator";
- } else {
-  if (vTitle && vDesc) {
-   vTitle.textContent = "Nenhum";
-   vDesc.textContent = "Configure seu veículo na garagem para ativar as funcionalidades.";
-  }
-  if (ecuActiveCar) ecuActiveCar.textContent = "NENHUM";
-  if (ecuPulse) ecuPulse.className = "ecu-status-indicator amber";
- }
  }
 
- // Alternar Tema
  if (themeToggleMain) {
- themeToggleMain.addEventListener('click', () => {
-  const nextTheme = appState.theme === 'dark' ? 'light' : 'dark';
-  appState.theme = nextTheme;
-  localStorage.setItem('gi_theme', nextTheme);
-  applyThemeLogos(nextTheme);
- });
+  themeToggleMain.addEventListener('click', () => {
+   const nextTheme = appState.theme === 'dark' ? 'light' : 'dark';
+   appState.theme = nextTheme;
+   localStorage.setItem('gi_theme', nextTheme);
+   applyThemeLogos(nextTheme);
+  });
  }
 
- // SINCRONIZAR APP
  const btnSync = document.getElementById('btn-sync-app');
  if (btnSync) {
   btnSync.addEventListener('click', () => {
@@ -2454,9 +2747,17 @@
    }, 600);
 
    setTimeout(() => {
-    appState.veiculos = JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [];
+    try {
+     appState.veiculos = JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [];
+    } catch(e) { appState.veiculos = []; }
     appState.veiculoAtivoId = localStorage.getItem('gi_veiculo_ativo_id') || null;
-    appState.financeContract = JSON.parse(localStorage.getItem('gi_financas')) || null;
+    try {
+     appState.financeContract = JSON.parse(localStorage.getItem('gi_financas')) || null;
+    } catch(e) { appState.financeContract = null; }
+    try {
+     appState.metas = JSON.parse(localStorage.getItem('gi_metas')) || [];
+    } catch(e) { appState.metas = []; }
+    appState.metaAtivaId = localStorage.getItem('gi_meta_ativa_id') || null;
     appState.motoristaNome = localStorage.getItem('gi_motorista_nome') || null;
     appState.motoristaEstado = localStorage.getItem('gi_motorista_estado') || null;
     appState.motoristaAvatar = localStorage.getItem('gi_motorista_avatar') || '👨‍✈️';
@@ -2468,6 +2769,7 @@
     if (screenMaintenance.classList.contains('active')) renderMaintenanceSystem();
     if (screenFinance.classList.contains('active')) renderFinanceSystem();
     if (screenMyVehicles.classList.contains('active')) renderVehiclesGrid();
+    if (screenGoals.classList.contains('active')) renderGoalsSystem();
 
     if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
     if (icon) icon.classList.remove('fa-spin');
@@ -2478,203 +2780,207 @@
   });
  }
 
- window.closeSyncSuccessModal = function() {
+ function closeSyncSuccessModal() {
   if (modalSyncSuccess) modalSyncSuccess.classList.remove('active');
- };
+ }
 
- // CRUD DE GARAGEM
  const btnAddVeh = document.getElementById('btn-add-vehicle-screen');
  if (btnAddVeh) {
- btnAddVeh.addEventListener('click', () => {
-  appState.veiculoEmEdicaoId = null;
-  if (addVehicleScreenTitle) addVehicleScreenTitle.textContent = "Nova Calibração";
-  resetAddVehicleForm();
-  switchTab('screen-add-vehicle');
- });
+  btnAddVeh.addEventListener('click', () => {
+   appState.veiculoEmEdicaoId = null;
+   if (addVehicleScreenTitle) addVehicleScreenTitle.textContent = "Nova Calibração";
+   resetAddVehicleForm();
+   switchTab('screen-add-vehicle');
+  });
  }
 
  function resetAddVehicleForm() {
- if (inputVkm) inputVkm.value = '';
- if (inputVplaca) inputVplaca.value = '';
- if (selectVmarca) selectVmarca.value = '';
- if (inputVmodelo) inputVmodelo.value = '';
- if (inputVcor) inputVcor.value = '';
- if (inputVEtanolOff) inputVEtanolOff.value = '';
- if (inputVGasolinaOff) inputVGasolinaOff.value = '';
- if (inputVEtanolOn) inputVEtanolOn.value = '';
- if (inputVGasolinaOn) inputVGasolinaOn.value = '';
+  if (inputVkm) inputVkm.value = '';
+  if (inputVplaca) inputVplaca.value = '';
+  if (selectVmarca) selectVmarca.value = '';
+  if (inputVmodelo) inputVmodelo.value = '';
+  if (inputVcor) inputVcor.value = '';
+  if (inputVEtanolOff) inputVEtanolOff.value = '';
+  if (inputVGasolinaOff) inputVGasolinaOff.value = '';
+  if (inputVEtanolOn) inputVEtanolOn.value = '';
+  if (inputVGasolinaOn) inputVGasolinaOn.value = '';
  }
 
  const btnSaveVeh = document.getElementById('btn-save-vehicle');
  if (btnSaveVeh) {
- btnSaveVeh.addEventListener('click', () => {
-  const km = parseInt(inputVkm ? inputVkm.value : '0');
-  const placa = inputVplaca ? inputVplaca.value.trim().toUpperCase() : '';
-  const marca = selectVmarca ? selectVmarca.value : '';
-  const modelo = inputVmodelo ? inputVmodelo.value.trim() : '';
-  const cor = inputVcor ? inputVcor.value.trim() : '';
-  const etanolOff = parseFloat(inputVEtanolOff ? inputVEtanolOff.value : '0');
-  const gasolinaOff = parseFloat(inputVGasolinaOff ? inputVGasolinaOff.value : '0');
-  const etanolOn = parseFloat(inputVEtanolOn ? inputVEtanolOn.value : '0');
-  const gasolinaOn = parseFloat(inputVGasolinaOn ? inputVGasolinaOn.value : '0');
+  btnSaveVeh.addEventListener('click', () => {
+   const km = parseInt(inputVkm ? inputVkm.value : '0');
+   const placa = inputVplaca ? inputVplaca.value.trim().toUpperCase() : '';
+   const marca = selectVmarca ? selectVmarca.value : '';
+   const modelo = inputVmodelo ? inputVmodelo.value.trim() : '';
+   const cor = inputVcor ? inputVcor.value.trim() : '';
+   const etanolOff = parseFloat(inputVEtanolOff ? inputVEtanolOff.value : '0');
+   const gasolinaOff = parseFloat(inputVGasolinaOff ? inputVGasolinaOff.value : '0');
+   const etanolOn = parseFloat(inputVEtanolOn ? inputVEtanolOn.value : '0');
+   const gasolinaOn = parseFloat(inputVGasolinaOn ? inputVGasolinaOn.value : '0');
 
-  if (!km || !placa || !marca || !modelo || !cor || isNaN(etanolOff) || isNaN(gasolinaOff) || isNaN(etanolOn) || isNaN(gasolinaOn)) {
-  alert('Calibração abortada. Preencha todos os parâmetros mecânicos corretamente.');
-  return;
-  }
+   if (!km || !placa || !marca || !modelo || !cor || isNaN(etanolOff) || isNaN(gasolinaOff) || isNaN(etanolOn) || isNaN(gasolinaOn)) {
+    alert('Calibração abortada. Preencha todos os parâmetros mecânicos corretamente.');
+    return;
+   }
 
-  const timestamp = Date.now();
+   const timestamp = Date.now();
 
-  if (appState.veiculoEmEdicaoId) {
-  const idx = appState.veiculos.findIndex(v => v.id === appState.veiculoEmEdicaoId);
-  if (idx !== -1) {
-   const prev = appState.veiculos[idx];
-   appState.veiculos[idx] = { 
-   id: appState.veiculoEmEdicaoId, km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn,
-   maintOilLast: prev.maintOilLast ?? null, maintOilInt: prev.maintOilInt ?? null,
-   maintFilterLast: prev.maintFilterLast ?? null, maintFilterInt: prev.maintFilterInt ?? null,
-   odoLastUpdated: prev.odoLastUpdated ?? timestamp
-   };
-  }
-  } else {
-  const novo = { 
-   id: String(timestamp), km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn,
-   maintOilLast: null, maintOilInt: null,
-   maintFilterLast: null, maintFilterInt: null,
-   odoLastUpdated: timestamp
-  };
-  appState.veiculos.push(novo);
-  setVeiculoAtivo(novo.id);
-  }
+   if (appState.veiculoEmEdicaoId) {
+    const idx = appState.veiculos.findIndex(v => v.id === appState.veiculoEmEdicaoId);
+    if (idx !== -1) {
+     const prev = appState.veiculos[idx];
+     appState.veiculos[idx] = { 
+      id: appState.veiculoEmEdicaoId, km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn,
+      maintOilLast: prev.maintOilLast ?? null, maintOilInt: prev.maintOilInt ?? null,
+      maintFilterLast: prev.maintFilterLast ?? null, maintFilterInt: prev.maintFilterInt ?? null,
+      maintAlignLast: prev.maintAlignLast ?? null, maintAlignInt: prev.maintAlignInt ?? null,
+      maintBalanceLast: prev.maintBalanceLast ?? null, maintBalanceInt: prev.maintBalanceInt ?? null,
+      maintAcSanitLast: prev.maintAcSanitLast ?? null, maintAcSanitInt: prev.maintAcSanitInt ?? null,
+      odoLastUpdated: prev.odoLastUpdated ?? timestamp
+     };
+    }
+   } else {
+    const novo = { 
+     id: String(timestamp), km, placa, marca, modelo, cor, etanolOff, gasolinaOff, etanolOn, gasolinaOn,
+     maintOilLast: null, maintOilInt: null,
+     maintFilterLast: null, maintFilterInt: null,
+     maintAlignLast: null, maintAlignInt: null,
+     maintBalanceLast: null, maintBalanceInt: null,
+     maintAcSanitLast: null, maintAcSanitInt: null,
+     odoLastUpdated: timestamp
+    };
+    appState.veiculos.push(novo);
+    setVeiculoAtivo(novo.id);
+   }
 
-  appState.veiculoEmEdicaoId = null;
-  localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
-  renderVehiclesGrid();
-  switchTab('screen-my-vehicles');
- });
+   appState.veiculoEmEdicaoId = null;
+   localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+   renderVehiclesGrid();
+   switchTab('screen-my-vehicles');
+  });
  }
 
  function setVeiculoAtivo(id) {
- appState.veiculoAtivoId = id;
- localStorage.setItem('gi_veiculo_ativo_id', id);
+  appState.veiculoAtivoId = id;
+  localStorage.setItem('gi_veiculo_ativo_id', id);
  }
 
  function getVeiculoAtivoObj() {
- if (appState.veiculos.length === 0) return null;
- return appState.veiculos.find(v => v.id === appState.veiculoAtivoId) || appState.veiculos[0];
+  if (appState.veiculos.length === 0) return null;
+  return appState.veiculos.find(v => v.id === appState.veiculoAtivoId) || appState.veiculos[0];
  }
 
  function editVehicle(id, e) {
- e.stopPropagation();
- const v = appState.veiculos.find(veh => veh.id === id);
- if (!v) return;
+  e.stopPropagation();
+  const v = appState.veiculos.find(veh => veh.id === id);
+  if (!v) return;
 
- appState.veiculoEmEdicaoId = id;
- if (addVehicleScreenTitle) addVehicleScreenTitle.textContent = "Editar Calibração";
+  appState.veiculoEmEdicaoId = id;
+  if (addVehicleScreenTitle) addVehicleScreenTitle.textContent = "Editar Calibração";
 
- if (inputVkm) inputVkm.value = v.km;
- if (inputVplaca) inputVplaca.value = v.placa;
- if (selectVmarca) selectVmarca.value = v.marca;
- if (inputVmodelo) inputVmodelo.value = v.modelo;
- if (inputVcor) inputVcor.value = v.cor;
- if (inputVEtanolOff) inputVEtanolOff.value = v.etanolOff;
- if (inputVGasolinaOff) inputVGasolinaOff.value = v.gasolinaOff;
- if (inputVEtanolOn) inputVEtanolOn.value = v.etanolOn;
- if (inputVGasolinaOn) inputVGasolinaOn.value = v.gasolinaOn;
+  if (inputVkm) inputVkm.value = v.km;
+  if (inputVplaca) inputVplaca.value = v.placa;
+  if (selectVmarca) selectVmarca.value = v.marca;
+  if (inputVmodelo) inputVmodelo.value = v.modelo;
+  if (inputVcor) inputVcor.value = v.cor;
+  if (inputVEtanolOff) inputVEtanolOff.value = v.etanolOff;
+  if (inputVGasolinaOff) inputVGasolinaOff.value = v.gasolinaOff;
+  if (inputVEtanolOn) inputVEtanolOn.value = v.etanolOn;
+  if (inputVGasolinaOn) inputVGasolinaOn.value = v.gasolinaOn;
 
- switchTab('screen-add-vehicle');
+  switchTab('screen-add-vehicle');
  }
 
  function deleteVehicle(id, e) {
- e.stopPropagation();
- if (!confirm('Descartar permanentemente esta calibração do banco de dados?')) return;
+  e.stopPropagation();
+  if (!confirm('Descartar permanentemente esta calibração do banco de dados?')) return;
 
- appState.veiculos = appState.veiculos.filter(v => v.id !== id);
- localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
+  appState.veiculos = appState.veiculos.filter(v => v.id !== id);
+  localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
 
- if (appState.veiculoAtivoId === id) {
-  if (appState.veiculos.length > 0) setVeiculoAtivo(appState.veiculos[0].id);
-  else { appState.veiculoAtivoId = null; localStorage.removeItem('gi_veiculo_ativo_id'); }
- }
- renderVehiclesGrid();
+  if (appState.veiculoAtivoId === id) {
+   if (appState.veiculos.length > 0) setVeiculoAtivo(appState.veiculos[0].id);
+   else { appState.veiculoAtivoId = null; localStorage.removeItem('gi_veiculo_ativo_id'); }
+  }
+  renderVehiclesGrid();
  }
 
  function renderVehiclesGrid() {
- if (!vehiclesListContainer) return;
- vehiclesListContainer.innerHTML = '';
- if (appState.veiculos.length === 0) {
-  vehiclesListContainer.innerHTML = `
-  <div style="text-align: center; grid-column: span 2; padding: 40px 20px;" class="bento-card">
-   <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhum carro cadastrado no banco da ECU.</p>
-  </div>
-  `;
-  return;
- }
-
- const ativo = getVeiculoAtivoObj();
- appState.veiculos.forEach(v => {
-  const isAtivo = ativo && v.id === ativo.id;
-  const card = document.createElement('div');
-  card.className = `premium-vehicle-card ${isAtivo ? 'active' : ''}`;
-  card.onclick = () => {
-  setVeiculoAtivo(v.id);
-  renderVehiclesGrid();
-  };
-
-  card.innerHTML = `
-  <div class="vehicle-info-block">
-   <span class="vehicle-model-line">${v.marca} <span style="font-weight: 300;">${v.modelo}</span></span>
-   <div class="vehicle-meta-line">
-   <span>${v.cor}</span> • <span>${v.km.toLocaleString()} KM</span> • <span class="vehicle-placa-badge">${v.placa}</span>
+  if (!vehiclesListContainer) return;
+  vehiclesListContainer.innerHTML = '';
+  if (appState.veiculos.length === 0) {
+   vehiclesListContainer.innerHTML = `
+   <div style="text-align: center; grid-column: span 2; padding: 40px 20px;" class="bento-card">
+    <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhum carro cadastrado no banco da ECU.</p>
    </div>
-  </div>
-  <div class="vehicle-actions-block">
-   <button class="icon-btn edit"><i class="fa-solid fa-pen"></i></button>
-   <button class="icon-btn delete"><i class="fa-solid fa-trash-can"></i></button>
-  </div>
-  `;
-  
-  const editBtn = card.querySelector('.edit');
-  const deleteBtn = card.querySelector('.delete');
-  if (editBtn) editBtn.addEventListener('click', (ev) => editVehicle(v.id, ev));
-  if (deleteBtn) deleteBtn.addEventListener('click', (ev) => deleteVehicle(v.id, ev));
+   `;
+   return;
+  }
 
-  vehiclesListContainer.appendChild(card);
- });
+  const ativo = getVeiculoAtivoObj();
+  appState.veiculos.forEach(v => {
+   const isAtivo = ativo && v.id === ativo.id;
+   const card = document.createElement('div');
+   card.className = `premium-vehicle-card ${isAtivo ? 'active' : ''}`;
+   card.onclick = () => {
+    setVeiculoAtivo(v.id);
+    renderVehiclesGrid();
+   };
+
+   card.innerHTML = `
+   <div class="vehicle-info-block">
+    <span class="vehicle-model-line">${v.marca} <span style="font-weight: 300;">${v.modelo}</span></span>
+    <div class="vehicle-meta-line">
+    <span>${v.cor}</span> • <span>${v.km.toLocaleString()} KM</span> • <span class="vehicle-placa-badge">${v.placa}</span>
+    </div>
+   </div>
+   <div class="vehicle-actions-block">
+    <button class="icon-btn edit"><i class="fa-solid fa-pen"></i></button>
+    <button class="icon-btn delete"><i class="fa-solid fa-trash-can"></i></button>
+   </div>
+   `;
+    
+   const editBtn = card.querySelector('.edit');
+   const deleteBtn = card.querySelector('.delete');
+   if (editBtn) editBtn.addEventListener('click', (ev) => editVehicle(v.id, ev));
+   if (deleteBtn) deleteBtn.addEventListener('click', (ev) => deleteVehicle(v.id, ev));
+
+   vehiclesListContainer.appendChild(card);
+  });
  }
 
  const btnModalGoToVehicles = document.getElementById('btn-modal-go-to-vehicles');
  if (btnModalGoToVehicles) {
- btnModalGoToVehicles.addEventListener('click', () => {
-  if (modalNoVehicle) modalNoVehicle.classList.remove('active');
-  switchTab('screen-my-vehicles');
- });
+  btnModalGoToVehicles.addEventListener('click', () => {
+   if (modalNoVehicle) modalNoVehicle.classList.remove('active');
+   switchTab('screen-my-vehicles');
+  });
  }
 
- // --- CÁLCULO E CLIMATIZAÇÃO ---
  if (acToggle) {
- acToggle.addEventListener('change', () => {
-  updateAiCostAnalysis();
-  if (resultCard) resultCard.style.display = 'none';
-  if (aiReportOutput) aiReportOutput.style.display = 'none';
- });
+  acToggle.addEventListener('change', () => {
+   updateAiCostAnalysis();
+   if (resultCard) resultCard.style.display = 'none';
+   if (aiReportOutput) aiReportOutput.style.display = 'none';
+  });
  }
 
  function updateAiCostAnalysis() {
- const hasAc = acToggle ? acToggle.checked : false;
- const v = getVeiculoAtivoObj();
- if (!v) return;
+  const hasAc = acToggle ? acToggle.checked : false;
+  const v = getVeiculoAtivoObj();
+  if (!v) return;
 
- const labels = hasAc ? "A/C Ligado" : "A/C Desligado";
- if (acSection) acSection.className = `tesla-switch-card ${hasAc ? 'active' : ''}`;
- if (acStatusDesc) acStatusDesc.textContent = `Exibindo resultados baseado no ${labels}`;
+  const labels = hasAc ? "A/C Ligado" : "A/C Desligado";
+  if (acSection) acSection.className = `tesla-switch-card ${hasAc ? 'active' : ''}`;
+  if (acStatusDesc) acStatusDesc.textContent = `Exibindo resultados baseado no ${}`;
 
- const cE = hasAc ? v.etanolOn : v.etanolOff;
- const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
+  const cE = hasAc ? v.etanolOn : v.etanolOff;
+  const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
 
- if (aiRecommendation) {
-  aiRecommendation.innerHTML = `Resultados sintonizado com a ECU para <strong>${v.marca} ${v.modelo}</strong>. Desempenho calibrado para: <strong>${cE} km/l</strong> no Etanol e <strong>${cG} km/l</strong> na Gasolina.`;
- }
+  if (aiRecommendation) {
+   aiRecommendation.innerHTML = `Resultados sintonizado com a ECU para <strong>${v.marca} ${v.modelo}</strong>. Desempenho calibrado para: <strong>${} km/l</strong> no Etanol e <strong>${} km/l</strong> na Gasolina.`;
+  }
  }
 
  function runDiagnosticCalculation(priceEtanol, priceGasolina, hasAc) {
@@ -2699,556 +3005,686 @@
    resultCard.style.display = 'flex';
    resultCard.classList.remove('etanol-won', 'gasolina-won');
   }
-  
+   
   const costEt = document.getElementById('meta-cost-etanol');
   const costGas = document.getElementById('meta-cost-gasolina');
   if (costEt) costEt.textContent = `R$ ${kmE.toFixed(2).replace('.', ',')} / KM`;
   if (costGas) costGas.textContent = `R$ ${kmG.toFixed(2).replace('.', ',')} / KM`;
 
   if (proporcoMercado < eficiencia) {
-  if (resultCard) resultCard.classList.add('etanol-won');
-  if (veredictoText) {
-   veredictoText.textContent = "ABASTEÇA COM ETANOL";
-   veredictoText.className = "diagnostic-verdict etanol-win";
-  }
-  const ecoPorLitro = kmG - kmE;
-  const ecoTanque = ecoPorLitro * cE * 50;
-  if (economyDetail) {
-   economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2).replace('.', ',')}</span> a cada 50L.`;
-  }
+   if (resultCard) resultCard.classList.add('etanol-won');
+   if (veredictoText) {
+    veredictoText.textContent = "ABASTEÇA COM ETANOL";
+    veredictoText.className = "diagnostic-verdict etanol-win";
+   }
+   const ecoPorLitro = kmG - kmE;
+   const ecoTanque = ecoPorLitro * cE * 50;
+   if (economyDetail) {
+    economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2).replace('.', ',')}</span> a cada 50L.`;
+   }
   } else {
-  if (resultCard) resultCard.classList.add('gasolina-won');
-  if (veredictoText) {
-   veredictoText.textContent = "ABASTEÇA COM GASOLINA";
-   veredictoText.className = "diagnostic-verdict gasolina-win";
-  }
-  const precoLimite = priceGasolina * eficiencia;
-  if (economyDetail) {
-   economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2).replace('.', ',')}</span>.`;
-  }
+   if (resultCard) resultCard.classList.add('gasolina-won');
+   if (veredictoText) {
+    veredictoText.textContent = "ABASTEÇA COM GASOLINA";
+    veredictoText.className = "diagnostic-verdict gasolina-win";
+   }
+   const precoLimite = priceGasolina * eficiencia;
+   if (economyDetail) {
+    economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2).replace('.', ',')}</span>.`;
+   }
   }
 
   if (badgeEfficiency) badgeEfficiency.textContent = `Eficiência Real: ${(eficiencia*100).toFixed(1)}%`;
  }
 
  if (calculateBtn) {
- calculateBtn.addEventListener('click', () => {
-  const pE = parseFloat((inputPriceEtanol ? inputPriceEtanol.value : '0').replace(',', '.'));
-  const pG = parseFloat((inputPriceGasolina ? inputPriceGasolina.value : '0').replace(',', '.'));
+  calculateBtn.addEventListener('click', () => {
+   const pE = parseFloat((inputPriceEtanol ? inputPriceEtanol.value : '0').replace(',', '.'));
+   const pG = parseFloat((inputPriceGasolina ? inputPriceGasolina.value : '0').replace(',', '.'));
 
-  if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
-  alert('Introduza valores de combustíveis válidos.');
-  return;
-  }
+   if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
+    alert('Introduza valores de combustíveis válidos.');
+    return;
+   }
 
-  if (modalToretoCalculating) modalToretoCalculating.classList.add('active');
+   if (modalToretoCalculating) modalToretoCalculating.classList.add('active');
 
-  setTimeout(() => {
-  if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
-  runDiagnosticCalculation(pE, pG, acToggle ? acToggle.checked : false);
-  }, 1400);
- });
+   setTimeout(() => {
+    if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
+    runDiagnosticCalculation(pE, pG, acToggle ? acToggle.checked : false);
+   }, 1400);
+  });
  }
 
  const btnHomeCalculate = document.getElementById('btn-home-calculate');
  if (btnHomeCalculate) {
- btnHomeCalculate.addEventListener('click', () => {
-  if (appState.veiculos.length === 0) {
-  if (modalNoVehicle) modalNoVehicle.classList.add('active');
-  return;
-  }
-  const pE = parseFloat((document.getElementById('home-price-etanol').value || '0').replace(',', '.'));
-  const pG = parseFloat((document.getElementById('home-price-gasolina').value || '0').replace(',', '.'));
-  const hasAc = document.getElementById('home-ac-toggle').checked;
+  btnHomeCalculate.addEventListener('click', () => {
+   if (appState.veiculos.length === 0) {
+    if (modalNoVehicle) modalNoVehicle.classList.add('active');
+    return;
+   }
+   const pE = parseFloat((document.getElementById('home-price-etanol').value || '0').replace(',', '.'));
+   const pG = parseFloat((document.getElementById('home-price-gasolina').value || '0').replace(',', '.'));
+   const hasAc = document.getElementById('home-ac-toggle').checked;
 
-  if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
-  alert('Introduza valores de combustíveis válidos no painel expresso.');
-  return;
-  }
+   if (isNaN(pE) || isNaN(pG) || pE <= 0 || pG <= 0) {
+    alert('Introduza valores de combustíveis válidos no painel expresso.');
+    return;
+   }
 
-  if (modalToretoCalculating) modalToretoCalculating.classList.add('active');
+   if (modalToretoCalculating) modalToretoCalculating.classList.add('active');
 
-  setTimeout(() => {
-  if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
-  runDiagnosticCalculation(pE, pG, hasAc);
-  }, 1400);
- });
+   setTimeout(() => {
+    if (modalToretoCalculating) modalToretoCalculating.classList.remove('active');
+    runDiagnosticCalculation(pE, pG, hasAc);
+   }, 1400);
+  });
  }
 
- // Relatório IA Premium
  if (btnGenerateReport) {
- btnGenerateReport.addEventListener('click', () => {
-  if (aiReportOutput) aiReportOutput.style.display = 'block';
-  if (aiReportContent) aiReportContent.innerHTML = `Processando telemetria...`;
+  btnGenerateReport.addEventListener('click', () => {
+   if (aiReportOutput) aiReportOutput.style.display = 'block';
+   if (aiReportContent) aiReportContent.innerHTML = `Processando telemetria...`;
 
-  setTimeout(() => {
-  const pE = parseFloat((inputPriceEtanol ? inputPriceEtanol.value : '0').replace(',', '.'));
-  const pG = parseFloat((inputPriceGasolina ? inputPriceGasolina.value : '0').replace(',', '.'));
-  const hasAc = acToggle ? acToggle.checked : false;
-  const v = getVeiculoAtivoObj();
-  if (!v) return;
-  const cE = hasAc ? v.etanolOn : v.etanolOff;
-  const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
-   
-  const kmE = pE / cE;
-  const kmG = pG / cG;
-  const ratio = pE / pG;
-  const ef = cE / cG;
+   setTimeout(() => {
+    const pE = parseFloat((inputPriceEtanol ? inputPriceEtanol.value : '0').replace(',', '.'));
+    const pG = parseFloat((inputPriceGasolina ? inputPriceGasolina.value : '0').replace(',', '.'));
+    const hasAc = acToggle ? acToggle.checked : false;
+    const v = getVeiculoAtivoObj();
+    if (!v) return;
+    const cE = hasAc ? v.etanolOn : v.etanolOff;
+    const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
+     
+    const kmE = pE / cE;
+    const kmG = pG / cG;
+    const ratio = pE / pG;
+    const ef = cE / cG;
 
-  let report = '';
-  if (ratio < ef) {
-   report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km com Etanol é de <strong>R$ ${kmE.toFixed(2).replace('.', ',')}</strong> versus <strong>R$ ${kmG.toFixed(2).replace('.', ',')}</strong> na Gasolina. O Etanol é extremamente vantajoso com as tabelas de preços correntes.</p>
-   <p><strong>Autonomia Preditiva:</strong> Seu reservatório de 50L garante <strong>${(cE*50).toFixed(0)} km</strong> no Etanol. Na Gasolina, garantiria <strong>${(cG*50).toFixed(0)} km</strong>, mas o custo por km percorrido não compensa.</p>`;
-  } else {
-   report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km na Gasolina é de <strong>R$ ${kmG.toFixed(2).replace('.', ',')}</strong> contra <strong>R$ ${kmE.toFixed(2).replace('.', ',')}</strong> no Etanol. A Gasolina fornece maior poder calórico, compensando a diferença de preço atual.</p>
-   <p><strong>Autonomia Preditiva:</strong> Sua autonomia por tanque de 50L chega a <strong>${(cG*50).toFixed(0)} km</strong>, o que reduz paradas de abastecimento.</p>`;
-  }
+    let report = '';
+    if (ratio < ef) {
+     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km com Etanol é de <strong>R$ ${kmE.toFixed(2).replace('.', ',')}</strong> versus <strong>R$ ${kmG.toFixed(2).replace('.', ',')}</strong> na Gasolina. O Etanol é extremamente vantajoso com as tabelas de preços correntes.</p>
+     <p><strong>Autonomia Preditiva:</strong> Seu reservatório de 50L garante <strong>${(cE*50).toFixed(0)} km</strong> no Etanol. Na Gasolina, garantiria <strong>${(cG*50).toFixed(0)} km</strong>, mas o custo por km percorrido não compensa.</p>`;
+    } else {
+     report = `<p><strong>Análise de Injeção:</strong> O custo operacional por km na Gasolina é de <strong>R$ ${kmG.toFixed(2).replace('.', ',')}</strong> contra <strong>R$ ${kmE.toFixed(2).replace('.', ',')}</strong> no Etanol. A Gasolina fornece maior poder calórico, compensando a diferença de preço atual.</p>
+     <p><strong>Autonomia Preditiva:</strong> Sua autonomia por tanque de 50L chega a <strong>${(cG*50).toFixed(0)} km</strong>, o que reduz paradas de abastecimento.</p>`;
+    }
 
-  if (aiReportContent) aiReportContent.innerHTML = report;
-  }, 1200);
- });
+    if (aiReportContent) aiReportContent.innerHTML = report;
+   }, 1200);
+  });
  }
 
- // --- SISTEMA DE MANUTENÇÃO ---
  function renderMaintenanceSystem() {
- const v = getVeiculoAtivoObj();
- const container = document.getElementById('maintenance-items-container');
- if (!container) return;
- container.innerHTML = '';
+  const v = getVeiculoAtivoObj();
+  const container = document.getElementById('maintenance-items-container');
+  if (!container) return;
+  container.innerHTML = '';
 
- if (!v) return;
+  if (!v) return;
 
- const components = [
-  { key: 'Oil', name: 'Troca de Óleo Lubrificante', icon: 'fa-oil-can' },
-  { key: 'Filter', name: 'Substituição de Filtros', icon: 'fa-filter' }
- ];
+  const components = [
+   { key: 'Oil', name: 'Troca de Óleo Lubrificante', icon: 'fa-oil-can' },
+   { key: 'Filter', name: 'Substituição de Filtros', icon: 'fa-filter' },
+   { key: 'Align', name: 'Alinhamento Preventivo', icon: 'fa-car-side' },
+   { key: 'Balance', name: 'Balanceamento e Rodízio de Pneus', icon: 'fa-circle-notch' },
+   { key: 'AcSanit', name: 'Higienização do Ar-Condicionado & Filtro Cabine', icon: 'fa-wind' }
+  ];
 
- components.forEach(comp => {
-  const lastChange = v[`maint${comp.key}Last`];
-  const interval = v[`maint${comp.key}Int`];
+  components.forEach(comp => {
+   const lastChange = v[`maint${comp.key}Last`];
+   const interval = v[`maint${comp.key}Int`];
 
-  const div = document.createElement('div');
-  div.className = 'maint-item';
+   const div = document.createElement('div');
+   div.className = 'maint-item';
 
-  if (lastChange !== undefined && lastChange !== null && interval !== undefined && interval !== null) {
-  const nextChange = lastChange + interval;
-  let rest = nextChange - v.km;
-  if (rest < 0) rest = 0;
+   if (lastChange !== undefined && lastChange !== null && interval !== undefined && interval !== null) {
+    const nextChange = lastChange + interval;
+    let rest = nextChange - v.km;
+    if (rest < 0) rest = 0;
 
-  const percentage = Math.max(0, Math.min(100, (rest / interval) * 100));
+    const percentage = Math.max(0, Math.min(100, (rest / interval) * 100));
 
-  let barColor = 'var(--accent-blue)';
-  let statusClass = 'healthy';
-  let statusText = 'Saudável';
+    let barColor = 'var(--accent-blue)';
+    let statusClass = 'healthy';
+    let statusText = 'Saudável';
 
-  if (percentage < 30) {
-   barColor = 'var(--accent-gasolina)';
-   statusClass = 'attention';
-   statusText = 'Atenção';
-  }
-  if (percentage < 10) {
-   barColor = 'var(--accent-red)';
-   statusClass = 'critical';
-   statusText = 'Crítico';
-  }
+    if (percentage < 30) {
+     barColor = 'var(--accent-gasolina)';
+     statusClass = 'attention';
+     statusText = 'Atenção';
+    }
+    if (percentage < 10) {
+     barColor = 'var(--accent-red)';
+     statusClass = 'critical';
+     statusText = 'Crítico';
+    }
 
-  div.innerHTML = `
-   <div class="maint-meta">
-   <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
-   <span class="maint-badge ${statusClass}">${statusText}</span>
-   </div>
-   <div class="maint-progress-bar">
-   <div class="maint-progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
-   </div>
-   
-   <div class="maint-diagnostic-grid">
-    <div class="maint-diagnostic-col">
-     <span class="maint-diag-lbl">Última Troca</span>
-     <span class="maint-diag-val">${lastChange.toLocaleString()} km</span>
-    </div>
-    <div class="maint-diagnostic-col">
-     <span class="maint-diag-lbl">KM Atual</span>
-     <span class="maint-diag-val">${v.km.toLocaleString()} km</span>
-    </div>
-    <div class="maint-diagnostic-col">
-     <span class="maint-diag-lbl">Próxima Troca</span>
-     <span class="maint-diag-val">${nextChange.toLocaleString()} km</span>
-    </div>
-   </div>
+    div.innerHTML = `
+     <div class="maint-meta">
+     <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
+     <span class="maint-badge ${}">${}</span>
+     </div>
+     <div class="maint-progress-bar">
+     <div class="maint-progress-fill" style="width: ${}%; background-color: ${};"></div>
+     </div>
+     
+     <div class="maint-diagnostic-grid">
+     <div class="maint-diagnostic-col">
+      <span class="maint-diag-lbl">Último Ajuste</span>
+      <span class="maint-diag-val">${lastChange.toLocaleString()} km</span>
+     </div>
+     <div class="maint-diagnostic-col">
+      <span class="maint-diag-lbl">KM Atual</span>
+      <span class="maint-diag-val">${v.km.toLocaleString()} km</span>
+     </div>
+     <div class="maint-diagnostic-col">
+      <span class="maint-diag-lbl">Próximo Ajuste</span>
+      <span class="maint-diag-val">${nextChange.toLocaleString()} km</span>
+     </div>
+     </div>
 
-   <div class="maint-meta" style="margin-top: 10px;">
-   <span class="maint-km" style="font-weight:700; color: ${percentage < 10 ? 'var(--accent-red)' : 'inherit'};">
-    ${rest > 0 ? `Intervalo de segurança: Restam ${rest.toLocaleString()} km` : 'COMPONENTE VENCIDO - REALIZE A SUBSTITUIÇÃO'}
-   </span>
-   </div>
-   <button class="maint-action-btn" onclick="openMaintSetupModal('${comp.key}')" style="margin-top: 8px; width: 100%; justify-content: center;"><i class="fa-solid fa-rotate"></i> Registrar Troca</button>
-  `;
-  } else {
-  div.innerHTML = `
-   <div class="maint-meta">
-   <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
-   <button class="btn-premium-secondary" onclick="openMaintSetupModal('${comp.key}')" style="width: auto; height: 36px; padding: 0 14px; font-size: 0.75rem;">Configurar Controle</button>
-   </div>
-   <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Nenhum registro de troca localizado para este componente.</p>
-  `;
-  }
-  container.appendChild(div);
- });
+     <div class="maint-meta" style="margin-top: 10px;">
+     <span class="maint-km" style="font-weight:700; color: ${percentage < 10 ? 'var(--accent-red)' : 'inherit'};">
+     ${rest > 0 ? `Intervalo de segurança: Restam ${rest.toLocaleString()} km` : 'COMPONENTE VENCIDO - REALIZE A MANUTENÇÃO'}
+     </span>
+     </div>
+     <button class="maint-action-btn" onclick="openMaintSetupModal('${comp.key}')" style="margin-top: 8px; width: 100%; justify-content: center;"><i class="fa-solid fa-rotate"></i> Registrar Intervenção</button>
+    `;
+   } else {
+    div.innerHTML = `
+     <div class="maint-meta">
+     <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
+     <button class="btn-premium-secondary" onclick="openMaintSetupModal('${comp.key}')" style="width: auto; height: 36px; padding: 0 14px; font-size: 0.75rem;">Configurar Controle</button>
+     </div>
+     <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Nenhum registro de troca localizado para este componente.</p>
+    `;
+   }
+   container.appendChild(div);
+  });
  }
 
- window.openMaintSetupModal = function(key) {
- activeMaintKey = key;
- const v = getVeiculoAtivoObj();
- if(!v) return;
-
- const mTitle = document.getElementById('maint-popup-title');
- if (mTitle) mTitle.textContent = key === 'Oil' ? 'Configurar Troca de Óleo' : 'Configurar Troca de Filtros';
-  
- const lastKmIn = document.getElementById('maint-pop-last-km');
- const intKmIn = document.getElementById('maint-pop-interval-km');
- if (lastKmIn) lastKmIn.value = v.km;
- if (intKmIn) intKmIn.value = 10000;
-
- if (modalSetupMaint) modalSetupMaint.classList.add('active');
- };
-
- window.closeMaintSetupModal = function() {
- if (modalSetupMaint) modalSetupMaint.classList.remove('active');
- };
-
- const btnSaveMaintPop = document.getElementById('btn-save-maint-popup');
- if (btnSaveMaintPop) {
- btnSaveMaintPop.addEventListener('click', () => {
+ function openMaintSetupModal(key) {
+  activeMaintKey = key;
   const v = getVeiculoAtivoObj();
   if(!v) return;
 
+  const mTitle = document.getElementById('maint-popup-title');
+  if (mTitle) {
+    if (key === 'Oil') mTitle.textContent = 'Configurar Troca de Óleo';
+    else if (key === 'Filter') mTitle.textContent = 'Configurar Troca de Filtros';
+    else if (key === 'Align') mTitle.textContent = 'Configurar Alinhamento';
+    else if (key === 'Balance') mTitle.textContent = 'Configurar Balanceamento e Rodízio';
+    else if (key === 'AcSanit') mTitle.textContent = 'Configurar Higienização do Ar';
+  }
+   
   const lastKmIn = document.getElementById('maint-pop-last-km');
   const intKmIn = document.getElementById('maint-pop-interval-km');
-  const lastKm = lastKmIn ? parseInt(lastKmIn.value) : NaN;
-  const interval = intKmIn ? parseInt(intKmIn.value) : NaN;
-
-  if (isNaN(lastKm) || isNaN(interval) || lastKm < 0 || interval <= 0) {
-  alert('Dados de quilometragem inválidos.');
-  return;
+  if (lastKmIn) lastKmIn.value = v.km;
+  
+  if (intKmIn) {
+    if (key === 'Oil' || key === 'Filter' || key === 'Align' || key === 'Balance') {
+     intKmIn.value = 10000;
+    } else if (key === 'AcSanit') {
+     intKmIn.value = 15000;
+    }
   }
 
-  v[`maint${activeMaintKey}Last`] = lastKm;
-  v[`maint${activeMaintKey}Int`] = interval;
-
-  const idx = appState.veiculos.findIndex(veh => veh.id === v.id);
-  if (idx !== -1) {
-  appState.veiculos[idx] = v;
-  localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
-  }
-
-  closeMaintSetupModal();
-  renderMaintenanceSystem();
- });
+  if (modalSetupMaint) modalSetupMaint.classList.add('active');
  }
 
- // --- CONTROLE DE IDADE DO ODÔMETRO ---
+ function closeMaintSetupModal() {
+  if (modalSetupMaint) modalSetupMaint.classList.remove('active');
+ }
+
  function checkOdometerAgeLimit() {
- const v = getVeiculoAtivoObj();
- const alertBox = document.getElementById('odo-update-container');
- if (!alertBox) return;
-
- if (!v) {
-  alertBox.style.display = 'none';
-  return;
- }
-
- const lastUpdated = v.odoLastUpdated || Date.now();
- const diffTime = Math.abs(Date.now() - lastUpdated);
- const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
- if (diffDays >= 7) {
-  alertBox.style.display = 'flex';
- } else {
-  alertBox.style.display = 'none';
- }
- }
-
- window.openOdometerUpdateModal = function() {
- const v = getVeiculoAtivoObj();
- if (!v) return;
- const odoPopKm = document.getElementById('odo-pop-km');
- if (odoPopKm) odoPopKm.value = v.km;
- if (modalUpdateOdometer) modalUpdateOdometer.classList.add('active');
- };
-
- window.closeOdometerUpdateModal = function() {
- if (modalUpdateOdometer) modalUpdateOdometer.classList.remove('active');
- };
-
- const btnSaveOdoPop = document.getElementById('btn-save-odo-popup');
- if (btnSaveOdoPop) {
- btnSaveOdoPop.addEventListener('click', () => {
   const v = getVeiculoAtivoObj();
-  if(!v) return;
+  const alertBox = document.getElementById('odo-update-container');
+  if (!alertBox) return;
 
-  const odoPopKm = document.getElementById('odo-pop-km');
-  const newKm = odoPopKm ? parseInt(odoPopKm.value) : NaN;
-  if (isNaN(newKm) || newKm < v.km) {
-  alert('O novo odômetro não pode ser menor do que a marcação anterior.');
-  return;
+  if (!v) {
+   alertBox.style.display = 'none';
+   return;
   }
 
-  v.km = newKm;
-  v.odoLastUpdated = Date.now();
+  const lastUpdated = v.odoLastUpdated || Date.now();
+  const diffTime = Math.abs(Date.now() - lastUpdated);
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-  const idx = appState.veiculos.findIndex(veh => veh.id === v.id);
-  if (idx !== -1) {
-  appState.veiculos[idx] = v;
-  localStorage.setItem('gi_meus_veiculos', JSON.stringify(appState.veiculos));
-  }
-
-  closeOdometerUpdateModal();
-  updateHomeActiveVehicleCard();
-  checkOdometerAgeLimit();
- });
- }
-
- // --- SISTEMA DE FINANCIAMENTO COM CHECKLIST DE PARCELAS ---
- const btnSaveFin = document.getElementById('btn-save-finance');
- if (btnSaveFin) {
- btnSaveFin.addEventListener('click', () => {
-  const finValorP = document.getElementById('fin-valor-p');
-  const finVencP = document.getElementById('fin-vencimento-p');
-  const finAtualP = document.getElementById('fin-atual-p');
-  const finTotalP = document.getElementById('fin-total-p');
-
-  const valorParcela = finValorP ? parseFloat(finValorP.value.replace(',', '.')) : NaN;
-  const diaVencimento = finVencP ? parseInt(finVencP.value) : NaN;
-  const parcelaAtual = finAtualP ? parseInt(finAtualP.value) : NaN;
-  const totalParcelas = finTotalP ? parseInt(finTotalP.value) : NaN;
-
-  if (isNaN(valorParcela) || valorParcela <= 0 || 
-    isNaN(diaVencimento) || diaVencimento <= 0 || diaVencimento > 31 || 
-    isNaN(totalParcelas) || totalParcelas <= 0 || 
-    isNaN(parcelaAtual) || parcelaAtual < 0 || parcelaAtual > totalParcelas) {
-  alert('Dados do fluxo de pagamento inválidos. Todos os campos devem ser preenchidos corretamente com números válidos.');
-  return;
-  }
-
-  const parcelasStatus = [];
-  for (let i = 1; i <= totalParcelas; i++) {
-  parcelasStatus.push({
-   num: i,
-   paga: i <= parcelaAtual ? true : false
-  });
-  }
-
-  const contract = {
-  valor: valorParcela,
-  dia: diaVencimento,
-  total: totalParcelas,
-  parcelasStatus: parcelasStatus,
-  dataInicioContrato: Date.now()
-  };
-
-  appState.financeContract = contract;
-  localStorage.setItem('gi_financas', JSON.stringify(contract));
-
-  renderFinanceSystem();
- });
- }
-
- const btnToggleFinForm = document.getElementById('btn-toggle-finance-form');
- if (btnToggleFinForm) {
- btnToggleFinForm.addEventListener('click', () => {
-  const form = document.getElementById('finance-form-container');
-  if (form.style.display === 'none') {
-  form.style.display = 'flex';
-  btnToggleFinForm.innerHTML = '<i class="fa-solid fa-xmark"></i> Ocultar Form';
+  if (diffDays >= 7) {
+   alertBox.style.display = 'flex';
   } else {
-  form.style.display = 'none';
-  btnToggleFinForm.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar Contrato';
+   alertBox.style.display = 'none';
   }
- });
+ }
+
+ function openOdometerUpdateModal() {
+  const v = getVeiculoAtivoObj();
+  if (!v) return;
+  const odoPopKm = document.getElementById('odo-pop-km');
+  if (odoPopKm) odoPopKm.value = v.km;
+  if (modalUpdateOdometer) modalUpdateOdometer.classList.add('active');
+ }
+
+ function closeOdometerUpdateModal() {
+  if (modalUpdateOdometer) modalUpdateOdometer.classList.remove('active');
  }
 
  function renderFinanceSystem() {
- const contract = appState.financeContract;
- const emptyState = document.getElementById('finance-empty-state');
- const summaryBox = document.getElementById('finance-summary-container');
- const checklistContainer = document.getElementById('finance-checklist-container');
- const editBtn = document.getElementById('btn-toggle-finance-form');
- const formContainer = document.getElementById('finance-form-container');
- const checklistContent = document.getElementById('parcelas-checklist-container');
- const layout = document.getElementById('finance-grid-layout');
+  const contract = appState.financeContract;
+  const emptyState = document.getElementById('finance-empty-state');
+  const summaryBox = document.getElementById('finance-summary-container');
+  const checklistContainer = document.getElementById('finance-checklist-container');
+  const editBtn = document.getElementById('btn-toggle-finance-form');
+  const formContainer = document.getElementById('finance-form-container');
+  const checklistContent = document.getElementById('parcelas-checklist-container');
+  const layout = document.getElementById('finance-grid-layout');
 
- if (!contract) {
-  if (emptyState) emptyState.style.display = 'block';
-  if (summaryBox) summaryBox.style.display = 'none';
-  if (checklistContainer) checklistContainer.style.display = 'none';
-  if (editBtn) editBtn.style.display = 'none';
-  if (formContainer) formContainer.style.display = 'flex';
-  if (layout) layout.classList.remove('active-contract');
-  return;
- }
-
- if (emptyState) emptyState.style.display = 'none';
- if (summaryBox) summaryBox.style.display = 'flex';
- if (checklistContainer) checklistContainer.style.display = 'flex';
- if (editBtn) editBtn.style.display = 'flex';
- if (formContainer) formContainer.style.display = 'none'; 
- if (layout) layout.classList.add('active-contract');
-  
- if (editBtn) editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar Contrato';
-
- const fVal = document.getElementById('fin-valor-p');
- const fVenc = document.getElementById('fin-vencimento-p');
- const fTot = document.getElementById('fin-total-p');
- const fAt = document.getElementById('fin-atual-p');
-
- if (fVal) fVal.value = contract.valor.toFixed(2).replace('.', ',');
- if (fVenc) fVenc.value = contract.dia;
- if (fTot) fTot.value = contract.total;
-
- const pagasChecklist = contract.parcelasStatus.filter(p => p.paga).length;
- if (fAt) fAt.value = pagasChecklist;
-
- const valorPago = pagasChecklist * contract.valor;
- const parcelasRestantes = contract.total - pagasChecklist;
- const valorRestante = parcelasRestantes * contract.valor;
-
- const hoje = new Date();
- let anoVenc = hoje.getFullYear();
- let mesVenc = hoje.getMonth();
- if (hoje.getDate() > contract.dia) {
-  mesVenc += 1;
-  if (mesVenc > 11) { mesVenc = 0; anoVenc += 1; }
- }
- const proximoVencimento = new Date(anoVenc, mesVenc, contract.dia);
- const diffTime = proximoVencimento - hoje;
- const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-
- const dataQuitacao = new Date(hoje.getFullYear(), hoje.getMonth() + parcelasRestantes, contract.dia);
- const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
-
- const finMetaNext = document.getElementById('fin-meta-next');
- if (finMetaNext) finMetaNext.textContent = `R$ ${contract.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
-  
- const finMetaDays = document.getElementById('fin-meta-days');
- const finMetaPrev = document.getElementById('fin-meta-previsao');
-
- if (parcelasRestantes === 0) {
-  if (finMetaDays) finMetaDays.textContent = "Contrato Quitado";
-  if (finMetaPrev) finMetaPrev.textContent = "Liquidado";
- } else {
-  if (finMetaDays) finMetaDays.textContent = `Vence em ${diffDays} dias (${proximoVencimento.toLocaleDateString('pt-BR')})`;
-  if (finMetaPrev) finMetaPrev.textContent = `${mesesNomes[dataQuitacao.getMonth()]} de ${dataQuitacao.getFullYear()}`;
- }
-
- document.getElementById('fin-meta-pago').textContent = `R$ ${valorPago.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
- document.getElementById('fin-meta-pago-lbl').textContent = `${pagasChecklist} de ${contract.total} quitadas`;
-
- document.getElementById('fin-meta-restante').textContent = `R$ ${valorRestante.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
- document.getElementById('fin-meta-restante-lbl').textContent = `${parcelasRestantes} parcelas restantes`;
-
- if (checklistContent) {
-  checklistContent.innerHTML = '';
-  contract.parcelasStatus.forEach(p => {
-  const row = document.createElement('div');
-  row.className = `parcela-row ${p.paga ? 'paga' : ''}`;
-
-  const dataParcela = new Date(hoje.getFullYear(), hoje.getMonth() + (p.num - pagasChecklist), contract.dia);
-  const dateString = p.paga ? 'Quitado' : `Vencimento: ${dataParcela.toLocaleDateString('pt-BR')}`;
-
-  row.innerHTML = `
-   <div class="parcela-info">
-   <input type="checkbox" class="parcela-checkbox" ${p.paga ? 'checked' : ''}>
-   <span class="parcela-text">Parcela ${String(p.num).padStart(2, '0')}</span>
-   </div>
-   <span class="parcela-date">${dateString}</span>
-  `;
-   
-  const checkEl = row.querySelector('.parcela-checkbox');
-  if (checkEl) {
-   checkEl.addEventListener('change', (ev) => {
-   toggleParcelaState(p.num, ev.target.checked);
-   });
-  }
-  checklistContent.appendChild(row);
-  });
- }
- }
-
- window.toggleParcelaState = function(num, isChecked) {
- const contract = appState.financeContract;
- if (!contract) return;
-
- const idx = contract.parcelasStatus.findIndex(p => p.num === num);
- if (idx !== -1) {
-  contract.parcelasStatus[idx].paga = isChecked;
- }
-  
- localStorage.setItem('gi_financas', JSON.stringify(contract));
- renderFinanceSystem();
- };
-
- // LOGOUT
- const btnLogoutTrig = document.getElementById('btn-logout-trigger');
- if (btnLogoutTrig) {
- btnLogoutTrig.addEventListener('click', () => {
-  if (confirm('Deseja limpar todos os registros e reiniciar o perfil da central?')) {
-  localStorage.clear();
-  location.reload();
-  }
- });
- }
-
- // --- CHAT TORETTO ---
- if (toretoChatTrigger) {
- toretoChatTrigger.addEventListener('click', () => {
-  if (toretoChatPanel) toretoChatPanel.style.display = toretoChatPanel.style.display === 'flex' ? 'none' : 'flex';
- });
- }
-
- if (btnCloseChat) {
- btnCloseChat.addEventListener('click', () => {
-  if (toretoChatPanel) toretoChatPanel.style.display = 'none';
- });
- }
-
- function askToretto(theme) {
- let q = ""; let r = "";
- if (theme === 'combustivel') {
-  q = "Regra de Injeção: 70% vs Real";
-  r = "A regra universal dos 70% está defasada. Motores modernos com injeção multiponto possuem curvas de eficiência dinâmicas. Nós rodamos matemática pura para encontrar o ponto de equilíbrio monetário ideal.";
- } else if (theme === 'ar') {
-  q = "Carga do Compressor";
-  r = "Ativar o ar-condicionado força o motor a acionar o compressor via correia, drenando de 10% a 15% de torque na cidade. Contudo, em rodovias acima de 80 km/h, o arrasto aerodinâmico causado por janelas abertas drena muito mais combustível.";
- } else if (theme === 'manutencao') {
-  q = "Prevenção Mecânica Básica";
-  r = "Filtro de ar saturado restringe a passagem de oxigênio, forçando a ECU a injetar mais combustível para manter a queima correta. Velas gastas geram faíscas fracas e queimas incompletas. Mantenha os sensores calibrados.";
- }
-
- appendMsg(q, 'user');
- setTimeout(() => appendMsg(r, 'toreto'), 450);
- }
-
- function appendMsg(txt, sender) {
- if (!toretoChatMessages) return;
- const div = document.createElement('div');
- div.className = `chat-msg ${sender}`;
- div.textContent = txt;
- toretoChatMessages.appendChild(div);
- toretoChatMessages.scrollTop = toretoChatMessages.scrollHeight;
- }
-
- // Fechamento seguro dos overlays ao clicar fora
- const overlays = document.querySelectorAll('.modal-overlay');
- overlays.forEach(overlay => {
- overlay.addEventListener('click', (e) => {
-  if (e.target === overlay) {
-  if (overlay.id === 'modal-register-driver' && !appState.motoristaNome) {
+  if (!contract) {
+   if (emptyState) emptyState.style.display = 'block';
+   if (summaryBox) summaryBox.style.display = 'none';
+   if (checklistContainer) checklistContainer.style.display = 'none';
+   if (editBtn) editBtn.style.display = 'none';
+   if (formContainer) formContainer.style.display = 'flex';
+   if (layout) layout.classList.remove('active-contract');
    return;
   }
-  overlay.classList.remove('active');
+
+  if (emptyState) emptyState.style.display = 'none';
+  if (summaryBox) summaryBox.style.display = 'flex';
+  if (checklistContainer) checklistContainer.style.display = 'flex';
+  if (editBtn) editBtn.style.display = 'flex';
+  if (formContainer) formContainer.style.display = 'none'; 
+  if (layout) layout.classList.add('active-contract');
+   
+  if (editBtn) editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> Editar Contrato';
+
+  const fVal = document.getElementById('fin-valor-p');
+  const fVenc = document.getElementById('fin-vencimento-p');
+  const fTot = document.getElementById('fin-total-p');
+  const fAt = document.getElementById('fin-atual-p');
+
+  if (fVal) fVal.value = contract.valor.toFixed(2).replace('.', ',');
+  if (fVenc) fVenc.value = contract.dia;
+  if (fTot) fTot.value = contract.total;
+
+  const pagasChecklist = contract.parcelasStatus.filter(p => p.paga).length;
+  if (fAt) fAt.value = pagasChecklist;
+
+  const valorPago = pagasChecklist * contract.valor;
+  const parcelasRestantes = contract.total - pagasChecklist;
+  const valorRestante = parcelasRestantes * contract.valor;
+
+  const hoje = new Date();
+  let anoVenc = hoje.getFullYear();
+  let mesVenc = hoje.getMonth();
+  if (hoje.getDate() > contract.dia) {
+   mesVenc += 1;
+   if (mesVenc > 11) { mesVenc = 0; anoVenc += 1; }
   }
- });
- });
+  const proximoVencimento = new Date(anoVenc, mesVenc, contract.dia);
+  const diffTime = proximoVencimento - hoje;
+  const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+  const dataQuitacao = new Date(hoje.getFullYear(), hoje.getMonth() + parcelasRestantes, contract.dia);
+  const mesesNomes = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+
+  const finMetaNext = document.getElementById('fin-meta-next');
+  if (finMetaNext) finMetaNext.textContent = `R$ ${contract.valor.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+   
+  const finMetaDays = document.getElementById('fin-meta-days');
+  const finMetaPrev = document.getElementById('fin-meta-previsao');
+
+  if (parcelasRestantes === 0) {
+   if (finMetaDays) finMetaDays.textContent = "Contrato Quitado";
+   if (finMetaPrev) finMetaPrev.textContent = "Liquidado";
+  } else {
+   if (finMetaDays) finMetaDays.textContent = `Vence em ${} dias (${proximoVencimento.toLocaleDateString('pt-BR')})`;
+   if (finMetaPrev) finMetaPrev.textContent = `${mesesNomes[dataQuitacao.getMonth()]} de ${dataQuitacao.getFullYear()}`;
+  }
+
+  document.getElementById('fin-meta-pago').textContent = `R$ ${valorPago.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  document.getElementById('fin-meta-pago-lbl').textContent = `${} de ${contract.total} quitadas`;
+
+  document.getElementById('fin-meta-restante').textContent = `R$ ${valorRestante.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}`;
+  document.getElementById('fin-meta-restante-lbl').textContent = `${} parcelas restantes`;
+
+  if (checklistContent) {
+   checklistContent.innerHTML = '';
+   contract.parcelasStatus.forEach(p => {
+    const row = document.createElement('div');
+    row.className = `parcela-row ${p.paga ? 'paga' : ''}`;
+
+    const dataParcela = new Date(hoje.getFullYear(), hoje.getMonth() + (p.num - pagasChecklist), contract.dia);
+    const dateString = p.paga ? 'Quitado' : `Vencimento: ${dataParcela.toLocaleDateString('pt-BR')}`;
+
+    row.innerHTML = `
+     <div class="parcela-info">
+     <input type="checkbox" class="parcela-checkbox" ${p.paga ? 'checked' : ''}>
+     <span class="parcela-text">Parcela ${String(p.num).padStart(2, '0')}</span>
+     </div>
+     <span class="parcela-date">${}</span>
+    `;
+    
+    const checkEl = row.querySelector('.parcela-checkbox');
+    if (checkEl) {
+     checkEl.addEventListener('change', (ev) => {
+      toggleParcelaState(p.num, ev.target.checked);
+     });
+    }
+    checklistContent.appendChild(row);
+   });
+  }
+ }
+
+ function toggleParcelaState(num, isChecked) {
+  const contract = appState.financeContract;
+  if (!contract) return;
+
+  const idx = contract.parcelasStatus.findIndex(p => p.num === num);
+  if (idx !== -1) {
+   contract.parcelasStatus[idx].paga = isChecked;
+  }
+   
+  localStorage.setItem('gi_financas', JSON.stringify(contract));
+  renderFinanceSystem();
+ }
+
+ function applyBulkGoalsValue() {
+  const bulkVal = document.getElementById('g-val-bulk').value;
+  if (!bulkVal) return;
+  ['g-val-seg', 'g-val-ter', 'g-val-qua', 'g-val-qui', 'g-val-sex', 'g-val-sab'].forEach(id => {
+   document.getElementById(id).value = bulkVal;
+  });
+ }
+
+ function renderGoalsSystem() {
+  const metas = appState.metas;
+  const listWrapper = document.getElementById('goals-list-wrapper');
+  const activeContainer = document.getElementById('active-goal-container');
+  const formContainer = document.getElementById('goals-form-container');
+  const dashboard = document.getElementById('goals-dashboard');
+  const btnReset = document.getElementById('btn-reset-weekly-system');
+
+  if (!metas || metas.length === 0) {
+   if (formContainer) formContainer.style.display = 'flex';
+   if (activeContainer) activeContainer.style.display = 'none';
+   if (listWrapper) listWrapper.parentElement.style.display = 'none';
+   if (dashboard) dashboard.style.display = 'none';
+   if (btnReset) btnReset.style.display = 'none';
+   return;
+  }
+
+  if (formContainer) formContainer.style.display = 'none';
+  if (listWrapper) listWrapper.parentElement.style.display = 'flex';
+  if (dashboard) dashboard.style.display = 'grid';
+  if (btnReset) btnReset.style.display = 'flex';
+
+  let weeklyCappedSum = 0;
+  let weeklyBonusSum = 0;
+
+  metas.forEach(g => {
+   const totalDayAportes = (g.aportes || []).reduce((acc, ap) => acc + ap.valor, 0);
+   const capped = Math.min(totalDayAportes, g.valor);
+   const bonus = Math.max(0, totalDayAportes - g.valor);
+
+   weeklyCappedSum += capped;
+   weeklyBonusSum += bonus;
+  });
+
+  if (listWrapper) {
+   listWrapper.innerHTML = '';
+   metas.forEach(g => {
+    const isAtiva = appState.metaAtivaId === g.id;
+    const totalAportes = (g.aportes || []).reduce((acc, ap) => acc + ap.valor, 0);
+    const capped = Math.min(totalAportes, g.valor);
+    const bonus = Math.max(0, totalAportes - g.valor);
+    const progressPercent = g.valor > 0 ? Math.min(100, (capped / g.valor) * 100) : 0;
+
+    const item = document.createElement('div');
+    item.className = 'parcela-row';
+    item.style.flexDirection = 'column';
+    item.style.alignItems = 'stretch';
+    item.style.gap = '8px';
+
+    if (!g.work) {
+     item.style.opacity = '0.5';
+     item.style.background = 'rgba(0,0,0,0.1)';
+     item.style.cursor = 'default';
+     item.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+       <div style="display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-bed" style="color: var(--text-muted);"></i>
+        <span class="parcela-text" style="font-weight: 700;">${g.titulo}</span>
+       </div>
+       <span class="maint-badge healthy" style="font-size:0.65rem; background: rgba(17,156,110,0.05);">Folga</span>
+      </div>
+     `;
+    } else {
+     item.style.cursor = 'pointer';
+     item.style.border = isAtiva ? '1px solid var(--accent-gold)' : 'var(--border-glass)';
+     if (isAtiva) item.style.background = 'rgba(197, 160, 89, 0.03)';
+     item.onclick = () => selectActiveGoal(g.id);
+
+     item.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+       <div style="display:flex; align-items:center; gap:8px;">
+        <i class="fa-solid fa-calendar-day" style="color: ${isAtiva ? 'var(--accent-gold)' : 'var(--text-muted)'};"></i>
+        <span class="parcela-text" style="font-weight: 700;">${g.titulo}</span>
+       </div>
+       <span class="maint-badge ${totalAportes >= g.valor ? 'healthy' : (isAtiva ? 'attention' : 'critical')}" style="font-size:0.65rem;">
+        ${totalAportes >= g.valor ? 'Metas Batida' : (isAtiva ? 'Em Foco' : 'Pendente')}
+       </span>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; font-size: 0.78rem; color: var(--text-muted);">
+       <span>Meta: R$ ${g.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+       <span>Lançado: R$ ${totalAportes.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+      </div>
+
+      <div class="maint-progress-bar" style="height: 4px; background: rgba(255,255,255,0.03);">
+       <div class="maint-progress-fill" style="width: ${progressPercent}%; background-color: ${totalAportes >= g.valor ? 'var(--accent-etanol)' : 'var(--accent-gold)'};"></div>
+      </div>
+
+      <div style="display:flex; justify-content:space-between; font-size: 0.72rem; color: var(--text-muted); align-items:center;">
+       <span>Progresso: ${progressPercent.toFixed(0)}%</span>
+       <span>${bonus > 0 ? `<strong style="color:var(--accent-etanol);">+ R$ ${bonus.toLocaleString('pt-BR', {minimumFractionDigits: 2})} Bônus</strong>` : ''}</span>
+      </div>
+     `;
+    }
+    listWrapper.appendChild(item);
+   });
+  }
+
+  const activeGoal = metas.find(g => g.id === appState.metaAtivaId);
+  if (activeGoal) {
+   if (activeContainer) activeContainer.style.display = 'flex';
+
+   const totalAportes = (activeGoal.aportes || []).reduce((acc, ap) => acc + ap.valor, 0);
+   const capped = Math.min(totalAportes, activeGoal.valor);
+   const restante = Math.max(0, activeGoal.valor - totalAportes);
+
+   document.getElementById('goal-stat-week-total').textContent = `R$ ${weeklyCappedSum.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+   document.getElementById('goal-stat-day-capped').textContent = `R$ ${capped.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+   document.getElementById('goal-stat-day-remaining').textContent = `R$ ${restante.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+   document.getElementById('goal-stat-week-bonus').textContent = `R$ ${weeklyBonusSum.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+
+   const labelEl = document.getElementById('g-aporte-label-foco');
+   if (labelEl) labelEl.textContent = `Registrar Entrada em: ${activeGoal.titulo}`;
+
+   const historyContainer = document.getElementById('g-aportes-history-container');
+   if (historyContainer) {
+    historyContainer.innerHTML = '';
+    if (!activeGoal.aportes || activeGoal.aportes.length === 0) {
+     historyContainer.innerHTML = `
+      <div style="text-align: center; padding: 15px; font-size: 0.78rem; color: var(--text-muted);">
+       Nenhum faturamento registrado para este dia útil.
+      </div>
+     `;
+    } else {
+     activeGoal.aportes.slice().reverse().forEach((ap, idx) => {
+      const row = document.createElement('div');
+      row.className = 'parcela-row';
+      row.style.padding = '8px 12px';
+      row.style.marginBottom = '6px';
+      row.style.fontSize = '0.8rem';
+
+      const dateObj = new Date(ap.data);
+      const timeStr = dateObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
+
+      row.innerHTML = `
+       <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
+        <div>
+         <span style="font-weight:700; color:var(--accent-etanol);">+ R$ ${ap.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+         <div style="font-size:0.65rem; color:var(--text-muted);">${timeStr}</div>
+        </div>
+        <button class="icon-btn delete" onclick="deleteAporte(${idx}, event)" style="padding: 2px;"><i class="fa-solid fa-trash-can" style="font-size:0.75rem;"></i></button>
+       </div>
+      `;
+      historyContainer.appendChild(row);
+     });
+    }
+   }
+  } else {
+   if (activeContainer) activeContainer.style.display = 'none';
+  }
+ }
+
+ function selectActiveGoal(id) {
+  appState.metaAtivaId = id;
+  localStorage.setItem('gi_meta_ativa_id', id);
+  renderGoalsSystem();
+  updateHomeGoalWidget();
+ }
+
+ function closeActiveGoal() {
+  appState.metaAtivaId = null;
+  localStorage.removeItem('gi_meta_ativa_id');
+  renderGoalsSystem();
+  updateHomeGoalWidget();
+ }
+
+ function deleteGoal(id, e) {
+  if (e) e.stopPropagation();
+  if (!confirm('Deseja excluir permanentemente este objetivo da central?')) return;
+  appState.metas = appState.metas.filter(g => g.id !== id);
+  localStorage.setItem('gi_metas', JSON.stringify(appState.metas));
+  if (appState.metaAtivaId === id) {
+   appState.metaAtivaId = null;
+   localStorage.removeItem('gi_meta_ativa_id');
+  }
+  renderGoalsSystem();
+ }
+
+ function deleteAporte(reversedIdx, e) {
+  if (e) e.stopPropagation();
+  const activeGoal = appState.metas.find(g => g.id === appState.metaAtivaId);
+  if (!activeGoal || !activeGoal.aportes) return;
+
+  const realIdx = activeGoal.aportes.length - 1 - reversedIdx;
+  if (realIdx >= 0 && realIdx < activeGoal.aportes.length) {
+   if (confirm('Deletar este faturamento do histórico?')) {
+    activeGoal.aportes.splice(realIdx, 1);
+    localStorage.setItem('gi_metas', JSON.stringify(appState.metas));
+    renderGoalsSystem();
+    updateHomeGoalWidget();
+   }
+  }
+ }
+
+ function registerHomeAporte() {
+  const input = document.getElementById('home-goal-aporte-valor');
+  const valStr = input ? input.value : '';
+  const val = parseFloat(valStr.replace(/\./g, '').replace(',', '.')) || 0;
+
+  if (val <= 0) {
+   alert('Introduza um valor de faturamento válido.');
+   return;
+  }
+
+  const activeGoal = appState.metas.find(g => g.id === appState.metaAtivaId);
+  if (!activeGoal) return;
+
+  activeGoal.aportes.push({
+   valor: val,
+   data: Date.now()
+  });
+
+  localStorage.setItem('gi_metas', JSON.stringify(appState.metas));
+  if (input) input.value = '';
+
+  updateHomeGoalWidget();
+  if (screenGoals.classList.contains('active')) {
+   renderGoalsSystem();
+  }
+ }
+
+ function updateHomeGoalWidget() {
+  const metas = appState.metas;
+  const activeView = document.getElementById('home-goal-active-view');
+  const emptyView = document.getElementById('home-goal-empty-view');
+
+  if (!metas || metas.length === 0) {
+   if (activeView) activeView.style.display = 'none';
+   if (emptyView) emptyView.style.display = 'flex';
+   return;
+  }
+
+  const activeGoal = metas.find(g => g.id === appState.metaAtivaId);
+  if (activeGoal && activeGoal.work) {
+   if (activeView) activeView.style.display = 'flex';
+   if (emptyView) emptyView.style.display = 'none';
+
+   const totalAportes = (activeGoal.aportes || []).reduce((acc, ap) => acc + ap.valor, 0);
+   const capped = Math.min(totalAportes, activeGoal.valor);
+   const bonus = Math.max(0, totalAportes - activeGoal.valor);
+   const restante = Math.max(0, activeGoal.valor - totalAportes);
+   const progressPercent = activeGoal.valor > 0 ? Math.min(100, (capped / activeGoal.valor) * 100) : 0;
+
+   const dayTitleEl = document.getElementById('home-goal-day-title');
+   if (dayTitleEl) dayTitleEl.textContent = activeGoal.titulo;
+
+   const badgeEl = document.getElementById('home-goal-status-badge');
+   if (badgeEl) {
+    badgeEl.className = `maint-badge ${totalAportes >= activeGoal.valor ? 'healthy' : 'attention'}`;
+    badgeEl.textContent = totalAportes >= activeGoal.valor ? 'Meta Batida' : 'Em Foco';
+   }
+
+   const fillEl = document.getElementById('home-goal-progress-fill');
+   if (fillEl) fillEl.style.width = `${progressPercent}%`;
+
+   document.getElementById('home-goal-val-launched').textContent = `R$ ${totalAportes.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+   document.getElementById('home-goal-val-target').textContent = `R$ ${activeGoal.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+   document.getElementById('home-goal-val-remaining').textContent = `R$ ${restante.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+   document.getElementById('home-goal-val-bonus').textContent = `R$ ${bonus.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+  } else {
+   if (activeView) activeView.style.display = 'none';
+   if (emptyView) emptyView.style.display = 'flex';
+  }
+ }
+
+ // --- EXPOSIÇÃO DE MÉTODOS PARA ATRIBUTOS INLINE NO HTML ---
+ window.closeProfileModal = closeProfileModal;
+ window.closeNewsModal = closeNewsModal;
+ window.closeNoVehicleModal = closeNoVehicleModal;
+ window.toggleMobileDropdown = toggleMobileDropdown;
+ window.selectDropdownTab = selectDropdownTab;
+ window.openMaintSetupModal = openMaintSetupModal;
+ window.closeMaintSetupModal = closeMaintSetupModal;
+ window.openOdometerUpdateModal = openOdometerUpdateModal;
+ window.closeOdometerUpdateModal = closeOdometerUpdateModal;
+ window.toggleParcelaState = toggleParcelaState;
+ window.applyBulkGoalsValue = applyBulkGoalsValue;
+ window.resetWeeklySystem = resetWeeklySystem;
+ window.selectActiveGoal = selectActiveGoal;
+ window.closeActiveGoal = closeActiveGoal;
+ window.deleteGoal = deleteGoal;
+ window.deleteAporte = deleteAporte;
+ window.registerHomeAporte = registerHomeAporte;
+ window.closeSyncSuccessModal = closeSyncSuccessModal;
+ window.toggleGoalDayFields = toggleGoalDayFields;
+ window.setGoalMethod = setGoalMethod;
+ window.switchTab = switchTab;
+
  </script>
 </body>
 </html>
