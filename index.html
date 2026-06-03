@@ -12,51 +12,55 @@
  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
  <style>
  :root {
- /* Paleta de Luxo Minimalista - Copa do Mundo Premium */
- --bg-base: #060b18; /* Deep Midnight Brazilian Navy */
- --bg-app: #0d1b42; /* Azul Escuro Brasil */
- --bg-surface: #132454; /* Slate Titanium Azul Premium */
- --bg-input: #1b2d66; /* Input Jateado Navy */
- --bg-input-focus: #243b80; /* Foco Selecionado */
- --text-main: #f3f4f6; /* Platinum Off-White */
- --text-muted: #9c9c9c; /* Cinza Muted Brasil */
- --border-glass: 1px solid rgba(255, 255, 255, 0.08); /* Hairline Divider */
- --border-glass-glow: rgba(255, 193, 0, 0.25); /* Glow Amarelo Brasil */
+ /* =======================================================
+    PALETA DE CORES SOLICITADA - GENESIS COCKPIT (DARK THEME)
+    ======================================================= */
+ --bg-base: #060a12;             /* Cinza escuro quase preto */
+ --bg-app: #0c101c;              /* App Background escuro neutro */
+ --bg-surface: #121829;          /* Bento Cards neutros */
+ --bg-input: #182035;            /* Inputs cinzas */
+ --bg-input-focus: #1e284a;      /* Foco de Injeção */
+ --text-main: #FFFFFF;           /* Branco Puro */
+ --text-muted: #8c9cb2;          /* Cinza Muted */
+ --border-glass: 1px solid rgba(108, 172, 228, 0.15); /* Sky Blue sutil */
+ --border-glass-glow: rgba(255, 184, 28, 0.2);       /* Glow Amarelo */
   
- /* Assinaturas de Cores Temáticas */
- --accent-etanol: #009b1f; /* Verde Brasil */
- --accent-gasolina: #ffc100; /* Amarelo Brasil */
- --accent-blue: #005fdf; /* Azul Brasil */
- --accent-ai: #005fdf; /* Azul Telemetria */
- --accent-red: #cc2929; /* Crimson Redline */
- --accent-gold: #ffc100; /* Amarelo Brasil (Destaques) */
- --accent-gold-dark: #937637; /* Amarelo Escuro Premium */
+ /* Assinaturas de Cores Temáticas Obrigatórias */
+ --accent-etanol: #6CACE4;       /* Sky Blue */
+ --accent-gasolina: #FFB81C;     /* Yellow */
+ --accent-blue: #6CACE4;         /* Sky Blue */
+ --accent-ai: #6CACE4;           /* Sky Blue */
+ --accent-red: #7D4016;          /* Brown para itens Críticos/Deletar */
+ --accent-gold: #FFB81C;         /* Yellow */
+ --accent-brown: #7D4016;        /* Brown */
   
- --radius-lg: 4px; /* Cantos retos e lapidados estilo Genesis */
- --radius-md: 4px;
- --radius-sm: 2px;
- --shadow-premium: 0 16px 48px rgba(0, 0, 0, 0.7);
- --transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+ /* CONFIGURAÇÃO GENESIS: CANTOS RIGOROSAMENTE QUADRADOS */
+ --radius-lg: 0px; 
+ --radius-md: 0px;
+ --radius-sm: 0px;
+ --shadow-premium: 0 16px 48px rgba(0, 0, 0, 0.8);
+ --transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
  }
 
  .light-theme {
- /* Paleta Clean Brasil Premium (Branco Escandinavo com Toques de Copa) */
- --bg-base: #f0f3fa;
- --bg-app: #ffffff;
- --bg-surface: rgba(216, 225, 240, 0.85);
- --bg-input: rgba(194, 207, 235, 0.6);
- --bg-input-focus: rgba(166, 185, 224, 0.9);
- --text-main: #0d1b42; /* Azul Escuro Brasil */
- --text-muted: #6b7794;
- --border-glass: 1px solid rgba(13, 27, 66, 0.1);
- --border-glass-glow: rgba(0, 95, 223, 0.15);
+ /* ========================================================
+    PALETA DE CORES SOLICITADA - COCKPIT CLEAN (LIGHT THEME)
+    ======================================================== */
+ --bg-base: #f0f4f8;             
+ --bg-app: #ffffff;              
+ --bg-surface: #e1e9f0;          
+ --bg-input: #cbd6e2;            
+ --bg-input-focus: #b1c1d3;      
+ --text-main: #141b29;           
+ --text-muted: #536479;          
   
- --accent-etanol: #00801a; /* Verde escuro para melhor contraste */
- --accent-gasolina: #d48800; /* Amarelo escuro para melhor contraste */
- --accent-blue: #005fdf;
- --accent-ai: #005fdf;
- --accent-red: #dc2626;
- --accent-gold: #937637; /* Amarelo escuro gold */
+ --accent-etanol: #2d7bb4;       /* Sky Blue escurecido para contraste */
+ --accent-gasolina: #b87b00;     /* Yellow escurecido para contraste */
+ --accent-blue: #2d7bb4;
+ --accent-ai: #2d7bb4;
+ --accent-red: #7D4016;          /* Brown */
+ --accent-gold: #b87b00;
+ --accent-brown: #7D4016;
  }
 
  * {
@@ -65,6 +69,7 @@
  padding: 0;
  font-family: 'Google Sans Flex', sans-serif;
  -webkit-tap-highlight-color: transparent;
+ border-radius: 0px !important; /* Estrito Genesis */
  }
 
  body {
@@ -74,8 +79,28 @@
  justify-content: center;
  align-items: center;
  min-height: 100vh;
+ font-size: 14px; /* Escala de leitura do YouTube */
  transition: var(--transition);
  overflow-x: hidden;
+ line-height: 1.5;
+ }
+
+ /* ==========================================
+    ESTILIZAÇÃO DE SCROLLBAR GLOBAL DO YOUTUBE
+    ========================================== */
+ ::-webkit-scrollbar {
+ width: 6px;
+ height: 6px;
+ }
+ ::-webkit-scrollbar-track {
+ background: rgba(0, 0, 0, 0.15);
+ }
+ ::-webkit-scrollbar-thumb {
+ background: var(--bg-input-focus);
+ border: 1px solid var(--bg-surface);
+ }
+ ::-webkit-scrollbar-thumb:hover {
+ background: var(--accent-gold);
  }
 
  /* --- VIEWPORT PRINCIPAL --- */
@@ -86,18 +111,18 @@
  height: 100vh;
  overflow: hidden;
  position: relative;
- max-width: 1050px;
+ max-width: 1280px; 
  margin: 0 auto;
- padding: 32px 24px;
+ padding: 24px;
  }
 
- /* --- CABEÇALHO SUPERIOR (LUXO MINIMALISTA) --- */
+ /* --- CABEÇALHO SUPERIOR --- */
  .topbar-shell {
  display: none;
  justify-content: space-between;
  align-items: center;
- margin-bottom: 20px;
- padding-bottom: 20px;
+ margin-bottom: 24px;
+ padding-bottom: 16px;
  border-bottom: var(--border-glass);
  width: 100%;
  }
@@ -113,7 +138,7 @@
  }
 
  .topbar-logo-img {
- height: 38px;
+ height: 36px;
  width: auto;
  transition: var(--transition);
  cursor: pointer;
@@ -122,13 +147,18 @@
  .topbar-profile {
  display: flex;
  align-items: center;
+ justify-content: center;
  gap: 10px;
  cursor: pointer;
- padding: 8px 16px;
- border-radius: var(--radius-sm);
+ padding: 0 16px;
+ height: 38px; /* Unificação física simétrica de altura */
  background: var(--bg-input);
  border: var(--border-glass);
  transition: var(--transition);
+ font-size: 0.85rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.8px;
  }
 
  .topbar-profile:hover {
@@ -136,13 +166,12 @@
  }
 
  .profile-avatar {
- font-size: 1.15rem;
+ font-size: 1.2rem;
  width: 24px;
  height: 24px;
  display: flex;
  align-items: center;
  justify-content: center;
- border-radius: var(--radius-sm);
  }
 
  .profile-name {
@@ -152,7 +181,7 @@
 
  .topbar-controls {
  display: flex;
- gap: 8px;
+ gap: 10px;
  align-items: center;
  position: relative;
  }
@@ -162,18 +191,17 @@
  border: var(--border-glass);
  height: 38px;
  padding: 0 16px;
- border-radius: var(--radius-sm);
  display: flex;
  justify-content: center;
  align-items: center;
  cursor: pointer;
  color: var(--text-main);
- font-size: 0.75rem;
+ font-size: 0.8rem;
  font-weight: 700;
  text-transform: uppercase;
- gap: 6px;
+ gap: 8px;
  transition: var(--transition);
- letter-spacing: 1.5px;
+ letter-spacing: 1px;
  }
 
  .btn-control-utility:hover {
@@ -184,111 +212,9 @@
  .btn-control-utility.icon-only {
  width: 38px;
  padding: 0;
- border-radius: var(--radius-sm);
  }
 
- /* --- DROPDOWN EXCLUSIVO MOBILE --- */
- .mobile-dropdown {
- display: none;
- position: absolute;
- top: 48px;
- right: 0;
- background: var(--bg-surface);
- border: var(--border-glass);
- border-radius: var(--radius-lg);
- box-shadow: var(--shadow-premium);
- width: 240px;
- z-index: 1100;
- flex-direction: column;
- padding: 12px;
- gap: 8px;
- transform-origin: top right;
- animation: dropdownSlideIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
- }
-
- @keyframes dropdownSlideIn {
- from { opacity: 0; transform: scale(0.95) translateY(-10px); }
- to { opacity: 1; transform: scale(1) translateY(0); }
- }
-
- .mobile-dropdown.active {
- display: flex;
- }
-
- .dropdown-user-info {
- display: flex;
- align-items: center;
- gap: 10px;
- padding-bottom: 10px;
- border-bottom: var(--border-glass);
- margin-bottom: 4px;
- }
-
- .dropdown-avatar {
- font-size: 1.15rem;
- width: 24px;
- height: 24px;
- display: flex;
- align-items: center;
- justify-content: center;
- }
-
- .dropdown-greeting {
- font-size: 0.82rem;
- font-weight: 700;
- color: var(--text-main);
- }
-
- .dropdown-greeting span {
- color: var(--accent-gold);
- }
-
- .dropdown-item {
- background: var(--bg-input);
- border: var(--border-glass);
- color: var(--text-main);
- border-radius: var(--radius-sm);
- height: 40px;
- font-size: 0.75rem;
- font-weight: 700;
- cursor: pointer;
- display: flex;
- align-items: center;
- gap: 10px;
- padding: 0 14px;
- text-transform: uppercase;
- letter-spacing: 1px;
- transition: var(--transition);
- width: 100%;
- }
-
- .dropdown-item:hover {
- background: var(--bg-input-focus);
- border-color: var(--accent-gold);
- }
-
- .dropdown-item.highlighted-calc {
- background: rgba(255, 193, 0, 0.15) !important;
- border: 1px solid var(--accent-gold) !important;
- color: var(--text-main) !important;
- }
-
- .dropdown-item.highlighted-calc:hover {
- background: rgba(255, 193, 0, 0.25) !important;
- box-shadow: 0 0 12px rgba(255, 193, 0, 0.15);
- }
-
- .dropdown-item.logout {
- color: var(--accent-red);
- border-color: rgba(204, 41, 41, 0.2);
- }
-
- .dropdown-item.logout:hover {
- background: rgba(204, 41, 41, 0.08);
- border-color: var(--accent-red);
- }
-
- /* --- PAINEL DE STATUS DA ECU (INTEGRADO AO HERO) --- */
+ /* --- PAINEL DE STATUS DA ECU --- */
  .ecu-status-panel {
  display: flex;
  align-items: center;
@@ -308,13 +234,13 @@
  font-weight: 700;
  color: var(--text-muted);
  letter-spacing: 0.5px;
- font-size: 0.72rem;
+ font-size: 0.85rem;
  }
 
  .ecu-status-indicator {
- width: 8px;
- height: 8px;
- border-radius: 50%;
+ width: 10px;
+ height: 10px;
+ border-radius: 50% !important; /* LED Circular */
  background-color: var(--accent-etanol);
  box-shadow: 0 0 10px var(--accent-etanol);
  display: inline-block;
@@ -331,13 +257,13 @@
  text-transform: uppercase;
  }
 
- /* --- GRID DE SELEÇÃO DE DIA (METAS SEMANAIS) --- */
+ /* --- GRID DE SELEÇÃO DE DIA --- */
  .day-selector-grid {
  display: grid;
- grid-template-columns: repeat(4, 1fr);
+ grid-template-columns: repeat(7, 1fr);
  gap: 8px;
  width: 100%;
- margin-bottom: 8px;
+ margin-bottom: 12px;
  }
 
  .day-chip {
@@ -346,10 +272,9 @@
  justify-content: center;
  background: var(--bg-input);
  border: var(--border-glass);
- padding: 10px 14px;
- border-radius: var(--radius-sm);
+ padding: 12px 10px;
  cursor: pointer;
- font-size: 0.8rem;
+ font-size: 0.85rem;
  font-weight: 700;
  color: var(--text-muted);
  transition: var(--transition);
@@ -363,7 +288,7 @@
 
  .day-chip:has(input:checked) {
  border-color: var(--accent-gold);
- background: rgba(255, 193, 0, 0.1);
+ background: rgba(255, 184, 28, 0.1);
  color: var(--text-main);
  }
 
@@ -373,14 +298,13 @@
  grid-template-columns: repeat(4, 1fr);
  gap: 12px;
  width: 100%;
- margin-bottom: 20px;
+ margin-bottom: 24px;
  }
 
  .goals-stat-card {
  background: var(--bg-surface);
  border: var(--border-glass);
- border-radius: var(--radius-md);
- padding: 14px;
+ padding: 16px;
  display: flex;
  flex-direction: column;
  gap: 4px;
@@ -388,7 +312,7 @@
  }
 
  .goals-stat-lbl {
- font-size: 0.65rem;
+ font-size: 0.75rem;
  font-weight: 700;
  color: var(--text-muted);
  text-transform: uppercase;
@@ -396,7 +320,7 @@
  }
 
  .goals-stat-val {
- font-size: 1.05rem;
+ font-size: 1.25rem;
  font-weight: 800;
  color: var(--text-main);
  white-space: nowrap;
@@ -415,7 +339,7 @@
  flex-direction: column;
  overflow-y: auto;
  width: 100%;
- padding-bottom: 20px;
+ padding-bottom: 24px;
  }
 
  .main-viewport::-webkit-scrollbar { display: none; }
@@ -426,7 +350,7 @@
  flex-direction: column;
  flex-grow: 1;
  width: 100%;
- animation: viewFade 0.25s ease;
+ animation: viewFade 0.2s ease;
  }
 
  .screen.active {
@@ -439,13 +363,13 @@
  }
 
  .screen-header {
- margin-bottom: 24px;
- border-left: 1px solid var(--accent-gold);
+ margin-bottom: 20px;
+ border-left: 3px solid var(--accent-gold);
  padding-left: 12px;
  }
 
  .screen-title {
- font-size: 1.45rem;
+ font-size: 1.35rem; 
  font-weight: 800;
  letter-spacing: -0.5px;
  display: flex;
@@ -459,26 +383,28 @@
  font-weight: 400;
  color: var(--text-muted);
  margin-top: 4px;
+ line-height: 1.5;
  }
 
- /* --- BENTO GRID SYSTEM --- */
+ /* --- BENTO GRID SYSTEM (3 COLUNAS ALINHADAS DESKTOP) --- */
  .bento-grid {
  display: grid;
  grid-template-columns: 1fr;
- gap: 20px;
- margin-bottom: 24px;
+ gap: 16px;
+ margin-bottom: 16px;
+ align-items: stretch;
  }
 
  .bento-card {
  background: var(--bg-surface);
- border-radius: var(--radius-lg);
  border: var(--border-glass);
- padding: 24px;
+ padding: 20px;
  display: flex;
  flex-direction: column;
  justify-content: space-between;
  transition: var(--transition);
  position: relative;
+ width: 100%;
  }
 
  .bento-card:hover {
@@ -486,13 +412,13 @@
  }
 
  .bento-card.hero {
- background: radial-gradient(ellipse at bottom right, rgba(255, 193, 0, 0.05), transparent 75%), var(--bg-surface);
+ background: radial-gradient(ellipse at bottom right, rgba(108, 172, 228, 0.05), transparent 75%), var(--bg-surface);
  align-items: flex-start;
  justify-content: center;
- min-height: 120px;
+ min-height: 110px;
  }
 
- /* --- BARRA DE NAVEGAÇÃO FIXA (7 BOTÕES) --- */
+ /* --- BARRA DE NAVEGAÇÃO DESKTOP --- */
  .setores-garagem-navigation {
  display: none;
  grid-template-columns: repeat(7, 1fr);
@@ -512,7 +438,7 @@
  .setores-btn {
  background: transparent;
  border: none;
- padding: 14px 4px;
+ padding: 12px 4px;
  text-align: center;
  cursor: pointer;
  display: flex;
@@ -523,11 +449,11 @@
  color: var(--text-muted);
  transition: var(--transition);
  text-decoration: none;
- font-size: 0.72rem;
+ font-size: 0.8rem;
  font-weight: 700;
  text-transform: uppercase;
  letter-spacing: 1px;
- border-bottom: 2px solid transparent;
+ border-bottom: 3px solid transparent;
  }
 
  .setores-btn:hover {
@@ -535,22 +461,21 @@
  }
 
  .setores-btn.active {
- border-bottom: 2px solid var(--accent-gold);
+ border-bottom: 3px solid var(--accent-gold);
  color: var(--text-main);
  }
 
  .setores-btn i {
- font-size: 1.15rem;
+ font-size: 1.25rem;
  color: var(--accent-gold);
  }
 
  #side-tab-calc {
- background: rgba(255, 193, 0, 0.08) !important;
- border: 1px solid rgba(255, 193, 0, 0.3) !important;
- border-radius: var(--radius-md) !important;
+ background: rgba(255, 184, 28, 0.05) !important;
+ border: 1px solid rgba(255, 184, 28, 0.2) !important;
  }
  #side-tab-calc.active {
- background: rgba(255, 193, 0, 0.15) !important;
+ background: rgba(255, 184, 28, 0.1) !important;
  border: 1px solid var(--accent-gold) !important;
  }
 
@@ -564,10 +489,9 @@
 
  .premium-input-card {
  background: var(--bg-input);
- border-radius: var(--radius-md);
  border: none;
- border-bottom: 1px solid rgba(255, 255, 255, 0.06);
- padding: 14px 18px;
+ border-bottom: 2px solid rgba(255, 255, 255, 0.06);
+ padding: 12px 16px;
  display: flex;
  flex-direction: column;
  gap: 4px;
@@ -580,10 +504,10 @@
  }
 
  .premium-input-card label {
- font-size: 0.65rem;
+ font-size: 0.72rem;
  font-weight: 700;
  text-transform: uppercase;
- letter-spacing: 0.8px;
+ letter-spacing: 1px;
  color: var(--text-muted);
  }
 
@@ -598,7 +522,7 @@
  border: none;
  outline: none;
  color: var(--text-main);
- font-size: 1.05rem;
+ font-size: 1.1rem;
  font-weight: 600;
  width: 100%;
  }
@@ -617,26 +541,25 @@
  .premium-input-unit {
  font-size: 0.85rem;
  color: var(--text-muted);
- font-weight: 500;
+ font-weight: 600;
  margin-left: 6px;
  }
 
  /* --- INTERRUPTOR TESLA --- */
  .tesla-switch-card {
  background: var(--bg-surface);
- border-radius: var(--radius-md);
- padding: 18px 22px;
+ padding: 14px 20px;
  border: var(--border-glass);
  display: flex;
  justify-content: space-between;
  align-items: center;
- margin-bottom: 20px;
+ margin-bottom: 16px;
  transition: var(--transition);
  }
 
  .tesla-switch-card.active {
- border-color: rgba(255, 193, 0, 0.25);
- background: rgba(255, 193, 0, 0.02);
+ border-color: rgba(255, 184, 28, 0.2);
+ background: rgba(255, 184, 28, 0.02);
  }
 
  .switch-details {
@@ -646,12 +569,12 @@
  }
 
  .switch-title {
- font-size: 0.9rem;
+ font-size: 0.95rem;
  font-weight: 700;
  }
 
  .switch-desc {
- font-size: 0.78rem;
+ font-size: 0.82rem;
  color: var(--text-muted);
  }
 
@@ -670,19 +593,17 @@
  top: 0; left: 0; right: 0; bottom: 0;
  background-color: rgba(120, 120, 120, 0.2);
  transition: 0.3s;
- border-radius: var(--radius-sm);
  }
 
  .ios-slider:before {
  position: absolute;
  content: "";
- height: 18px;
- width: 18px;
- left: 3px;
- bottom: 3px;
+ height: 16px;
+ width: 16px;
+ left: 4px;
+ bottom: 4px;
  background-color: white;
  transition: 0.3s;
- border-radius: var(--radius-sm);
  }
 
  input:checked + .ios-slider { background-color: var(--accent-gold); }
@@ -691,11 +612,10 @@
  /* --- ALERTA ATUALIZAÇÃO ODÔMETRO --- */
  .odometer-update-alert {
  display: none;
- background: rgba(255, 193, 0, 0.03);
- border: 1px solid rgba(255, 193, 0, 0.15);
- border-radius: var(--radius-md);
- padding: 18px 22px;
- margin-bottom: 24px;
+ background: rgba(255, 184, 28, 0.03);
+ border: 1px solid rgba(255, 184, 28, 0.15);
+ padding: 16px 20px;
+ margin-bottom: 16px;
  align-items: center;
  justify-content: space-between;
  gap: 16px;
@@ -708,31 +628,32 @@
  }
 
  .odo-alert-title {
- font-size: 0.9rem;
+ font-size: 0.95rem;
  font-weight: 700;
  color: var(--accent-gasolina);
  }
 
  .odo-alert-desc {
- font-size: 0.8rem;
+ font-size: 0.82rem;
  color: var(--text-muted);
+ line-height: 1.4;
  }
 
- /* --- SISTEMA DE MANUTENÇÃO --- */
+ /* --- SISTEMA DE MANUTENÇÃO (SLIM CARDS) --- */
  .maint-status-card {
- display: flex;
- flex-direction: column;
+ display: grid;
+ grid-template-columns: repeat(3, 1fr); 
  gap: 16px;
  }
 
  .maint-item {
  display: flex;
  flex-direction: column;
- gap: 12px;
+ gap: 10px;
  background: var(--bg-input);
- padding: 20px;
- border-radius: var(--radius-md);
+ padding: 18px;
  border: var(--border-glass);
+ position: relative;
  }
 
  .maint-meta {
@@ -754,34 +675,32 @@
  }
 
  .maint-badge {
- font-size: 0.7rem;
+ font-size: 0.72rem;
  padding: 2px 8px;
- border-radius: var(--radius-sm);
  font-weight: 700;
  text-transform: uppercase;
  }
 
- .maint-badge.healthy { background: rgba(0, 155, 31, 0.1); color: var(--accent-etanol); }
- .maint-badge.attention { background: rgba(255, 193, 0, 0.15); color: var(--accent-gasolina); }
- .maint-badge.critical { background: rgba(239, 68, 68, 0.1); color: var(--accent-red); }
+ .maint-badge.healthy { background: rgba(108, 172, 228, 0.15); color: var(--accent-etanol); border: 1px solid var(--accent-etanol); }
+ .maint-badge.attention { background: rgba(255, 184, 28, 0.15); color: var(--accent-gasolina); border: 1px solid var(--accent-gasolina); }
+ .maint-badge.critical { background: rgba(125, 64, 22, 0.2); color: var(--accent-red); border: 1px solid var(--accent-red); }
 
  .maint-km {
- font-size: 0.8rem;
+ font-size: 0.85rem;
  color: var(--text-muted);
  }
 
  .maint-progress-bar {
  background: rgba(255, 255, 255, 0.04);
- height: 6px;
- border-radius: 10px;
+ height: 4px;
  overflow: hidden;
- position: relative;
+ position: absolute;
+ bottom: 0; left: 0; right: 0;
  }
 
  .maint-progress-fill {
  background: var(--accent-gold);
  height: 100%;
- border-radius: 10px;
  width: 0%;
  transition: width 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
  }
@@ -790,16 +709,17 @@
  background: transparent;
  border: var(--border-glass);
  color: var(--text-muted);
- font-size: 0.72rem;
- font-weight: 600;
+ font-size: 0.78rem;
+ font-weight: 700;
  text-transform: uppercase;
- padding: 6px 12px;
- border-radius: var(--radius-sm);
+ padding: 8px 12px;
  cursor: pointer;
  transition: var(--transition);
  display: flex;
  align-items: center;
- gap: 6px;
+ gap: 8px;
+ margin-top: auto;
+ justify-content: center;
  }
 
  .maint-action-btn:hover {
@@ -811,11 +731,11 @@
  .maint-diagnostic-grid {
  display: grid;
  grid-template-columns: repeat(3, 1fr);
- gap: 10px;
+ gap: 8px;
  background: rgba(0, 0, 0, 0.15);
- padding: 12px;
- border-radius: var(--radius-sm);
- margin-top: 8px;
+ padding: 10px;
+ margin-top: 4px;
+ margin-bottom: 8px;
  }
 
  .maint-diagnostic-col {
@@ -826,14 +746,14 @@
  }
 
  .maint-diag-lbl {
- font-size: 0.62rem;
+ font-size: 0.68rem;
  text-transform: uppercase;
  color: var(--text-muted);
  letter-spacing: 0.5px;
  }
 
  .maint-diag-val {
- font-size: 0.82rem;
+ font-size: 0.85rem;
  font-weight: 700;
  color: var(--text-main);
  }
@@ -843,19 +763,18 @@
  display: grid;
  grid-template-columns: 1fr 1fr;
  gap: 16px;
- margin-top: 20px;
+ margin-top: 16px;
  }
 
  .fin-result-item {
  background: var(--bg-input);
  border: var(--border-glass);
- padding: 18px;
- border-radius: var(--radius-md);
+ padding: 16px;
  text-align: left;
  }
 
  .fin-result-label {
- font-size: 0.72rem;
+ font-size: 0.75rem;
  color: var(--text-muted);
  text-transform: uppercase;
  letter-spacing: 0.5px;
@@ -863,7 +782,7 @@
  }
 
  .fin-result-value {
- font-size: 1.25rem;
+ font-size: 1.35rem;
  font-weight: 800;
  }
 
@@ -879,59 +798,49 @@
  padding-top: 16px;
  }
 
- .parcelas-checklist-container::-webkit-scrollbar {
- width: 4px;
- }
- .parcelas-checklist-container::-webkit-scrollbar-thumb {
- background: rgba(255, 255, 255, 0.08);
- border-radius: 4px;
- }
-
  .parcela-row {
  display: flex;
  align-items: center;
  justify-content: space-between;
  background: var(--bg-input);
  padding: 12px 16px;
- border-radius: var(--radius-sm);
  border: var(--border-glass);
  transition: var(--transition);
  }
 
  .parcela-row.paga {
- border-color: rgba(0, 155, 31, 0.2);
- background: rgba(0, 155, 31, 0.02);
+ border-color: rgba(108, 172, 228, 0.2);
+ background: rgba(108, 172, 228, 0.02);
  }
 
  .parcela-info {
  display: flex;
  align-items: center;
- gap: 12px;
+ gap: 10px;
  }
 
  .parcela-checkbox {
- width: 18px;
- height: 18px;
+ width: 20px;
+ height: 20px;
  accent-color: var(--accent-gold);
  cursor: pointer;
  }
 
  .parcela-text {
- font-size: 0.85rem;
+ font-size: 0.9rem;
  font-weight: 600;
  }
 
  .parcela-date {
- font-size: 0.78rem;
+ font-size: 0.85rem;
  color: var(--text-muted);
  }
 
  /* --- CONSOLE DE RESULTADOS --- */
  .diagnostic-display {
  background: rgba(255, 255, 255, 0.01);
- border-radius: var(--radius-md);
  border: var(--border-glass);
- padding: 24px;
+ padding: 20px;
  margin-top: 16px;
  display: none;
  flex-direction: column;
@@ -943,10 +852,10 @@
  }
 
  .diagnostic-display.etanol-won {
- border-left: 3px solid var(--accent-etanol);
+ border-left: 4px solid var(--accent-etanol);
  }
  .diagnostic-display.gasolina-won {
- border-left: 3px solid var(--accent-gasolina);
+ border-left: 4px solid var(--accent-gasolina);
  }
 
  .diagnostic-header {
@@ -954,11 +863,11 @@
  justify-content: space-between;
  align-items: center;
  border-bottom: 1px solid rgba(255, 255, 255, 0.03);
- padding-bottom: 12px;
+ padding-bottom: 10px;
  }
 
  .diagnostic-tag {
- font-size: 0.72rem;
+ font-size: 0.78rem;
  font-weight: 700;
  letter-spacing: 0.8px;
  text-transform: uppercase;
@@ -971,7 +880,7 @@
  }
 
  .diagnostic-verdict {
- font-size: 1.6rem;
+ font-size: 1.5rem;
  font-weight: 900;
  letter-spacing: -0.5px;
  }
@@ -980,7 +889,7 @@
  .diagnostic-verdict.gasolina-win { color: var(--accent-gasolina); }
 
  .diagnostic-desc {
- font-size: 0.85rem;
+ font-size: 0.9rem;
  color: var(--text-muted);
  line-height: 1.5;
  }
@@ -989,17 +898,16 @@
  display: flex;
  flex-direction: column;
  gap: 8px;
- margin-top: 4px;
+ margin-top: 6px;
  }
 
  .diagnostic-data-row {
  display: flex;
  justify-content: space-between;
- font-size: 0.8rem;
+ font-size: 0.85rem;
  color: var(--text-muted);
  padding: 10px 14px;
  background: rgba(255, 255, 255, 0.01);
- border-radius: var(--radius-sm);
  border: var(--border-glass);
  }
 
@@ -1011,27 +919,26 @@
  .ai-report-container {
  display: none;
  margin-top: 16px;
- background: rgba(0, 155, 31, 0.02);
- border: 1px dashed rgba(0, 155, 31, 0.2);
- border-radius: var(--radius-md);
- padding: 18px;
+ background: rgba(108, 172, 228, 0.02);
+ border: 1px dashed rgba(108, 172, 228, 0.2);
+ padding: 16px;
  }
 
  .ai-report-header {
  display: flex;
  align-items: center;
  gap: 8px;
- font-size: 0.75rem;
+ font-size: 0.8rem;
  font-weight: 700;
- color: var(--accent-etanol);
+ color: var(--accent-blue);
  text-transform: uppercase;
  letter-spacing: 0.5px;
  margin-bottom: 10px;
  }
 
  .ai-report-body {
- font-size: 0.82rem;
- line-height: 1.55;
+ font-size: 0.9rem;
+ line-height: 1.5;
  color: var(--text-muted);
  }
 
@@ -1049,7 +956,6 @@
 
  .premium-vehicle-card {
  background: var(--bg-surface);
- border-radius: var(--radius-md);
  border: var(--border-glass);
  padding: 20px;
  display: flex;
@@ -1066,7 +972,7 @@
 
  .premium-vehicle-card.active {
  border-color: var(--accent-gold);
- background: rgba(255, 193, 0, 0.03);
+ background: rgba(108, 172, 228, 0.03);
  }
 
  .premium-vehicle-card.active::before {
@@ -1074,7 +980,6 @@
  position: absolute;
  left: 0; top: 15%; height: 70%; width: 4px;
  background: var(--accent-gold);
- border-radius: 0 4px 4px 0;
  }
 
  .vehicle-info-block {
@@ -1089,7 +994,7 @@
  }
 
  .vehicle-meta-line {
- font-size: 0.8rem;
+ font-size: 0.85rem;
  color: var(--text-muted);
  display: flex;
  align-items: center;
@@ -1099,9 +1004,8 @@
  .vehicle-placa-badge {
  background: var(--bg-input);
  border: var(--border-glass);
- padding: 2px 8px;
- border-radius: var(--radius-sm);
- font-size: 0.7rem;
+ padding: 2px 10px;
+ font-size: 0.78rem;
  font-weight: 700;
  color: var(--text-main);
  }
@@ -1114,22 +1018,21 @@
 
  /* --- BOTÕES --- */
  .btn-premium {
- background: var(--text-main);
+ background: var(--accent-gold);
  color: var(--bg-base);
  border: none;
- border-radius: var(--radius-sm);
- height: 48px;
+ height: 46px;
  font-size: 0.85rem;
  font-weight: 700;
  display: flex;
  justify-content: center;
  align-items: center;
- gap: 8px;
+ gap: 10px;
  cursor: pointer;
  transition: var(--transition);
  width: 100%;
  text-transform: uppercase;
- letter-spacing: 1.5px;
+ letter-spacing: 1.2px;
  }
 
  .btn-premium:hover {
@@ -1141,19 +1044,18 @@
  background: var(--bg-input);
  border: var(--border-glass);
  color: var(--text-main);
- border-radius: var(--radius-sm);
- height: 46px;
- font-size: 0.82rem;
+ height: 42px;
+ font-size: 0.8rem;
  font-weight: 700;
  cursor: pointer;
  display: flex;
  justify-content: center;
  align-items: center;
- gap: 6px;
+ gap: 8px;
  transition: var(--transition);
  width: 100%;
  text-transform: uppercase;
- letter-spacing: 1.5px;
+ letter-spacing: 1px;
  }
 
  .btn-premium-secondary:hover {
@@ -1163,10 +1065,9 @@
  .icon-btn {
  background: transparent;
  border: none;
- font-size: 1.15rem;
+ font-size: 1.2rem;
  cursor: pointer;
- padding: 6px;
- border-radius: 50%;
+ padding: 8px;
  transition: var(--transition);
  color: var(--text-muted);
  }
@@ -1179,6 +1080,42 @@
  .icon-btn.edit:hover { color: var(--accent-gold); }
  .icon-btn.delete:hover { color: var(--accent-red); }
 
+ /* --- CONTATOS SUPORTE --- */
+ .support-contact-btn {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ color: var(--text-main);
+ height: 46px;
+ font-size: 0.9rem;
+ font-weight: 700;
+ cursor: pointer;
+ display: flex;
+ align-items: center;
+ gap: 12px;
+ padding: 0 16px;
+ transition: var(--transition);
+ text-decoration: none;
+ width: 100%;
+ }
+ .support-contact-btn:hover {
+ border-color: var(--accent-gold);
+ background: var(--bg-input-focus);
+ }
+
+ /* --- TERMINAL OBD2 SIMULADOR --- */
+ .obd-terminal-box {
+ background: #02040a;
+ border: 1px solid var(--accent-blue);
+ color: #32ff64;
+ font-family: 'Courier New', monospace;
+ padding: 12px;
+ font-size: 0.8rem;
+ line-height: 1.4;
+ overflow-y: auto;
+ height: 120px;
+ margin-top: 10px;
+ }
+
  /* --- SYSTEM FOOTER --- */
  .app-footer {
  margin-top: auto;
@@ -1187,7 +1124,7 @@
  display: flex;
  justify-content: space-between;
  align-items: center;
- font-size: 0.72rem;
+ font-size: 0.8rem;
  color: var(--text-muted);
  width: 100%;
  text-transform: uppercase;
@@ -1222,10 +1159,9 @@
  .modal-box {
  background: var(--bg-app);
  border: var(--border-glass);
- border-radius: var(--radius-lg);
  width: 100%;
  max-width: 440px;
- padding: 32px;
+ padding: 28px;
  box-shadow: var(--shadow-premium);
  animation: modalScaleUp 0.2s cubic-bezier(0.16, 1, 0.3, 1);
  position: relative;
@@ -1237,7 +1173,7 @@
  right: 16px;
  background: transparent;
  border: none;
- font-size: 1.3rem;
+ font-size: 1.75rem;
  color: var(--text-muted);
  cursor: pointer;
  transition: var(--transition);
@@ -1260,9 +1196,8 @@
  .avatar-option-btn {
  background: var(--bg-input);
  border: var(--border-glass);
- border-radius: var(--radius-sm);
  aspect-ratio: 1;
- font-size: 1.3rem;
+ font-size: 1.45rem;
  display: flex;
  justify-content: center;
  align-items: center;
@@ -1278,15 +1213,86 @@
 
  .spinner-premium {
  border: 2px solid rgba(255, 255, 255, 0.05);
- width: 40px;
- height: 44px;
- border-radius: 50%;
+ width: 36px;
+ height: 36px;
  border-left-color: var(--text-main);
  animation: spin 0.8s linear infinite;
  display: inline-block;
  }
 
  @keyframes spin { 100% { transform: rotate(360deg); } }
+
+ /* --- BOTTOM SHEET - OVERFLOW MENU MOBILE --- */
+ .bottom-sheet-backdrop {
+ position: fixed;
+ top: 0; left: 0; width: 100vw; height: 100vh;
+ background: rgba(0,0,0,0.7);
+ backdrop-filter: blur(6px);
+ -webkit-backdrop-filter: blur(6px);
+ z-index: 1040;
+ display: none;
+ }
+ .bottom-sheet-backdrop.active {
+ display: block;
+ }
+ .bottom-sheet-more {
+ position: fixed;
+ bottom: -100%;
+ left: 0; right: 0;
+ background: var(--bg-app);
+ border-top: 2px solid var(--accent-gold); 
+ z-index: 1050;
+ padding: 24px 20px 40px 20px;
+ box-shadow: 0 -10px 40px rgba(0,0,0,0.8);
+ transition: bottom 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+ }
+ .bottom-sheet-more.active {
+ bottom: 0;
+ }
+ .bottom-sheet-header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ margin-bottom: 20px;
+ }
+ .bottom-sheet-title {
+ font-size: 1.1rem;
+ font-weight: 800;
+ text-transform: uppercase;
+ color: var(--accent-gold);
+ letter-spacing: 0.8px;
+ }
+ .bottom-sheet-grid {
+ display: grid;
+ grid-template-columns: repeat(2, 1fr);
+ gap: 12px;
+ }
+ .sheet-menu-btn {
+ background: var(--bg-input);
+ border: var(--border-glass);
+ padding: 16px 12px;
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 8px;
+ color: var(--text-main);
+ font-size: 0.9rem;
+ font-weight: 700;
+ text-transform: uppercase;
+ letter-spacing: 0.8px;
+ text-decoration: none;
+ transition: var(--transition);
+ cursor: pointer;
+ }
+ .sheet-menu-btn:hover {
+ border-color: var(--accent-gold);
+ background: var(--bg-input-focus);
+ }
+ .sheet-menu-btn i {
+ font-size: 1.35rem;
+ color: var(--accent-gold);
+ }
 
  /* ==========================================
  MEDIA QUERIES - SPA VIEWPORT RESPONSIVIDADE
@@ -1296,42 +1302,51 @@
  .setores-garagem-navigation {
  position: fixed;
  bottom: 0; left: 0; right: 0;
- background: rgba(12, 13, 20, 0.95);
+ background: rgba(12, 13, 20, 0.99);
  backdrop-filter: blur(20px);
  -webkit-backdrop-filter: blur(20px);
  border-top: var(--border-glass);
- padding: 12px 6px 20px 6px;
+ padding: 10px 16px;
  margin: 0;
- grid-template-columns: repeat(7, 1fr);
- border-radius: 0;
+ height: 60px; /* Slim vertical */
+ grid-template-columns: 1fr;
  box-shadow: var(--shadow-premium);
+ display: flex !important;
+ justify-content: center;
+ align-items: center;
  }
+
+ .setores-garagem-navigation .setores-btn:not(#side-tab-more) {
+ display: none !important; /* Esconde abas de cockpit no mobile */
+ }
+
+ #side-tab-more {
+ display: flex !important;
+ width: 100%;
+ height: 40px;
+ background: var(--bg-input);
+ border: 1.5px solid var(--accent-gold) !important;
+ font-size: 0.95rem;
+ color: var(--text-main);
+ font-weight: 800;
+ text-transform: uppercase;
+ justify-content: center;
+ align-items: center;
+ gap: 10px;
+ letter-spacing: 1px;
+ }
+ #side-tab-more i {
+ font-size: 1.15rem;
+ }
+
  .main-viewport {
- padding-bottom: 140px !important;
+ padding-bottom: 100px !important;
  }
  .webapp-shell {
  padding: 16px 16px 0 16px;
  }
  .topbar-shell {
  margin-bottom: 16px;
- }
- .setores-btn {
- padding: 6px 2px;
- font-size: 0.58rem;
- gap: 4px;
- background: transparent;
- border: none;
- letter-spacing: 0.3px;
- }
- .setores-btn span {
- font-size: 0.52rem;
- }
- .setores-btn i {
- font-size: 1rem;
- }
- .setores-btn.active {
- background: rgba(255, 255, 255, 0.05);
- border-radius: var(--radius-sm);
  }
  .fin-results-grid {
  grid-template-columns: 1fr;
@@ -1341,24 +1356,21 @@
  gap: 12px;
  }
  .day-selector-grid {
- grid-template-columns: repeat(3, 1fr);
+ grid-template-columns: repeat(4, 1fr);
  }
  .goals-stats-dashboard {
  grid-template-columns: repeat(2, 1fr);
- gap: 8px;
+ gap: 10px;
  }
- .topbar-shell .topbar-controls .btn-control-utility:not(#btn-more-controls) {
- display: none;
- }
- #btn-more-controls {
- display: flex !important;
+ .maint-status-card {
+ grid-template-columns: 1fr; 
  }
  }
 
  @media (min-width: 768px) {
  .bento-grid {
- grid-template-columns: 1.1fr 1fr;
- gap: 24px;
+ grid-template-columns: 1.2fr 1fr;
+ gap: 20px;
  }
  .vehicles-grid {
  grid-template-columns: 1fr 1fr;
@@ -1368,7 +1380,10 @@
 
  @media (min-width: 900px) {
  .welcome-grid {
- grid-template-columns: 1.2fr 1fr 1fr !important;
+ grid-template-columns: repeat(3, 1fr) !important; /* 3 colunas perfeitas e idênticas no Desktop */
+ }
+ .day-selector-grid {
+ grid-template-columns: repeat(7, 1fr);
  }
  }
  </style>
@@ -1386,10 +1401,10 @@
  <div class="topbar-profile" id="navbar-profile-trigger">
  <div class="profile-avatar" id="navbar-profile-avatar">👨‍✈️</div>
  <div class="profile-meta">
- <span class="profile-name" id="welcome-username-greeting">Piloto(a)</span>
+  <span class="profile-name" id="welcome-username-greeting">Piloto(a)</span>
  </div>
  </div>
- <!-- Botão Principal de Controle no Desktop -->
+ <!-- Botões Principais do Desktop -->
  <button class="btn-control-utility" id="btn-open-news" title="Novidades">
  <i class="fa-solid fa-bullhorn"></i> Novidades
  </button>
@@ -1399,37 +1414,6 @@
  <button class="btn-control-utility" id="btn-logout-trigger" title="Sair do Perfil">
  <i class="fa-solid fa-right-from-bracket"></i> Sair
  </button>
- <!-- Botão Exclusivo Mobile (Aciona o Dropdown Premium) -->
- <button class="btn-control-utility icon-only" id="btn-more-controls" onclick="toggleMobileDropdown(event)" style="display:none;" title="Opções">
- <i class="fa-solid fa-ellipsis-vertical"></i>
- </button>
-
- <!-- ================= DROPDOWN MOBILE SUTIL ================= -->
- <div class="mobile-dropdown" id="mobile-dropdown-menu">
- <div class="dropdown-user-info">
- <div class="profile-avatar" id="dropdown-profile-avatar">👨‍✈️</div>
- <span class="dropdown-greeting" id="dropdown-username-greeting">Piloto(a)</span>
- </div>
- <!-- Botões de Ações rápidas no mobile -->
- <button class="dropdown-item highlighted-calc" onclick="selectDropdownTab('screen-calc')">
- <i class="fa-solid fa-gas-pump"></i> Calcula.Ai
- </button>
- <button class="dropdown-item" onclick="selectDropdownTab('screen-goals')">
- <i class="fa-solid fa-bullseye"></i> Meta.Ai
- </button>
- <button class="dropdown-item" onclick="selectDropdownTab('screen-support')">
- <i class="fa-solid fa-headset"></i> Suporte
- </button>
- <button class="dropdown-item" id="btn-dropdown-news">
- <i class="fa-solid fa-bullhorn"></i> Novidades
- </button>
- <button class="dropdown-item" id="btn-dropdown-theme">
- <i class="fa-solid fa-circle-half-stroke"></i> Alternar Tema
- </button>
- <button class="dropdown-item logout" id="btn-dropdown-logout">
- <i class="fa-solid fa-right-from-bracket"></i> Sair do Perfil
- </button>
- </div>
  </div>
  </header>
 
@@ -1458,27 +1442,71 @@
  </div>
 
  <div class="bento-grid welcome-grid">
- <!-- Bento Garagem Status com Painel de Status Integrado -->
- <div class="bento-card hero">
- <div style="text-align: left; width: 100%;">
- <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Veículo Ativo</span>
- <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum</h3>
- <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar as funcionalidades.</p>
-  
- <!-- ================= PAINEL DE STATUS DA ECU (INTEGRADO AO HERO CARD) ================= -->
- <div class="ecu-status-panel" id="app-ecu-status">
- <div class="ecu-status-item">
- <span class="ecu-status-indicator" id="ecu-pulse"></span>
- <span>ECU: <span class="ecu-status-value">CONECTADO</span></span>
+ <!-- Bento Metas.ai (HOME - PRIORIDADE 1) -->
+ <div class="bento-card" id="home-quick-goals-card">
+ <div style="text-align: left; width: 100%; display: flex; flex-direction: column; gap: 10px;">
+ <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Metas.ai • Telemetria Diária</span>
+ <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 0px; margin-bottom: 2px;">CÁLCULO E REGISTRO</h3>
+
+ <!-- View 1: Sem Metas Ativas -->
+ <div id="home-quick-goal-empty" style="display: none; padding: 12px 0;">
+ <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">Nenhuma meta cadastrada no sistema. Configure seus objetivos para calcular seu progresso diário e acumulados.</p>
+ <button class="btn-premium-secondary" onclick="switchTab('screen-goals')" style="height: 38px; font-size: 0.75rem;">Estabelecer Metas</button>
  </div>
- <button class="btn-control-utility" id="btn-sync-app" style="height: 26px; padding: 0 10px; font-size: 0.65rem; border-radius: var(--radius-sm); margin: 0; background: rgba(255,255,255,0.03);" title="Sincronizar Banco de Dados">
- <i class="fa-solid fa-rotate"></i> Sincronizar App
- </button>
+
+ <!-- View 2: Metas Ativas (Painel Explicativo Detalhado) -->
+ <div id="home-quick-goal-active" style="display: none; flex-direction: column; gap: 12px; width: 100%;">
+ <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: var(--border-glass); padding-bottom: 6px;">
+ <span style="display: flex; align-items: center; gap: 8px;">
+  <span id="home-quick-goal-day" style="font-size: 0.95rem; font-weight: 800; color: var(--text-main);">---</span>
+  <button class="icon-btn edit" onclick="editHomeDailyGoal(event)" style="padding: 2px; font-size: 0.85rem;" title="Editar Meta Diária"><i class="fa-solid fa-pen"></i></button>
+ </span>
+ <span id="home-quick-goal-badge" class="maint-badge healthy" style="font-size: 0.65rem;">Nominal</span>
  </div>
+ 
+ <p style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.4;">
+  Lançamentos feitos na Home atualizam instantaneamente as tabelas da semana e transferem bônus caso você ultrapasse a meta do dia.
+ </p>
+
+ <!-- Dashboard Micro-Cards (Estilo YouTube Analytics) -->
+ <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 4px 0;">
+  <div style="background: rgba(255,255,255,0.02); padding: 8px; border: var(--border-glass); text-align: center;">
+    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Objetivo</div>
+    <div id="home-quick-goal-target-lbl" style="font-size: 0.82rem; font-weight: 800; color: var(--accent-gold); margin-top: 2px;">R$ 0,00</div>
+  </div>
+  <div style="background: rgba(255,255,255,0.02); padding: 8px; border: var(--border-glass); text-align: center;">
+    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Faturado</div>
+    <div id="home-quick-goal-done-lbl" style="font-size: 0.82rem; font-weight: 800; color: var(--accent-etanol); margin-top: 2px;">R$ 0,00</div>
+  </div>
+  <div style="background: rgba(255,255,255,0.02); padding: 8px; border: var(--border-glass); text-align: center;">
+    <div style="font-size: 0.65rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Falta</div>
+    <div id="home-quick-goal-rem-lbl" style="font-size: 0.82rem; font-weight: 800; color: var(--accent-gasolina); margin-top: 2px;">R$ 0,00</div>
+  </div>
+ </div>
+
+ <div style="display: flex; flex-direction: column; gap: 4px;">
+ <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
+ <span id="home-quick-goal-progress-text">Progresso Geral</span>
+ <span id="home-quick-goal-pct" style="font-weight: 700;">0%</span>
+ </div>
+ <div class="maint-progress-bar" style="height: 6px; background: rgba(255, 255, 255, 0.03); position: relative; border-radius: 0px !important;">
+ <div id="home-quick-goal-fill" class="maint-progress-fill" style="width: 0%; background-color: var(--accent-gold);"></div>
  </div>
  </div>
 
- <!-- Bento Quick Fuel Calculator Integrada na Home -->
+ <div class="premium-input-card" style="padding: 10px 14px; margin-top: 4px;">
+ <label style="color: var(--accent-gold);">INSIRA UM VALOR</label>
+ <div class="premium-input-wrapper">
+ <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
+ <input type="text" id="home-quick-goal-value" placeholder="0,00" style="font-size: 0.95rem;">
+ </div>
+ </div>
+ <button class="btn-premium" id="btn-home-quick-goal" style="height: 40px; font-size: 0.8rem;">Adicionar Entrada</button>
+ </div> <!-- Closes active -->
+ </div> <!-- Closes inner -->
+ </div> <!-- Closes bento-card -->
+
+ <!-- Bento Quick Fuel Calculator Integrada na Home (PRIORIDADE 2) -->
  <div class="bento-card">
  <div style="text-align: left; width: 100%;">
  <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Calcula.ai</span>
@@ -1515,43 +1543,28 @@
  </div>
  </div>
 
- <!-- Bento Metas.ai Instantâneo Integrado na Home -->
- <div class="bento-card" id="home-quick-goals-card">
- <div style="text-align: left; width: 100%; display: flex; flex-direction: column; gap: 8px;">
- <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Metas.ai</span>
- <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 0px; margin-bottom: 4px;">REGISTRO PARCIAL</h3>
-
- <!-- View 1: Sem Metas Ativas -->
- <div id="home-quick-goal-empty" style="display: none; padding: 12px 0;">
- <p style="font-size: 0.82rem; color: var(--text-muted); margin-bottom: 16px;">Você ainda não possui metas estabelecidas.</p>
- <button class="btn-premium-secondary" onclick="switchTab('screen-goals')" style="height: 38px; font-size: 0.75rem;">Estabelecer Metas</button>
+ <!-- Bento Garagem Status com Painel de Status Integrado (PRIORIDADE 3) -->
+ <div class="bento-card hero">
+ <div style="text-align: left; width: 100%;">
+ <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Veículo Ativo</span>
+ <h3 style="font-size: 1.25rem; font-weight: 800; margin-top: 4px; margin-bottom: 4px;" id="home-vehicle-title">Nenhum</h3>
+ <p style="font-size: 0.82rem; color: var(--text-muted);" id="home-vehicle-desc">Configure seu veículo na garagem para ativar as funcionalidades.</p>
+  
+ <!-- ================= PAINEL DE STATUS DA ECU ================= -->
+ <div class="ecu-status-panel" id="app-ecu-status">
+ <div class="ecu-status-item">
+ <span class="ecu-status-indicator" id="ecu-pulse"></span>
+ <span>ECU: <span class="ecu-status-value">CONECTADO</span></span>
  </div>
-
- <!-- View 2: Metas Ativas (Form Expresso) -->
- <div id="home-quick-goal-active" style="display: none; flex-direction: column; gap: 10px; width: 100%;">
- <div style="display: flex; justify-content: space-between; align-items: center;">
- <span id="home-quick-goal-day" style="font-size: 0.85rem; font-weight: 700;">---</span>
- <span id="home-quick-goal-badge" class="maint-badge healthy" style="font-size: 0.65rem;">Nominal</span>
+ <button class="btn-control-utility" id="btn-sync-app" style="height: 28px; padding: 0 12px; font-size: 0.7rem; margin: 0; background: rgba(255,255,255,0.03);" title="Sincronizar Banco de Dados">
+ <i class="fa-solid fa-rotate"></i> Sincronizar App
+ </button>
  </div>
-
- <div style="display: flex; flex-direction: column; gap: 4px;">
- <div style="display: flex; justify-content: space-between; font-size: 0.75rem; color: var(--text-muted);">
- <span id="home-quick-goal-progress-text">Meta: R$ 0,00 • Lançado: R$ 0,00 - Faltam: R$ 0,00</span>
- <span id="home-quick-goal-pct">0%</span>
- </div>
- <div class="maint-progress-bar" style="height: 6px; background: rgba(255, 255, 255, 0.03);">
- <div id="home-quick-goal-fill" class="maint-progress-fill" style="width: 0%; background-color: var(--accent-gold);"></div>
- </div>
- </div>
-
- <div class="premium-input-card" style="padding: 10px 14px; margin-top: 4px;">
- <label style="color: var(--accent-gold);">INSIRA UM VALOR</label>
- <div class="premium-input-wrapper">
- <span class="premium-input-unit" style="font-size: 0.80rem;">R$</span>
- <input type="text" id="home-quick-goal-value" placeholder="0,00" style="font-size: 0.95rem;">
- </div>
- </div>
- <button class="btn-premium" id="btn-home-quick-goal" style="height: 40px; font-size: 0.8rem;">Adicionar Entrada</button>
+ 
+ <!-- Painel de OBD2 Insights (Novidade Gearhead) -->
+ <div style="margin-top: 10px; font-size: 0.8rem; border-top: 1px dashed rgba(108,172,228,0.2); padding-top: 10px;">
+   <span style="color: var(--accent-blue); font-weight: 700;"><i class="fa-solid fa-lightbulb"></i> Telemetria preditiva:</span>
+   <p id="gearhead-dynamic-insight" style="color: var(--text-muted); margin-top: 2px;">Simulando injeção em tempo real...</p>
  </div>
  </div>
  </div>
@@ -1601,14 +1614,14 @@
 
  <!-- Resultados e Telemetria -->
  <div class="bento-card" style="justify-content: flex-start; gap: 14px;">
- <div class="ai-assistant-card" style="margin-bottom: 0; background: rgba(0, 95, 223, 0.02); border: 1px solid rgba(0, 95, 223, 0.06); padding: 16px; border-radius: var(--radius-md); display: flex; gap: 12px;">
- <div class="ai-text" id="ai-recommendation" style="font-size: 0.8rem; line-height: 1.5; color: var(--text-muted);">Calculando...</div>
+ <div class="ai-assistant-card" style="margin-bottom: 0; background: rgba(108,172,228,0.02); border: 1px solid rgba(108,172,228,0.06); padding: 14px; display: flex; gap: 10px;">
+ <div class="ai-text" id="ai-recommendation" style="font-size: 0.9rem; line-height: 1.5; color: var(--text-muted);">Calculando...</div>
  </div>
 
  <div class="diagnostic-display" id="result-card">
  <div class="diagnostic-header">
  <span class="diagnostic-tag">Resultado Específico</span>
- <span class="badge-pill" id="badge-efficiency" style="font-size: 0.72rem; color: var(--accent-gold); font-weight: 700;">Eficiência: --%</span>
+ <span class="badge-pill" id="badge-efficiency" style="font-size: 0.8rem; color: var(--accent-gold); font-weight: 700;">Eficiência: --%</span>
  </div>
  <div class="diagnostic-verdict-box">
  <div class="diagnostic-verdict" id="veredicto-text">---</div>
@@ -1626,13 +1639,24 @@
  </div>
  </div>
 
- <button class="btn-premium-secondary" id="btn-generate-report" style="margin-top: 10px; height: 42px; font-size: 0.82rem; font-weight: 700;">Gerar relatório</button>
+ <div style="display: flex; gap: 10px; margin-top: 10px;">
+ <button class="btn-premium-secondary" id="btn-generate-report" style="height: 42px; font-size: 0.8rem; font-weight: 700; flex: 1;">Gerar relatório</button>
+ <button class="btn-premium" id="btn-log-refuel" style="height: 42px; font-size: 0.8rem; font-weight: 700; flex: 1; display: none; background: var(--accent-etanol); color: white;">Salvar Abastecimento</button>
+ </div>
   
  <div class="ai-report-container" id="ai-report-output">
  <div class="ai-report-header">⚙️ Detalhamento Inteligente</div>
  <div class="ai-report-body" id="ai-report-content"></div>
  </div>
  </div>
+ </div>
+ </div>
+
+ <!-- Card de Histórico Recente de Abastecimento -->
+ <div class="bento-card" id="refuel-history-card" style="display: none; margin-top: 24px;">
+ <span class="category-title" style="font-size: 0.85rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Abastecimentos Registrados</span>
+ <div id="refuel-history-list" style="display: flex; flex-direction: column; gap: 10px; margin-top: 12px;">
+ <!-- Injetado dinamicamente via JS -->
  </div>
  </div>
  </div>
@@ -1651,28 +1675,30 @@
 
  <!-- DASHBOARD DE SALDOS -->
  <div class="goals-stats-dashboard" id="goals-dashboard" style="display: none;">
- <div class="goals-stat-card">
- <span class="goals-stat-lbl">Meta da Semana</span>
- <div class="goals-stat-val gold" id="goal-stat-week-target" style="color: var(--accent-gold);">R$ 0,00</div>
- </div>
- <div class="goals-stat-card">
- <span class="goals-stat-lbl">Feito na Semana</span>
- <div class="goals-stat-val green" id="goal-stat-week-launched" style="color: var(--accent-etanol);">R$ 0,00</div>
- </div>
- <div class="goals-stat-card">
- <span class="goals-stat-lbl">Falta na Semana</span>
- <div class="goals-stat-val orange" id="goal-stat-week-remaining" style="color: var(--accent-gasolina);">R$ 0,00</div>
- </div>
- <div class="goals-stat-card">
- <span class="goals-stat-lbl">Saldo Bônus+ (Total)</span>
- <div class="goals-stat-val" style="color: var(--accent-ai);" id="goal-stat-week-bonus">R$ 0,00</div>
+ <div class="goals-stats-dashboard" style="grid-column: span 4; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; width:100%;">
+   <div class="goals-stat-card">
+    <span class="goals-stat-lbl">Meta da Semana</span>
+    <div class="goals-stat-val gold" id="goal-stat-week-target" style="color: var(--accent-gold);">R$ 0,00</div>
+   </div>
+   <div class="goals-stat-card">
+    <span class="goals-stat-lbl">Feito na Semana</span>
+    <div class="goals-stat-val green" id="goal-stat-week-launched" style="color: var(--accent-etanol);">R$ 0,00</div>
+   </div>
+   <div class="goals-stat-card">
+    <span class="goals-stat-lbl">Falta na Semana</span>
+    <div class="goals-stat-val orange" id="goal-stat-week-remaining" style="color: var(--accent-gasolina);">R$ 0,00</div>
+   </div>
+   <div class="goals-stat-card">
+    <span class="goals-stat-lbl">Saldo Bônus+ (Total)</span>
+    <div class="goals-stat-val" style="color: var(--accent-ai);" id="goal-stat-week-bonus">R$ 0,00</div>
+   </div>
  </div>
  </div>
 
  <div class="bento-grid" id="goals-grid-layout">
  <!-- Formulário de Configuração Semanal -->
  <div class="bento-card" id="goals-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">1. Selecione os Dias de Trabalho</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">1. Selecione os Dias de Trabalho</span>
   
  <!-- GRID DE SELEÇÃO DE DIA CALIBRADO -->
  <div class="day-selector-grid" id="g-days-selector">
@@ -1685,7 +1711,7 @@
  <label class="day-chip"><input type="checkbox" id="chk-dom" onchange="toggleGoalDayFields()">Dom</label>
  </div>
 
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">2. Distribuição de Metas</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">2. Distribuição de Metas</span>
  <div style="display: flex; gap: 10px; margin-bottom: 8px;">
  <button type="button" class="btn-premium-secondary" id="btn-method-equal" style="flex: 1;" onclick="setGoalMethod('equal')">Dividir por Igual</button>
  <button type="button" class="btn-premium-secondary" id="btn-method-indiv" style="flex: 1;" onclick="setGoalMethod('indiv')">Meta por Dia</button>
@@ -1698,7 +1724,7 @@
  <span class="premium-input-unit">R$</span>
  <input type="text" id="g-val-weekly-total" placeholder="0,00">
  </div>
- <span style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;">O valor digitado acima será dividido de forma exata e igualitária entre os dias de trabalho selecionados (Máx: R$ 200.000,00).</span>
+ <span style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;">O valor digitado acima será dividido de forma exata e igualitária entre os dias de trabalho selecionados (Máx: R$ 200.000,00).</span>
  </div>
 
  <!-- Contêiner Método: Individual por Dia -->
@@ -1758,19 +1784,19 @@
  </div>
 
  <!-- Lista das Metas da Semana Ativa -->
- <div class="bento-card" id="goals-list-container" style="justify-content: flex-start; gap: 16px; width: 100%; display: none;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Gabarito da Semana</span>
- <div style="display: flex; flex-direction: column; gap: 10px; max-height: 380px; overflow-y: auto;" id="goals-list-wrapper">
+ <div class="bento-card" id="goals-list-container" style="justify-content: flex-start; gap: 12px; width: 100%; display: none;">
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Gabarito da Semana</span>
+ <div style="display: flex; flex-direction: column; gap: 8px; max-height: 380px; overflow-y: auto;" id="goals-list-wrapper">
  <!-- Injetado dinamicamente via JS -->
  </div>
  </div>
 
  <!-- Painel Meta Focada (Aportes/Ganhos Diários) -->
- <div class="bento-card" id="active-goal-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Lançar Ganhos de Hoje</span>
+ <div class="bento-card" id="active-goal-container" style="justify-content: flex-start; gap: 14px; display: none; width: 100%;">
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Lançar Ganhos de Hoje</span>
 
  <!-- Micro-resumo do Dia Focado -->
- <div id="g-active-day-summary" style="display: flex; justify-content: space-between; font-size: 0.78rem; background: var(--bg-input); padding: 10px 14px; border-radius: var(--radius-sm); border: var(--border-glass);">
+ <div id="g-active-day-summary" style="display: flex; justify-content: space-between; font-size: 0.85rem; background: var(--bg-input); padding: 10px 12px; border: var(--border-glass);">
  <div>Meta: <span id="g-active-day-target" style="font-weight:700; color:var(--accent-gold);">R$ 0,00</span></div>
  <div>Lançado: <span id="g-active-day-launched" style="font-weight:700; color:var(--accent-etanol);">R$ 0,00</span></div>
  <div>Falta: <span id="g-active-day-remaining" style="font-weight:700; color:var(--accent-gasolina);">R$ 0,00</span></div>
@@ -1785,7 +1811,7 @@
  </div>
  <button class="btn-premium" id="btn-add-aporte">Registrar Entrada</button>
 
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700; margin-top: 8px;">Entradas Lançadas</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-top: 8px;">Entradas Lançadas</span>
  <div class="parcelas-checklist-container" id="g-aportes-history-container" style="max-height: 180px; margin-top: 0; padding-top: 0; border: none;">
  <!-- Histórico de aportes do dia -->
  </div>
@@ -1800,7 +1826,7 @@
  <h2 class="screen-title">Minha Garagem</h2>
  <p class="screen-desc">Cadastre e selecione seus veículos.</p>
  </div>
- <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 44px; padding: 0 16px; font-size: 0.8rem;">Adicionar Veículo</button>
+ <button class="btn-premium" id="btn-add-vehicle-screen" style="width: auto; height: 38px; padding: 0 16px; font-size: 0.8rem;">Adicionar Veículo</button>
  </div>
 
  <div class="form-content">
@@ -1817,12 +1843,12 @@
  <h2 class="screen-title" id="add-vehicle-screen-title">Ficha Técnica</h2>
  <p class="screen-desc">Introduza os dados corretos no banco de dados da ECU.</p>
  </div>
- <button class="btn-premium-secondary" id="back-add-to-list" style="width: auto; height: 40px; padding: 0 16px;">Cancelar</button>
+ <button class="btn-premium-secondary" id="back-add-to-list" style="width: auto; height: 38px; padding: 0 16px;">Cancelar</button>
  </div>
 
  <div class="form-content" style="gap: 16px;">
  <div class="form-scrollable">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Informações da ECU</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Informações da ECU</span>
  <div class="input-group-grid">
  <div class="premium-input-card">
  <label>Placa de Identificação</label>
@@ -1868,7 +1894,7 @@
  <input type="text" id="v-modelo" placeholder="Ex: Onix 1.0 Turbo">
  </div>
 
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Normal (Sem Ar/C)</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Consumo Normal (Sem Ar/C)</span>
  <div class="input-group-grid">
  <div class="premium-input-card">
  <label style="color: var(--accent-etanol);">Etanol</label>
@@ -1886,7 +1912,7 @@
  </div>
  </div>
 
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Consumo Elevado (Com Ar/C)</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Consumo Elevado (Com Ar/C)</span>
  <div class="input-group-grid">
  <div class="premium-input-card">
  <label style="color: var(--accent-etanol);">Etanol Ar/C</label>
@@ -1909,17 +1935,17 @@
  <button class="btn-premium" id="btn-save-vehicle">Registrar Consumo</button>
  </div>
 
- <!-- ================= TELA 5: MANUTENÇÃO (COMPONTENTES BETA ATUALIZADO!) ================= -->
+ <!-- ================= TELA 5: MANUTENÇÃO ================= -->
  <div id="screen-maintenance" class="screen">
  <div class="screen-header">
  <h2 class="screen-title">Controle de Manutenção <span style="font-size: 0.75rem; vertical-align: super; color: var(--accent-gold); font-weight: 800;">BETA</span></h2>
  <p class="screen-desc">Acompanhe e preveja trocas de óleos, filtros, pneus, alinhamento e ar-condicionado de acordo com sua rodagem.</p>
  </div>
 
- <div class="bento-card" style="justify-content: flex-start; gap: 20px;">
- <div class="maint-status-card" id="maintenance-items-container">
- <!-- Injetado Dinamicamente -->
- </div>
+ <div class="bento-card" style="width: 100%;">
+   <div class="maint-status-card" id="maintenance-items-container">
+    <!-- Injetado Dinamicamente pelo padrão de cards simétricos do YouTube -->
+   </div>
  </div>
  </div>
 
@@ -1930,13 +1956,13 @@
  <h2 class="screen-title">Financiamento do Veículo <span style="font-size: 0.75rem; vertical-align: super; color: var(--accent-gold); font-weight: 800;">BETA</span></h2>
  <p class="screen-desc">Controle individual de parcelas quitadas, valores restantes e previsão de quitação.</p>
  </div>
- <button class="btn-premium-secondary" id="btn-toggle-finance-form" style="width:auto; height:38px; padding: 0 14px; font-size:0.75rem; display:none;"><i class="fa-solid fa-pen-to-square"></i> Editar Contrato</button>
+ <button class="btn-premium-secondary" id="btn-toggle-finance-form" style="width:auto; height:34px; padding: 0 12px; font-size:0.75rem; display:none;"><i class="fa-solid fa-pen-to-square"></i> Editar Contrato</button>
  </div>
 
  <div class="bento-grid" id="finance-grid-layout">
  <!-- Coluna de Form de Cadastro de Financiamento -->
  <div class="bento-card" id="finance-form-container" style="justify-content: flex-start; gap: 14px; width: 100%;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Contrato Atual</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Contrato Atual</span>
   
  <div class="premium-input-card">
  <label>Valor da Parcela</label>
@@ -1967,38 +1993,38 @@
 
  <!-- Coluna do Resumo de Amortização -->
  <div class="bento-card" id="finance-summary-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Status de Quitação</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Status de Quitação</span>
   
  <div class="fin-results-grid" id="finance-summary" style="margin-top: 0; width: 100%;">
  <div class="fin-result-item" style="grid-column: span 2; padding: 14px;">
  <div class="fin-result-label">Próxima Parcela</div>
- <div class="fin-result-value" id="fin-meta-next" style="color: var(--accent-gold); font-size: 1.15rem;">R$ 0,00</div>
+ <div class="fin-result-value" id="fin-meta-next" style="color: var(--accent-gold); font-size: 1.25rem;">R$ 0,00</div>
  <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-days">Calculando...</div>
  </div>
  <div class="fin-result-item" style="padding: 12px;">
- <div class="fin-result-label" style="font-size: 0.65rem;">Total já Pago</div>
- <div class="fin-result-value" id="fin-meta-pago" style="color: var(--accent-etanol); font-size: 1.05rem;">R$ 0,00</div>
- <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-pago-lbl">-- pagas</div>
+ <div class="fin-result-label" style="font-size: 0.75rem;">Total já Pago</div>
+ <div class="fin-result-value" id="fin-meta-pago" style="color: var(--accent-etanol); font-size: 1.15rem;">R$ 0,00</div>
+ <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-pago-lbl">-- pagas</div>
  </div>
  <div class="fin-result-item" style="padding: 12px;">
- <div class="fin-result-label" style="font-size: 0.65rem;">Saldo Restante</div>
- <div class="fin-result-value" id="fin-meta-restante" style="font-size: 1.05rem;">R$ 0,00</div>
- <div style="font-size: 0.65rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-restante-lbl">-- restantes</div>
+ <div class="fin-result-label" style="font-size: 0.75rem;">Saldo Restante</div>
+ <div class="fin-result-value" id="fin-meta-restante" style="font-size: 1.15rem;">R$ 0,00</div>
+ <div style="font-size: 0.75rem; color: var(--text-muted); margin-top: 4px;" id="fin-meta-restante-lbl">-- restantes</div>
  </div>
  <div class="fin-result-item" style="grid-column: span 2; padding: 12px;">
  <div class="fin-result-label">Previsão de Quitação</div>
- <div class="fin-result-value" id="fin-meta-previsao" style="font-size: 1rem;">--</div>
+ <div class="fin-result-value" id="fin-meta-previsao" style="font-size: 1.15rem;">--</div>
  </div>
  </div>
 
  <div id="finance-empty-state" style="text-align: center; padding: 40px 10px;">
- <p style="color: var(--text-muted); font-size: 0.85rem;">Preencha os dados operacionais do contrato para computar o checklist.</p>
+ <p style="color: var(--text-muted); font-size: 0.95rem;">Preencha os dados operacionais do contrato para computar o checklist.</p>
  </div>
  </div>
 
  <!-- Checklist de Parcelas Interativas (Aparece ao Lado no Desktop) -->
  <div class="bento-card" id="finance-checklist-container" style="justify-content: flex-start; gap: 16px; display: none; width: 100%;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Histórico de Parcelas</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Histórico de Parcelas</span>
  <div class="parcelas-checklist-container" id="parcelas-checklist-container">
  <!-- Injetado via JS de forma dinâmica -->
  </div>
@@ -2016,50 +2042,57 @@
  <div class="bento-grid">
  <!-- Card de Informações da Central -->
  <div class="bento-card" style="justify-content: flex-start; gap: 16px;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Diretrizes do Sistema</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Diretrizes do Sistema</span>
   
  <div class="fin-result-item" style="padding: 16px; display: flex; flex-direction: column; gap: 10px;">
  <div style="display: flex; justify-content: space-between; align-items: center;">
- <span style="font-size: 0.85rem; font-weight: 700;">Cockpit Central</span>
- <span class="maint-badge healthy" style="font-size: 0.65rem;">Versão v2.1 BETA</span>
+ <span style="font-size: 0.9rem; font-weight: 700;">Cockpit Central</span>
+ <span class="maint-badge healthy" style="font-size: 0.7rem;">Versão v2.2</span>
  </div>
- <div style="font-size: 0.8rem; color: var(--text-muted); line-height: 1.5;">
- Software voltado a gerenciamento do veículo, dados de consumo, dados de manutenção e gerenciamento faturamento.
+ <div style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5;">
+ Software de alta fidelidade desenvolvido para gerenciamento do veículo, telemetria de consumo, manutenção preventiva e controle financeiro.
  </div>
  </div>
 
- <div style="display: flex; flex-direction: column; gap: 8px;">
+ <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
  <div class="diagnostic-data-row">
  <span>Desenvolvedor Principal</span>
- <span>Marcelo Moreno</span>
+ <span style="color: var(--text-main); font-weight: 600;">Marcelo Moreno</span>
  </div>
  <div class="diagnostic-data-row">
  <span>Última Sincronização</span>
- <span id="support-sync-time">Nominal</span>
+ <span id="support-sync-time" style="color: var(--text-main); font-weight: 600;">Nominal</span>
  </div>
  <div class="diagnostic-data-row">
  <span>Banco de Dados Local</span>
  <span style="color: var(--accent-etanol); font-weight: 700;">CONECTADO (ECU local)</span>
  </div>
  </div>
+
+ <!-- Terminal OBD2 (Badass Gearhead Usability Tool) -->
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-top: 10px;">créditos :)</span>
+ <div class="obd-terminal-box" id="obd-terminal-logs">
+   [OBD2] Carregando interface de barramento CAN...<br>
+   [OBD2] Pronto. Sintonizado com o veículo ativo.<br>
+ </div>
  </div>
 
  <!-- Card de Canais de Contato -->
  <div class="bento-card" style="justify-content: flex-start; gap: 16px;">
- <span class="category-title" style="font-size: 0.72rem; color: var(--text-muted); font-weight: 700;">Canais Oficiais</span>
+ <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700;">Canais Oficiais</span>
 
- <a href="https://instagram.com/mv.rcelo" target="_blank" style="text-decoration: none;" class="dropdown-item">
- <i class="fa-brands fa-instagram" style="color: var(--accent-gold); font-size: 1.1rem;"></i> Direct: @mv.rcelo
+ <a href="https://instagram.com/mv.rcelo" target="_blank" class="support-contact-btn">
+  <i class="fa-brands fa-instagram" style="color: var(--accent-gold); font-size: 1.15rem;"></i> Direct: @mv.rcelo
  </a>
- <a href="mailto:suporte@garageminteligente.com" style="text-decoration: none;" class="dropdown-item">
- <i class="fa-solid fa-envelope" style="color: var(--accent-gold); font-size: 1.1rem;"></i> garageminteligentebrasil@gmail.com
+ <a href="mailto:suporte@garageminteligente.com" class="support-contact-btn">
+  <i class="fa-solid fa-envelope" style="color: var(--accent-gold); font-size: 1.15rem;"></i> garageminteligentebrasil@gmail.com
  </a>
- <p style="color: rgba(100, 100, 100, 0.5)" class="dropdown-item">
- <i class="fa-brands fa-whatsapp" style="color: rgba(150,150,150, 0.5); font-size: 1.1rem;"></i> Central de Atendimento Whatsapp
+ <p style="color: rgba(100, 100, 100, 0.5)" class="support-contact-btn">
+  <i class="fa-brands fa-whatsapp" style="color: rgba(150,150,150, 0.5); font-size: 1.15rem;"></i> Central de Atendimento Whatsapp (em breve)
  </p>
 
  <div style="border-top: var(--border-glass); padding-top: 16px; text-align: center; margin-top: auto;">
- <span style="font-size: 0.68rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">
+ <span style="font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.8px;">
  Garagem Inteligente © 2026.
  </span>
  </div>
@@ -2069,7 +2102,7 @@
 
  </main>
 
- <!-- ================= BARRA DE NAVEGAÇÃO FIXA (7 BOTÕES) ================= -->
+ <!-- ================= BARRA DE NAVEGAÇÃO FIXA ================= -->
  <nav class="setores-garagem-navigation" id="app-setores-nav">
  <button class="setores-btn active" id="side-tab-home" onclick="switchTab('screen-welcome')">
  <i class="fa-solid fa-house"></i>
@@ -2083,6 +2116,8 @@
  <i class="fa-solid fa-gas-pump"></i>
  <span>Calcula.ai</span>
  </button>
+ 
+ <!-- Elementos padrão Desktop -->
  <button class="setores-btn" id="side-tab-goals" onclick="switchTab('screen-goals')">
  <i class="fa-solid fa-bullseye"></i>
  <span>Meta.ai</span>
@@ -2099,8 +2134,61 @@
  <i class="fa-solid fa-headset"></i>
  <span>Suporte</span>
  </button>
+
+ <!-- Único botão técnico que aparece no Mobile -->
+ <button class="setores-btn" id="side-tab-more" onclick="toggleBottomSheet(true)" style="display: none;">
+ <i class="fa-solid fa-bars"></i>
+ <span>MENU COCKPIT ☰</span>
+ </button>
  </nav>
 
+ </div>
+
+ <!-- ================= OVERLAY DO MENU BOTTOM SHEET MOBILE (100% RETILÍNEO) ================= -->
+ <div class="bottom-sheet-backdrop" id="sheet-backdrop" onclick="toggleBottomSheet(false)"></div>
+ <div class="bottom-sheet-more" id="sheet-more">
+ <div class="bottom-sheet-header">
+ <span class="bottom-sheet-title">Acessar Menus</span>
+ <button class="icon-btn" onclick="toggleBottomSheet(false)"><i class="fa-solid fa-xmark"></i></button>
+ </div>
+ <div class="bottom-sheet-grid">
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-welcome')">
+ <i class="fa-solid fa-house"></i>
+ <span>Home</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-my-vehicles')">
+ <i class="fa-solid fa-warehouse"></i>
+ <span>Garagem</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-calc')">
+ <i class="fa-solid fa-gas-pump"></i>
+ <span>Calcula.ai</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-goals')">
+ <i class="fa-solid fa-bullseye"></i>
+ <span>Meta.ai</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-maintenance')">
+ <i class="fa-solid fa-screwdriver-wrench"></i>
+ <span>Manutenções</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-finance')">
+ <i class="fa-solid fa-wallet"></i>
+ <span>Finanças</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="selectSheetTab('screen-support')">
+ <i class="fa-solid fa-headset"></i>
+ <span>Suporte</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="toggleThemeSheet()">
+ <i class="fa-solid fa-circle-half-stroke"></i>
+ <span>Tema</span>
+ </div>
+ <div class="sheet-menu-btn" onclick="triggerProfileSheet()" style="grid-column: span 2;">
+ <i class="fa-solid fa-user-gear"></i>
+ <span>Ajustar Perfil Piloto</span>
+ </div>
+ </div>
  </div>
 
  <!-- ================= MODAL: CONFIGURAÇÃO DE PROFILE ================= -->
@@ -2108,8 +2196,8 @@
  <div class="modal-box">
  <button class="modal-close-btn" id="profile-close-btn" onclick="closeProfileModal()">×</button>
  <div style="text-align: center; margin-bottom: 24px;">
- <h3 style="font-size: 1.35rem; font-weight: 800;" id="profile-modal-title">Sistemas de Identificação</h3>
- <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Forneça os dados e selecione seu avatar.</p>
+ <h3 style="font-size: 1.25rem; font-weight: 800;" id="profile-modal-title">Sistemas de Identificação</h3>
+ <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Forneça os dados e selecione seu avatar.</p>
  </div>
  <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 24px;">
  <div class="premium-input-card">
@@ -2136,8 +2224,8 @@
  </select>
  </div>
 
- <div style="display: flex; flex-direction: column; gap: 6px;">
- <span style="font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Avatar de Preferência</span>
+ <div style="display: flex; flex-direction: column; gap: 8px;">
+ <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Avatar de Preferência</span>
  <div class="avatar-selector-grid">
  <button class="avatar-option-btn selected" data-avatar="👨‍✈️">👨‍✈️</button>
  <button class="avatar-option-btn" data-avatar="🚀">🚀</button>
@@ -2159,7 +2247,7 @@
  <div class="modal-box">
  <button class="modal-close-btn" onclick="closeNewsModal()">×</button>
  <div style="text-align: center; margin-bottom: 20px;">
- <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-blue);">Novidades do Cockpit</h3>
+ <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--accent-blue);">Novidades do Cockpit</h3>
  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">O que mudou na sua central de bordo.</p>
  </div>
  <div style="display: flex; flex-direction: column; gap: 16px; max-height: 280px; overflow-y: auto;">
@@ -2178,7 +2266,7 @@
  <div class="modal-overlay" id="modal-no-vehicle">
  <div class="modal-box" style="text-align: center;">
  <button class="modal-close-btn" onclick="closeNoVehicleModal()">×</button>
- <h3 style="font-size: 1.35rem; font-weight: 800; color: var(--accent-gasolina);">Sem dados para calcular</h3>
+ <h3 style="font-size: 1.25rem; font-weight: 800; color: var(--accent-gasolina);">Sem dados para calcular</h3>
  <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 6px; margin-bottom: 24px;">É necessário pelo menos um carro cadastrado para calcular o consumo baseado no preço do combustível.</p>
  <button class="btn-premium" id="btn-modal-go-to-vehicles">Cadastrar Veículo</button>
  </div>
@@ -2190,7 +2278,7 @@
  <button class="modal-close-btn" onclick="closeOdometerUpdateModal()">×</button>
  <div style="text-align: center; margin-bottom: 20px;">
  <h3 style="font-size: 1.25rem; font-weight: 800;">Atualizar Odômetro</h3>
- <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira a marcação de rodagem atual para calibração.</p>
+ <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Insira a marcação de rodagem atual para calibração.</p>
  </div>
  <div class="premium-input-card" style="margin-bottom: 20px;">
  <label>KM Atual do Painel</label>
@@ -2208,8 +2296,8 @@
  <div class="modal-box">
  <button class="modal-close-btn" onclick="closeMaintSetupModal()">×</button>
  <div style="text-align: center; margin-bottom: 20px;">
- <h3 style="font-size: 1.25rem; font-weight: 800;" id="maint-popup-title">Troca de Lubrificante e Filtro de Óleo & Combustível</h3>
- <p style="font-size: 0.82rem; color: var(--text-muted); margin-top: 4px;">Insira o KM de sua última troca.</p>
+ <h3 style="font-size: 1.35rem; font-weight: 800;" id="maint-popup-title">Troca de Lubrificante e Filtro de Óleo & Combustível</h3>
+ <p style="font-size: 0.85rem; color: var(--text-muted); margin-top: 4px;">Insira o KM de sua última troca.</p>
  </div>
  <div style="display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px;">
  <div class="premium-input-card">
@@ -2236,7 +2324,7 @@
  <div class="modal-box" style="text-align: center; max-width: 320px;">
  <div class="spinner-premium" style="margin-bottom: 20px;"></div>
  <h3 style="font-size: 1.15rem; font-weight: 800; margin-bottom: 4px;">Injetando Variáveis...</h3>
- <p id="toreto-calculation-step" style="font-size: 0.82rem; color: var(--text-muted);">Buscando intervenção divina</p>
+ <p id="toreto-calculation-step" style="font-size: 0.85rem; color: var(--text-muted);">Buscando intervenção divina</p>
  </div>
  </div>
 
@@ -2245,7 +2333,7 @@
  <div class="modal-box" style="text-align: center; max-width: 360px; border-top: 3px solid var(--accent-etanol);">
  <i class="fa-solid fa-circle-check" style="font-size: 3rem; color: var(--accent-etanol); margin-bottom: 16px;"></i>
  <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px;">Calibração Concluída</h3>
- <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Todas as diretrizes de bordo da ECU e tabelas de injeção do motorista foram integradas.</p>
+ <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Todas as diretrizes de bordo da ECU e tabelas de injeção do motorista foram integradas.</p>
  <button class="btn-premium" onclick="closeSyncSuccessModal()">Retornar ao Cockpit</button>
  </div>
  </div>
@@ -2255,9 +2343,9 @@
  <div class="modal-box" style="text-align: center; border-top: 3px solid var(--accent-etanol);">
  <button class="modal-close-btn" onclick="closeCongratsModal()">×</button>
  <i class="fa-solid fa-trophy" style="font-size: 3.5rem; color: var(--accent-gold); margin-bottom: 16px; animation: spin 0.8s cubic-bezier(0.16, 1, 0.3, 1);"></i>
- <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; color: var(--accent-etanol);">Meta Batida! 🏁</h3>
- <p style="font-size: 0.95rem; font-weight: 700; margin-bottom: 8px;">Excelente trabalho na pista!</p>
- <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Você atingiu o seu objetivo financeiro diário. Você já pode ir descansar agora!</p>
+ <h3 style="font-size: 1.35rem; font-weight: 800; margin-bottom: 6px; letter-spacing: -0.3px; color: var(--accent-etanol);">Meta Batida! 🏁</h3>
+ <p style="font-size: 1.05rem; font-weight: 700; margin-bottom: 8px;">Excelente trabalho na pista!</p>
+ <p style="font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 24px;">Você atingiu o seu objetivo financeiro diário. Você já pode ir descansar agora!</p>
  <button class="btn-premium" onclick="closeCongratsModal()">Excelente!</button>
  </div>
  </div>
@@ -2265,19 +2353,22 @@
  </div>
 
  <script>
- // Cache e Inicialização Global do SPA
+ // Tratamento de Erros e inicialização segura das variáveis locais (Fim dos travamentos de boot)
  let appState = {
  theme: localStorage.getItem('gi_theme') || 'dark',
  motoristaNome: localStorage.getItem('gi_motorista_nome') || null,
  motoristaEstado: localStorage.getItem('gi_motorista_estado') || null,
  motoristaAvatar: localStorage.getItem('gi_motorista_avatar') || '👨‍✈️',
- veiculos: JSON.parse(localStorage.getItem('gi_meus_veiculos')) || [],
+ veiculos: (() => { try { const parsed = JSON.parse(localStorage.getItem('gi_meus_veiculos')); return Array.isArray(parsed) ? parsed : []; } catch(e) { return []; } })(),
  veiculoAtivoId: localStorage.getItem('gi_veiculo_ativo_id') || null,
  veiculoEmEdicaoId: null,
- financeContract: JSON.parse(localStorage.getItem('gi_financas')) || null,
- metas: JSON.parse(localStorage.getItem('gi_metas')) || [],
+ financeContract: (() => { try { const parsed = JSON.parse(localStorage.getItem('gi_financas')); return (parsed && typeof parsed === 'object') ? parsed : null; } catch(e) { return null; } })(),
+ metas: (() => { try { const parsed = JSON.parse(localStorage.getItem('gi_metas')); return Array.isArray(parsed) ? parsed : []; } catch(e) { return []; } })(),
  metaAtivaId: localStorage.getItem('gi_meta_ativa_id') || null,
- goalMethod: 'equal'
+ goalMethod: 'equal',
+ abastecimentos: (() => { try { const parsed = JSON.parse(localStorage.getItem('gi_abastecimentos')); return Array.isArray(parsed) ? parsed : []; } catch(e) { return []; } })(),
+ calculoCorrente: null,
+ editingGoalId: null 
  };
 
  let activeMaintKey = '';
@@ -2328,11 +2419,9 @@
  function initApp() {
  applyThemeLogos(appState.theme);
 
- // Configurações do Avatar no Topbar e Dropdown
+ // Configurações do Avatar no Topbar
  const avatarEl = document.getElementById('navbar-profile-avatar');
  if (avatarEl) avatarEl.textContent = appState.motoristaAvatar;
- const dropAvatarEl = document.getElementById('dropdown-profile-avatar');
- if (dropAvatarEl) dropAvatarEl.textContent = appState.motoristaAvatar;
 
  // Define veículo ativo padrão se houver
  if (appState.veiculos.length > 0 && !appState.veiculoAtivoId) {
@@ -2367,12 +2456,6 @@
  if (appState.motoristaNome) {
  const greetingEl = document.getElementById('welcome-username-greeting');
  if (greetingEl) greetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
-  
- const dropGreetingEl = document.getElementById('dropdown-username-greeting');
- if (dropGreetingEl) dropGreetingEl.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
-
- const closeBtn = document.getElementById('profile-close-btn');
- if (closeBtn) closeBtn.style.display = 'block'; 
  runEcunIntro(false);
  } else {
  const closeBtn = document.getElementById('profile-close-btn');
@@ -2383,6 +2466,9 @@
  updateHomeActiveVehicleCard();
  updateHomeQuickGoalsWidget();
  checkOdometerAgeLimit();
+ renderAbastLogs();
+ initSupportTerminalSimulator();
+ updateDynamicInsights();
  }
 
  // Executa o boot do sistema de forma segura
@@ -2497,69 +2583,45 @@
  if (modalCongratsGoal) modalCongratsGoal.classList.remove('active');
  };
 
- // LÓGICA DO DROPDOWN MOBILE
- window.toggleMobileDropdown = function(e) {
- if (e) e.stopPropagation();
- const dropdown = document.getElementById('mobile-dropdown-menu');
- if (dropdown) dropdown.classList.toggle('active');
- };
-
- window.selectDropdownTab = function(screenId) {
- switchTab(screenId);
- const dropdown = document.getElementById('mobile-dropdown-menu');
- if (dropdown) dropdown.classList.remove('active');
- };
-
- // Fechar o dropdown caso clique em qualquer outro lugar da página
- document.addEventListener('click', (e) => {
- const dropdown = document.getElementById('mobile-dropdown-menu');
- const btnControls = document.getElementById('btn-more-controls');
- if (dropdown && dropdown.classList.contains('active')) {
- if (!dropdown.contains(e.target) && e.target !== btnControls && !btnControls.contains(e.target)) {
- dropdown.classList.remove('active');
- }
- }
- });
-
- // Ações do Dropdown Mobile
- const btnDropdownNews = document.getElementById('btn-dropdown-news');
- if (btnDropdownNews) {
- btnDropdownNews.addEventListener('click', () => {
- const dropdown = document.getElementById('mobile-dropdown-menu');
- if (dropdown) dropdown.classList.remove('active');
- if (modalNews) modalNews.classList.add('active');
- });
- }
-
- const btnDropdownTheme = document.getElementById('btn-dropdown-theme');
- if (btnDropdownTheme) {
- btnDropdownTheme.addEventListener('click', () => {
- const nextTheme = appState.theme === 'dark' ? 'light' : 'dark';
- appState.theme = nextTheme;
- localStorage.setItem('gi_theme', nextTheme);
- applyThemeLogos(nextTheme);
- const dropdown = document.getElementById('mobile-dropdown-menu');
- if (dropdown) dropdown.classList.remove('active');
- });
- }
-
- const btnDropdownLogout = document.getElementById('btn-dropdown-logout');
- if (btnDropdownLogout) {
- btnDropdownLogout.addEventListener('click', () => {
- const dropdown = document.getElementById('mobile-dropdown-menu');
- if (dropdown) dropdown.classList.remove('active');
- if (confirm('Deseja limpar todos os registros e reiniciar o perfil da central?')) {
- localStorage.clear();
- location.reload();
- }
- });
- }
-
  const btnOpenNews = document.getElementById('btn-open-news');
  if (btnOpenNews) {
  btnOpenNews.addEventListener('click', () => {
  if (modalNews) modalNews.classList.add('active');
  });
+ }
+
+ // CONTROLE BOTTOM SHEET (MENU EXCEDENTE MOBILE)
+ function toggleBottomSheet(open) {
+ const backdrop = document.getElementById('sheet-backdrop');
+ const sheet = document.getElementById('sheet-more');
+ if (backdrop && sheet) {
+ if (open) {
+ backdrop.classList.add('active');
+ sheet.classList.add('active');
+ } else {
+ backdrop.classList.remove('active');
+ sheet.classList.remove('active');
+ }
+ }
+ }
+
+ function selectSheetTab(screenId) {
+ toggleBottomSheet(false);
+ switchTab(screenId);
+ }
+
+ function toggleThemeSheet() {
+ toggleBottomSheet(false);
+ const nextTheme = appState.theme === 'dark' ? 'light' : 'dark';
+ appState.theme = nextTheme;
+ localStorage.setItem('gi_theme', nextTheme);
+ applyThemeLogos(nextTheme);
+ }
+
+ function triggerProfileSheet() {
+ toggleBottomSheet(false);
+ const profileBtn = document.getElementById('navbar-profile-trigger');
+ if (profileBtn) profileBtn.click();
  }
 
  // Máscara de entrada para valores monetários
@@ -2651,75 +2713,94 @@
 
  const greeting = document.getElementById('welcome-username-greeting');
  if (greeting) greeting.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
- const dropGreeting = document.getElementById('dropdown-username-greeting');
- if (dropGreeting) dropGreeting.innerHTML = `Olá, <span>${appState.motoristaNome}</span>!`;
 
  const topAvatar = document.getElementById('navbar-profile-avatar');
  if (topAvatar) topAvatar.textContent = appState.motoristaAvatar;
- const dropAvatar = document.getElementById('dropdown-profile-avatar');
- if (dropAvatar) dropAvatar.textContent = appState.motoristaAvatar;
   
  closeProfileModal();
  switchTab('screen-welcome');
  });
  }
 
- // Alternar Abas (SPA Tabs Controller com visibilidade nativa)
+ // Alternar Abas (SPA Tabs Controller com visibilidade nativa - CORRIGIDO!)
  function switchTab(screenId) {
  if ((screenId === 'screen-calc' || screenId === 'screen-maintenance') && appState.veiculos.length === 0) {
  if (modalNoVehicle) modalNoVehicle.classList.add('active');
  return;
  }
 
- const screens = [screenWelcome, screenCalc, screenMyVehicles, screenAddVehicle, screenMaintenance, screenFinance, screenGoals, screenSupport];
- screens.forEach(s => { if (s) s.classList.remove('active'); });
+ // Garante o desligamento limpo e simétrico das outras telas
+ const screens = ['screen-welcome', 'screen-calc', 'screen-my-vehicles', 'screen-add-vehicle', 'screen-maintenance', 'screen-finance', 'screen-goals', 'screen-support'];
+ screens.forEach(id => {
+  const el = document.getElementById(id);
+  if (el) el.classList.remove('active');
+ });
   
+ const activeScreen = document.getElementById(screenId);
+ if (activeScreen) activeScreen.classList.add('active');
+
  const tabs = ['home', 'vehicles', 'calc', 'goals', 'maint', 'fin', 'support'];
  tabs.forEach(tab => {
- const el = document.getElementById(`side-tab-${tab}`);
- if (el) el.classList.remove('active');
+  const el = document.getElementById('side-tab-' + tab);
+  if (el) el.classList.remove('active');
  });
 
+ const moreBtn = document.getElementById('side-tab-more');
+ if (moreBtn) moreBtn.classList.remove('active');
+
+ // Mapeamento dinâmico do nome da aba ativa para atualização do botão de menu mobile
+ const activeTabNameMap = {
+ 'screen-welcome': 'HOME',
+ 'screen-my-vehicles': 'GARAGEM',
+ 'screen-calc': 'CALCULA.AI',
+ 'screen-goals': 'META.AI',
+ 'screen-maintenance': 'MANUTENÇÃO',
+ 'screen-finance': 'FINANÇAS',
+ 'screen-support': 'SUPORTE'
+ };
+
+ const activeTabName = activeTabNameMap[screenId] || 'MENU';
+ const moreBtnSpan = document.querySelector('#side-tab-more span');
+ if (moreBtnSpan) {
+  moreBtnSpan.innerHTML = `MENU: ${activeTabName} ☰`;
+ }
+
+ const tabIdMap = {
+  'screen-welcome': 'side-tab-home',
+  'screen-my-vehicles': 'side-tab-vehicles',
+  'screen-calc': 'side-tab-calc',
+  'screen-goals': 'side-tab-goals',
+  'screen-maintenance': 'side-tab-maint',
+  'screen-finance': 'side-tab-fin',
+  'screen-support': 'side-tab-support'
+ };
+
+ const targetTabId = tabIdMap[screenId];
+ if (window.innerWidth > 900) {
+  const el = document.getElementById(targetTabId);
+  if (el) el.classList.add('active');
+ } else {
+  if (moreBtn) moreBtn.classList.add('active');
+ }
+
  if (screenId === 'screen-welcome') {
- if (screenWelcome) screenWelcome.classList.add('active');
- const el = document.getElementById('side-tab-home');
- if (el) el.classList.add('active');
- updateHomeActiveVehicleCard();
- updateHomeQuickGoalsWidget();
- checkOdometerAgeLimit();
+  updateHomeActiveVehicleCard();
+  updateHomeQuickGoalsWidget();
+  checkOdometerAgeLimit();
  } else if (screenId === 'screen-calc') {
- if (screenCalc) screenCalc.classList.add('active');
- const el = document.getElementById('side-tab-calc');
- if (el) el.classList.add('active');
- updateAiCostAnalysis();
+  updateAiCostAnalysis();
+  renderAbastLogs();
  } else if (screenId === 'screen-my-vehicles') {
- if (screenMyVehicles) screenMyVehicles.classList.add('active');
- const el = document.getElementById('side-tab-vehicles');
- if (el) el.classList.add('active');
- renderVehiclesGrid();
- } else if (screenId === 'screen-add-vehicle') {
- if (screenAddVehicle) screenAddVehicle.classList.add('active');
+  renderVehiclesGrid();
  } else if (screenId === 'screen-maintenance') {
- if (screenMaintenance) screenMaintenance.classList.add('active');
- const el = document.getElementById('side-tab-maint');
- if (el) el.classList.add('active');
- renderMaintenanceSystem();
+  renderMaintenanceSystem();
  } else if (screenId === 'screen-finance') {
- if (screenFinance) screenFinance.classList.add('active');
- const el = document.getElementById('side-tab-fin');
- if (el) el.classList.add('active');
- renderFinanceSystem();
+  renderFinanceSystem();
  } else if (screenId === 'screen-goals') {
- if (screenGoals) screenGoals.classList.add('active');
- const el = document.getElementById('side-tab-goals');
- if (el) el.classList.add('active');
- renderGoalsSystem();
+  renderGoalsSystem();
  } else if (screenId === 'screen-support') {
- if (screenSupport) screenSupport.classList.add('active');
- const el = document.getElementById('side-tab-support');
- if (el) el.classList.add('active');
- const syncTime = document.getElementById('support-sync-time');
- if (syncTime) syncTime.textContent = new Date().toLocaleString('pt-BR');
+  const syncTime = document.getElementById('support-sync-time');
+  if (syncTime) syncTime.textContent = new Date().toLocaleString('pt-BR');
  }
  }
 
@@ -2733,7 +2814,7 @@
  if (v) {
  if (vTitle && vDesc) {
  vTitle.innerHTML = `${v.marca} <span style="font-weight: 300;">${v.modelo}</span>`;
- vDesc.innerHTML = `Resultados para <span class="vehicle-placa-badge" style="font-size:0.65rem; padding: 1px 6px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
+ vDesc.innerHTML = `Resultados para <span class="vehicle-placa-badge" style="font-size:0.75rem; padding: 2px 8px;">${v.placa}</span> • ${v.km.toLocaleString()} KM rodados.`;
  }
  if (ecuPulse) ecuPulse.className = "ecu-status-indicator";
  } else {
@@ -2781,11 +2862,13 @@
  appState.motoristaNome = localStorage.getItem('gi_motorista_nome') || null;
  appState.motoristaEstado = localStorage.getItem('gi_motorista_estado') || null;
  appState.motoristaAvatar = localStorage.getItem('gi_motorista_avatar') || '👨‍✈️';
+ appState.abastecimentos = JSON.parse(localStorage.getItem('gi_abastecimentos')) || [];
   
  applyThemeLogos(appState.theme);
  updateHomeActiveVehicleCard();
  updateHomeQuickGoalsWidget();
  checkOdometerAgeLimit();
+ renderAbastLogs();
   
  if (screenMaintenance.classList.contains('active')) renderMaintenanceSystem();
  if (screenFinance.classList.contains('active')) renderFinanceSystem();
@@ -2889,7 +2972,7 @@
  }
 
  function getVeiculoAtivoObj() {
- if (appState.veiculos.length === 0) return null;
+ if (!appState.veiculos || appState.veiculos.length === 0) return null;
  return appState.veiculos.find(v => v.id === appState.veiculoAtivoId) || appState.veiculos[0];
  }
 
@@ -2934,7 +3017,7 @@
  if (appState.veiculos.length === 0) {
  vehiclesListContainer.innerHTML = `
  <div style="text-align: center; grid-column: span 2; padding: 40px 20px;" class="bento-card">
- <p style="color: var(--text-muted); font-size: 0.9rem;">Nenhum carro cadastrado no banco da ECU.</p>
+ <p style="color: var(--text-muted); font-size: 0.95rem;">Nenhum carro cadastrado no banco da ECU.</p>
  </div>
  `;
  return;
@@ -2946,8 +3029,8 @@
  const card = document.createElement('div');
  card.className = `premium-vehicle-card ${isAtivo ? 'active' : ''}`;
  card.onclick = () => {
- setVeiculoAtivo(v.id);
- renderVehiclesGrid();
+  setVeiculoAtivo(v.id);
+  renderVehiclesGrid();
  };
 
  card.innerHTML = `
@@ -2996,13 +3079,13 @@
 
  const labels = hasAc ? "A/C Ligado" : "A/C Desligado";
  if (acSection) acSection.className = `tesla-switch-card ${hasAc ? 'active' : ''}`;
- if (acStatusDesc) acStatusDesc.textContent = `Exibindo resultados baseados em: ${labels}`;
+ if (acStatusDesc) acStatusDesc.textContent = `Exibindo resultados baseados em: ` + labels;
 
  const cE = hasAc ? v.etanolOn : v.etanolOff;
  const cG = hasAc ? v.gasolinaOn : v.gasolinaOff;
 
  if (aiRecommendation) {
- aiRecommendation.innerHTML = `Resultados sintonizados com a ECU para <strong>${v.marca} ${v.modelo}</strong>. Desempenho calibrado para: <strong>${cE.toFixed(1)} km/l</strong> no Etanol e <strong>${cG.toFixed(1)} km/l</strong> na Gasolina.`;
+  aiRecommendation.innerHTML = `Resultados sintonizados com a ECU para <strong>${v.marca} ${v.modelo}</strong>. Desempenho calibrado para: <strong>${cE.toFixed(1)} km/l</strong> no Etanol e <strong>${cG.toFixed(1)} km/l</strong> na Gasolina.`;
  }
  }
 
@@ -3034,31 +3117,105 @@
  if (costEt) costEt.textContent = `R$ ${kmE.toFixed(2).replace('.', ',')} / KM`;
  if (costGas) costGas.textContent = `R$ ${kmG.toFixed(2).replace('.', ',')} / KM`;
 
+ let veredicto = 'GASOLINA';
  if (proporcoMercado < eficiencia) {
+ veredicto = 'ETANOL';
  if (resultCard) resultCard.classList.add('etanol-won');
  if (veredictoText) {
- veredictoText.textContent = "ABASTEÇA COM ETANOL";
- veredictoText.className = "diagnostic-verdict etanol-win";
+  veredictoText.textContent = "ABASTEÇA COM ETANOL";
+  veredictoText.className = "diagnostic-verdict etanol-win";
  }
  const ecoPorLitro = kmG - kmE;
  const ecoTanque = ecoPorLitro * cE * 50;
  if (economyDetail) {
- economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2).replace('.', ',')}</span> a cada 50L.`;
+  economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-etanol); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> do preço da Gasolina.<br>Sua injeção poupa aproximadamente <span style="color: var(--text-main); font-weight:700;">R$ ${ecoTanque.toFixed(2).replace('.', ',')}</span> a cada 50L.`;
  }
  } else {
  if (resultCard) resultCard.classList.add('gasolina-won');
  if (veredictoText) {
- veredictoText.textContent = "ABASTEÇA COM GASOLINA";
- veredictoText.className = "diagnostic-verdict gasolina-win";
+  veredictoText.textContent = "ABASTEÇA COM GASOLINA";
+  veredictoText.className = "diagnostic-verdict gasolina-win";
  }
  const precoLimite = priceGasolina * eficiencia;
  if (economyDetail) {
- economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2).replace('.', ',')}</span>.`;
+  economyDetail.innerHTML = `O Etanol representa <span style="color: var(--accent-gasolina); font-weight:700;">${(proporcoMercado*100).toFixed(0)}%</span> da Gasolina.<br>Para o álcool compensar, o preço teto no posto deve ser <span style="color: var(--text-main); font-weight:700;">R$ ${precoLimite.toFixed(2).replace('.', ',')}</span>.`;
  }
  }
 
  if (badgeEfficiency) badgeEfficiency.textContent = `Eficiência Real: ${(eficiencia*100).toFixed(1)}%`;
+
+ appState.calculoCorrente = {
+ combustivel: veredicto,
+ priceEtanol,
+ priceGasolina,
+ custoKm: veredicto === 'ETANOL' ? kmE : kmG,
+ veiculo: `${v.marca} ${v.modelo}`
+ };
+
+ const logBtn = document.getElementById('btn-log-refuel');
+ if (logBtn) logBtn.style.display = 'block';
+ updateDynamicInsights();
  }
+
+ // FUNCIONALIDADE HISTÓRICO DE ABASTECIMENTOS
+ const btnLogRefuel = document.getElementById('btn-log-refuel');
+ if (btnLogRefuel) {
+ btnLogRefuel.addEventListener('click', () => {
+ if (!appState.calculoCorrente) return;
+  
+ const novoLog = {
+ id: Date.now(),
+ data: new Date().toLocaleString('pt-BR'),
+ ...appState.calculoCorrente
+ };
+
+ appState.abastecimentos.unshift(novoLog);
+ localStorage.setItem('gi_abastecimentos', JSON.stringify(appState.abastecimentos));
+ alert('Abastecimento registrado com sucesso no banco de dados!');
+ btnLogRefuel.style.display = 'none';
+ renderAbastLogs();
+ });
+ }
+
+ function renderAbastLogs() {
+ const container = document.getElementById('refuel-history-list');
+ const card = document.getElementById('refuel-history-card');
+ if (!container || !card) return;
+
+ if (appState.abastecimentos.length === 0) {
+ card.style.display = 'none';
+ return;
+ }
+
+ card.style.display = 'flex';
+ container.innerHTML = '';
+
+ appState.abastecimentos.slice(0, 5).forEach((log) => {
+ const item = document.createElement('div');
+ item.className = 'parcela-row';
+ item.innerHTML = `
+ <div class="parcela-info">
+ <i class="fa-solid fa-gas-pump" style="color: ${log.combustivel === 'ETANOL' ? 'var(--accent-etanol)' : 'var(--accent-gasolina)'}; font-size: 1.25rem;"></i>
+ <div>
+ <span class="parcela-text" style="font-weight: 700;">Abasteceu com ${log.combustivel}</span>
+ <div style="font-size: 0.82rem; color: var(--text-muted);">${log.veiculo} • ${log.data}</div>
+ </div>
+ </div>
+ <div style="text-align: right;">
+ <span class="parcela-text" style="color: var(--text-main); font-weight:700;">Custo/KM: R$ ${log.custoKm.toFixed(2).replace('.', ',')}</span>
+ <div style="font-size: 0.78rem; color: var(--text-muted); cursor: pointer; margin-top: 4px;" onclick="deleteAbastLog(${log.id})"><i class="fa-solid fa-trash" style="color: var(--accent-red);"></i> Remover</div>
+ </div>
+ `;
+ container.appendChild(item);
+ });
+ }
+
+ window.deleteAbastLog = function(id) {
+ if (!confirm('Deseja excluir este registro de abastecimento?')) return;
+ appState.abastecimentos = appState.abastecimentos.filter(l => l.id !== id);
+ localStorage.setItem('gi_abastecimentos', JSON.stringify(appState.abastecimentos));
+ renderAbastLogs();
+ };
 
  if (calculateBtn) {
  calculateBtn.addEventListener('click', () => {
@@ -3156,8 +3313,8 @@
  ];
 
  components.forEach(comp => {
- const lastChange = v[`maint${comp.key}Last`];
- const interval = v[`maint${comp.key}Int`];
+ const lastChange = v['maint' + comp.key + 'Last'];
+ const interval = v['maint' + comp.key + 'Int'];
 
  const div = document.createElement('div');
  div.className = 'maint-item';
@@ -3190,7 +3347,7 @@
  <span class="maint-badge ${statusClass}">${statusText}</span>
  </div>
  <div class="maint-progress-bar">
- <div class="maint-progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
+  <div class="maint-progress-fill" style="width: ${percentage}%; background-color: ${barColor};"></div>
  </div>
   
  <div class="maint-diagnostic-grid">
@@ -3208,20 +3365,20 @@
  </div>
  </div>
 
- <div class="maint-meta" style="margin-top: 10px;">
+ <div class="maint-meta" style="margin-top: 10px; margin-bottom: 12px;">
  <span class="maint-km" style="font-weight:700; color: ${percentage < 10 ? 'var(--accent-red)' : 'inherit'};">
- ${rest > 0 ? `Intervalo de segurança: Restam ${rest.toLocaleString()} km` : 'COMPONENTE VENCIDO - REALIZE A MANUTENÇÃO'}
+ ${rest > 0 ? `Restam ${rest.toLocaleString()} km` : 'COMPONENTE VENCIDO - MANUTENÇÃO REQUERIDA'}
  </span>
  </div>
- <button class="maint-action-btn" onclick="openMaintSetupModal('${comp.key}')" style="margin-top: 8px; width: 100%; justify-content: center;"><i class="fa-solid fa-rotate"></i> Registrar Intervenção</button>
+ <button class="maint-action-btn" onclick="openMaintSetupModal('${comp.key}')" style="width: 100%;"><i class="fa-solid fa-rotate"></i> Registrar Intervenção</button>
  `;
  } else {
  div.innerHTML = `
- <div class="maint-meta">
- <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
- <button class="btn-premium-secondary" onclick="openMaintSetupModal('${comp.key}')" style="width: auto; height: 36px; padding: 0 14px; font-size: 0.75rem;">Configurar Controle</button>
+ <div class="maint-meta" style="margin-bottom: 8px;">
+  <span class="maint-name"><i class="fa-solid ${comp.icon}"></i> ${comp.name}</span>
  </div>
- <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 6px;">Nenhum registro de troca localizado para este componente.</p>
+ <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Nenhum registro localizado para este componente.</p>
+ <button class="btn-premium-secondary" onclick="openMaintSetupModal('${comp.key}')" style="width: 100%; height: 36px; font-size: 0.75rem;">Configurar Controle</button>
  `;
  }
  container.appendChild(div);
@@ -3277,8 +3434,8 @@
  return;
  }
 
- v[`maint${activeMaintKey}Last`] = lastKm;
- v[`maint${activeMaintKey}Int`] = interval;
+ v['maint' + activeMaintKey + 'Last'] = lastKm;
+ v['maint' + activeMaintKey + 'Int'] = interval;
 
  const idx = appState.veiculos.findIndex(veh => veh.id === v.id);
  if (idx !== -1) {
@@ -3557,14 +3714,14 @@
 
  if (method === 'equal') {
  btnEqual.style.borderColor = 'var(--accent-gold)';
- btnEqual.style.background = 'rgba(255, 193, 0, 0.1)';
+ btnEqual.style.background = 'rgba(255, 184, 28, 0.1)';
  btnIndiv.style.borderColor = 'rgba(255, 255, 255, 0.05)';
  btnIndiv.style.background = 'var(--bg-input)';
  if (eqContainer) eqContainer.style.display = 'flex';
  if (indivContainer) indivContainer.style.display = 'none';
  } else {
  btnIndiv.style.borderColor = 'var(--accent-gold)';
- btnIndiv.style.background = 'rgba(255, 193, 0, 0.1)';
+ btnIndiv.style.background = 'rgba(255, 184, 28, 0.1)';
  btnEqual.style.borderColor = 'rgba(255, 255, 255, 0.05)';
  btnEqual.style.background = 'var(--bg-input)';
  if (eqContainer) eqContainer.style.display = 'none';
@@ -3615,11 +3772,11 @@
  daysKeys.forEach(day => {
  const isWork = activeDays.includes(day);
  metasArray.push({
-  id: day,
-  titulo: daysLabels[day],
-  valor: isWork ? dividedValue : 0,
-  work: isWork,
-  aportes: []
+ id: day,
+ titulo: daysLabels[day],
+ valor: isWork ? dividedValue : 0,
+ work: isWork,
+ aportes: []
  });
  });
  } else {
@@ -3628,8 +3785,8 @@
  daysKeys.forEach(day => {
  const isWork = activeDays.includes(day);
  if (isWork) {
-  const val = parseFloat(document.getElementById('g-val-' + day).value.replace(/\./g, '').replace(',', '.')) || 0;
-  totalIndivSum += val;
+ const val = parseFloat(document.getElementById('g-val-' + day).value.replace(/\./g, '').replace(',', '.')) || 0;
+ totalIndivSum += val;
  }
  });
 
@@ -3648,11 +3805,11 @@
  const isWork = activeDays.includes(day);
  const inputVal = isWork ? (parseFloat(document.getElementById('g-val-' + day).value.replace(/\./g, '').replace(',', '.')) || 0) : 0;
  metasArray.push({
-  id: day,
-  titulo: daysLabels[day],
-  valor: inputVal,
-  work: isWork,
-  aportes: []
+ id: day,
+ titulo: daysLabels[day],
+ valor: inputVal,
+ work: isWork,
+ aportes: []
  });
  });
  }
@@ -3705,6 +3862,44 @@
  updateHomeQuickGoalsWidget();
  };
 
+ // FUNÇÃO DE EDIÇÃO INLINE DE META DIÁRIA (SOLUÇÃO PREMIUM)
+ window.startEditGoal = function(id, e) {
+  if (e) e.stopPropagation();
+  appState.editingGoalId = id;
+  renderGoalsSystem();
+  
+  const input = document.getElementById('inline-edit-goal-val');
+  if (input) {
+    applyATMValueMask(input);
+    input.focus();
+  }
+ };
+
+ window.saveInlineGoal = function(id, e) {
+  if (e) e.stopPropagation();
+  const input = document.getElementById('inline-edit-goal-val');
+  if (!input) return;
+  const newVal = parseFloat(input.value.replace(/\./g, '').replace(',', '.')) || 0;
+  if (newVal <= 0 || newVal > 200000) {
+    alert('Meta inválida (Máx: R$ 200.000,00)');
+    return;
+  }
+  const g = appState.metas.find(item => item.id === id);
+  if (g) {
+    g.valor = newVal;
+    localStorage.setItem('gi_metas', JSON.stringify(appState.metas));
+  }
+  appState.editingGoalId = null;
+  renderGoalsSystem();
+  updateHomeQuickGoalsWidget();
+ };
+
+ window.cancelInlineGoal = function(e) {
+  if (e) e.stopPropagation();
+  appState.editingGoalId = null;
+  renderGoalsSystem();
+ };
+
  function renderGoalsSystem() {
  const metas = appState.metas;
  const listWrapper = document.getElementById('goals-list-wrapper');
@@ -3716,14 +3911,14 @@
  if (!metas || metas.length === 0) {
  if (formContainer) formContainer.style.display = 'flex';
  if (activeContainer) activeContainer.style.display = 'none';
- if (listWrapper) listWrapper.parentElement.style.display = 'none';
+ if (listWrapper && listWrapper.parentElement) listWrapper.parentElement.style.display = 'none';
  if (dashboard) dashboard.style.display = 'none';
  if (btnReset) btnReset.style.display = 'none';
  return;
  }
 
  if (formContainer) formContainer.style.display = 'none';
- if (listWrapper) listWrapper.parentElement.style.display = 'flex';
+ if (listWrapper && listWrapper.parentElement) listWrapper.parentElement.style.display = 'flex';
  if (dashboard) dashboard.style.display = 'grid';
  if (btnReset) btnReset.style.display = 'flex';
 
@@ -3747,11 +3942,12 @@
  }
  });
 
- // Renderizar a lista cronológica Seg-Dom
+ // Renderizar a lista cronológica Seg-Dom com suporte à Edição Inline
  if (listWrapper) {
  listWrapper.innerHTML = '';
  metas.forEach(g => {
  const isAtiva = appState.metaAtivaId === g.id;
+ const isEditing = appState.editingGoalId === g.id;
  const totalAportes = (g.aportes || []).reduce((acc, ap) => acc + ap.valor, 0);
  const capped = Math.min(totalAportes, g.valor);
  const bonus = Math.max(0, totalAportes - g.valor);
@@ -3774,37 +3970,56 @@
  <i class="fa-solid fa-bed" style="color: var(--text-muted);"></i>
  <span class="parcela-text" style="font-weight: 700;">${g.titulo}</span>
  </div>
- <span class="maint-badge healthy" style="font-size:0.65rem; background: rgba(0, 155, 31, 0.05);">Folga</span>
+ <span class="maint-badge healthy" style="font-size:0.75rem; background: rgba(108, 172, 228, 0.05);">Folga</span>
  </div>
  `;
+ } else if (isEditing) {
+  // FORMULÁRIO DE EDIÇÃO INLINE DO GABARITO (GENESIS SYSTEM)
+  const currentFormatted = g.valor.toFixed(2).replace('.', ',');
+  item.style.border = '2px solid var(--accent-gold)';
+  item.style.background = 'rgba(255, 184, 28, 0.05)';
+  item.innerHTML = `
+   <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
+     <span class="parcela-text" style="font-weight: 700; color: var(--accent-gold);"><i class="fa-solid fa-pen"></i> Ajustando ${g.titulo}</span>
+   </div>
+   <div style="display:flex; gap: 8px; width: 100%; align-items: center; margin-top: 4px;">
+     <div class="premium-input-card" style="flex: 1; padding: 6px 12px; margin: 0;">
+       <label style="font-size: 0.65rem;">Nova Meta (R$)</label>
+       <input type="text" id="inline-edit-goal-val" value="${currentFormatted}" style="font-size: 1rem; font-weight: 700; height: auto; padding: 2px 0;">
+     </div>
+     <button class="btn-premium" onclick="saveInlineGoal('${g.id}', event)" style="width: 40px; height: 38px; padding: 0; background: var(--accent-etanol); color: white;"><i class="fa-solid fa-check"></i></button>
+     <button class="btn-premium-secondary" onclick="cancelInlineGoal(event)" style="width: 40px; height: 38px; padding: 0;"><i class="fa-solid fa-xmark"></i></button>
+   </div>
+  `;
  } else {
- // Dia útil cadastrado
+ // Dia útil cadastrado normal
  item.style.cursor = 'pointer';
- item.style.border = isAtiva ? '1px solid var(--accent-gold)' : 'var(--border-glass)';
- if (isAtiva) item.style.background = 'rgba(255, 193, 0, 0.03)';
+ item.style.border = isAtiva ? '2px solid var(--accent-gold)' : 'var(--border-glass)';
+ if (isAtiva) item.style.background = 'rgba(255, 184, 28, 0.03)';
  item.onclick = () => selectActiveGoal(g.id);
 
  item.innerHTML = `
  <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
- <div style="display:flex; align-items:center; gap:8px;">
+ <div style="display:flex; align-items:center; gap:10px;">
  <i class="fa-solid fa-calendar-day" style="color: ${isAtiva ? 'var(--accent-gold)' : 'var(--text-muted)'};"></i>
  <span class="parcela-text" style="font-weight: 700;">${g.titulo}</span>
+ <button class="icon-btn edit" onclick="startEditGoal('${g.id}', event)" style="padding: 2px; font-size: 0.85rem;" title="Editar Meta Diária"><i class="fa-solid fa-pen"></i></button>
  </div>
- <span class="maint-badge ${totalAportes >= g.valor ? 'healthy' : (isAtiva ? 'attention' : 'critical')}" style="font-size:0.65rem;">
+ <span class="maint-badge ${totalAportes >= g.valor ? 'healthy' : (isAtiva ? 'attention' : 'critical')}" style="font-size:0.75rem;">
  ${totalAportes >= g.valor ? 'Meta Batida' : (isAtiva ? 'Em Foco' : 'Pendente')}
  </span>
  </div>
 
- <div style="display:flex; justify-content:space-between; font-size: 0.78rem; color: var(--text-muted);">
+ <div style="display:flex; justify-content:space-between; font-size: 0.88rem; color: var(--text-muted);">
  <span>Meta: R$ ${g.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
  <span>Lançado: R$ ${totalAportes.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
  </div>
 
- <div class="maint-progress-bar" style="height: 4px; background: rgba(255,255,255,0.03);">
+ <div class="maint-progress-bar" style="height: 4px; background: rgba(255,255,255,0.03); position: relative; border-radius: 0px !important;">
  <div class="maint-progress-fill" style="width: ${progressPercent}%; background-color: ${totalAportes >= g.valor ? 'var(--accent-etanol)' : 'var(--accent-gold)'};"></div>
  </div>
 
- <div style="display:flex; justify-content:space-between; font-size: 0.72rem; color: var(--text-muted); align-items:center;">
+ <div style="display:flex; justify-content:space-between; font-size: 0.82rem; color: var(--text-muted); align-items:center;">
  <span>Progresso: ${progressPercent.toFixed(0)}%</span>
  <span>${bonus > 0 ? `<strong style="color:var(--accent-etanol);">+ R$ ${bonus.toLocaleString('pt-BR', {minimumFractionDigits: 2})} Bônus</strong>` : ''}</span>
  </div>
@@ -3847,7 +4062,7 @@
  historyContainer.innerHTML = '';
  if (!activeGoal.aportes || activeGoal.aportes.length === 0) {
  historyContainer.innerHTML = `
- <div style="text-align: center; padding: 15px; font-size: 0.78rem; color: var(--text-muted);">
+ <div style="text-align: center; padding: 15px; font-size: 0.88rem; color: var(--text-muted);">
  Nenhum faturamento registrado para este dia útil.
  </div>
  `;
@@ -3857,7 +4072,7 @@
  row.className = 'parcela-row';
  row.style.padding = '8px 12px';
  row.style.marginBottom = '6px';
- row.style.fontSize = '0.8rem';
+ row.style.fontSize = '0.88rem';
 
  const dateObj = new Date(ap.data);
  const timeStr = dateObj.toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'});
@@ -3865,16 +4080,30 @@
  row.innerHTML = `
  <div style="display:flex; justify-content:space-between; width:100%; align-items:center;">
  <div>
-  <span style="font-weight:700; color:var(--accent-etanol);">+ R$ ${ap.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
-  <div style="font-size:0.65rem; color:var(--text-muted);">${timeStr}</div>
+ <span style="font-weight:700; color:var(--accent-etanol);">+ R$ ${ap.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</span>
+ <div style="font-size:0.75rem; color:var(--text-muted);">${timeStr}</div>
  </div>
- <button class="icon-btn delete" onclick="deleteAporte(${idx}, event)" style="padding: 2px;"><i class="fa-solid fa-trash-can" style="font-size:0.75rem;"></i></button>
+ <div style="display:flex; gap: 8px;">
+  <button class="icon-btn edit" style="padding: 2px;"><i class="fa-solid fa-pen" style="font-size:0.85rem;"></i></button>
+  <button class="icon-btn delete" style="padding: 2px;"><i class="fa-solid fa-trash-can" style="font-size:0.85rem;"></i></button>
+ </div>
  </div>
  `;
   
+ const editBtn = row.querySelector('.edit');
+ if (editBtn) {
+  editBtn.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    editAporte(idx, ev);
+  });
+ }
+
  const deleteBtn = row.querySelector('.delete');
  if (deleteBtn) {
-  deleteBtn.addEventListener('click', (ev) => deleteAporte(idx, ev));
+  deleteBtn.addEventListener('click', (ev) => {
+    ev.stopPropagation();
+    deleteAporte(idx, ev);
+  });
  }
   
  historyContainer.appendChild(row);
@@ -3940,6 +4169,29 @@
  });
  }
 
+ // FUNÇÃO DE EDIÇÃO DE GANHO LANÇADO (APORTE)
+ window.editAporte = function(reversedIdx, e) {
+  if (e) e.stopPropagation();
+  const activeGoal = appState.metas.find(g => g.id === appState.metaAtivaId);
+  if (!activeGoal || !activeGoal.aportes) return;
+  const realIdx = activeGoal.aportes.length - 1 - reversedIdx;
+  if (realIdx >= 0 && realIdx < activeGoal.aportes.length) {
+    const currentVal = activeGoal.aportes[realIdx].valor;
+    const formattedVal = currentVal.toFixed(2).replace('.', ',');
+    const newValStr = prompt("Alterar valor do faturamento lançado para " + activeGoal.titulo + ":", formattedVal);
+    if (newValStr === null) return; // Cancelado
+    const newVal = parseFloat(newValStr.replace(/\./g, '').replace(',', '.')) || 0;
+    if (newVal <= 0 || newVal > 50000) {
+      alert("Valor inválido (Máx: R$ 50.000,00 por entrada).");
+      return;
+    }
+    activeGoal.aportes[realIdx].valor = newVal;
+    localStorage.setItem('gi_metas', JSON.stringify(appState.metas));
+    renderGoalsSystem();
+    updateHomeQuickGoalsWidget();
+  }
+ };
+
  // Deletar faturamento diário
  window.deleteAporte = function(reversedIdx, e) {
  if (e) e.stopPropagation();
@@ -3958,7 +4210,7 @@
  };
 
 
- // ================= NOVO WIDGET METAS.AI EXPRESSO (HOME) =================
+ // ================= NOVO WIDGET METAS.AI EXPRESSO REFORMULADO (HOME) =================
 
  function updateHomeQuickGoalsWidget() {
  const metas = appState.metas;
@@ -3994,6 +4246,11 @@
  const pctEl = document.getElementById('home-quick-goal-pct');
  const fillEl = document.getElementById('home-quick-goal-fill');
  
+ // Elementos detalhados em box do novo Grid de Faturamento
+ const targetLbl = document.getElementById('home-quick-goal-target-lbl');
+ const doneLbl = document.getElementById('home-quick-goal-done-lbl');
+ const remLbl = document.getElementById('home-quick-goal-rem-lbl');
+
  if (activeGoal) {
  const totalAportes = (activeGoal.aportes || []).reduce((acc, ap) => acc + ap.valor, 0);
  const capped = Math.min(totalAportes, activeGoal.valor);
@@ -4005,32 +4262,68 @@
   
  if (badgeEl) {
  if (totalAportes >= activeGoal.valor) {
-  badgeEl.className = "maint-badge healthy";
-  badgeEl.textContent = "Meta Batida";
+ badgeEl.className = "maint-badge healthy";
+ badgeEl.textContent = "Meta Batida";
  } else {
-  badgeEl.className = "maint-badge attention";
-  badgeEl.textContent = "Em Foco";
+ badgeEl.className = "maint-badge attention";
+ badgeEl.textContent = "Em Foco";
  }
+ }
+
+ // Atualiza indicadores analíticos
+ if (targetLbl) targetLbl.textContent = 'R$ ' + activeGoal.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+ if (doneLbl) doneLbl.textContent = 'R$ ' + totalAportes.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+ if (remLbl) {
+  if (totalAportes >= activeGoal.valor) {
+    remLbl.textContent = 'Bônus ativo!';
+    remLbl.style.color = 'var(--accent-etanol)';
+  } else {
+    remLbl.textContent = 'R$ ' + faltam.toLocaleString('pt-BR', {minimumFractionDigits: 2});
+    remLbl.style.color = 'var(--accent-gasolina)';
+  }
  }
   
  if (progressTextEl) {
- progressTextEl.innerHTML = `Meta: R$ ${activeGoal.valor.toLocaleString('pt-BR', {minimumFractionDigits: 2})} • Lançado: R$ ${totalAportes.toLocaleString('pt-BR', {minimumFractionDigits: 2})} - Faltam: R$ ${faltam.toLocaleString('pt-BR', {minimumFractionDigits: 2})}`;
+  if (totalAportes >= activeGoal.valor) {
+    progressTextEl.innerHTML = `🔥 Limite diário superado! Todo faturamento adicional agora acumula bônus.`;
+  } else {
+    progressTextEl.innerHTML = `Faltam apenas <strong>R$ ${faltam.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</strong> para liberar seu bônus diário.`;
+  }
  }
   
  if (pctEl) {
  if (bonus > 0) {
-  pctEl.innerHTML = `<strong style="color:var(--accent-etanol);">+ R$ ${bonus.toLocaleString('pt-BR', {minimumFractionDigits: 2})} Bônus</strong> (${progressPercent.toFixed(0)}%)`;
+ pctEl.innerHTML = `<strong style="color:var(--accent-etanol);">+ R$ ${bonus.toLocaleString('pt-BR', {minimumFractionDigits: 2})} Bônus</strong> (${progressPercent.toFixed(0)}%)`;
  } else {
-  pctEl.textContent = `${progressPercent.toFixed(0)}%`;
+ pctEl.textContent = progressPercent.toFixed(0) + '%';
  }
  }
   
  if (fillEl) {
- fillEl.style.width = `${progressPercent}%`;
+ fillEl.style.width = progressPercent + '%';
  fillEl.style.backgroundColor = totalAportes >= activeGoal.valor ? 'var(--accent-etanol)' : 'var(--accent-gold)';
  }
  }
  }
+
+ // ATALHO RÁPIDO DE EDIÇÃO DA META DIÁRIA DIRETAMENTE NA HOME (SOLUÇÃO PREMIUM)
+ window.editHomeDailyGoal = function(e) {
+  if (e) e.stopPropagation();
+  const activeGoal = appState.metas.find(g => g.id === appState.metaAtivaId);
+  if (!activeGoal) return;
+  const formattedVal = activeGoal.valor.toFixed(2).replace('.', ',');
+  const newValStr = prompt("Alterar meta diária de faturamento (" + activeGoal.titulo + "):", formattedVal);
+  if (newValStr === null) return; // Cancelado
+  const newVal = parseFloat(newValStr.replace(/\./g, '').replace(',', '.')) || 0;
+  if (newVal <= 0 || newVal > 200000) {
+    alert("Meta inválida (Máx: R$ 200.000,00)");
+    return;
+  }
+  activeGoal.valor = newVal;
+  localStorage.setItem('gi_metas', JSON.stringify(appState.metas));
+  updateHomeQuickGoalsWidget();
+  renderGoalsSystem();
+ };
 
  const btnHomeQuickGoal = document.getElementById('btn-home-quick-goal');
  if (btnHomeQuickGoal) {
@@ -4078,6 +4371,58 @@
  if (modal) modal.classList.add('active');
  }
 
+ // ================= SIMULADOR TERMINAL OBD2 LIVE (SUPORTE SCREEN) =================
+ function initSupportTerminalSimulator() {
+   const term = document.getElementById('obd-terminal-logs');
+   if (!term) return;
+   
+   const logs = [
+     "[OBD2] Sincronizando com barramento de telemetria CAN...",
+     "[OBD2] Relação lambda ideal detectada (1.00)",
+     "[OBD2] Temperatura de admissão: 28°C",
+     "[OBD2] Sensor de pressão do coletor (MAP): OK",
+     "[OBD2] Ajuste de combustível a longo prazo (STFT): -1%",
+     "[OBD2] Nenhuma anomalia (DTC) localizada no motorista.",
+     "[OBD2] ECU mapeada e calibrada com sucesso!"
+   ];
+   
+   let index = 0;
+   setInterval(() => {
+     if (term.children.length > 50) term.innerHTML = ""; // Limpa cache de logs antigos
+     const date = new Date().toLocaleTimeString('pt-BR');
+     const rLog = logs[index % logs.length];
+     term.innerHTML += `<div style="margin-bottom: 2px;">[${date}] ${rLog}</div>`;
+     term.scrollTop = term.scrollHeight;
+     index++;
+   }, 3000);
+ }
+
+ // ================= CARROSSEL DINÂMICO DE INSIGHTS GEARHEAD (HOME SCREEN) =================
+ function updateDynamicInsights() {
+   const label = document.getElementById('gearhead-dynamic-insight');
+   if (!label) return;
+   
+   const insights = [
+     "Conduzir com ar-condicionado desligado pode poupar até 1.2 km/l na sua média geral.",
+     "Mantenha os pneus calibrados semanalmente para otimizar o arrasto aerodinâmico em 3%.",
+     "Sua ECU ativa calcula desgaste baseado no seu odômetro. Atualize os quilômetros semanalmente.",
+     "Atualmente, com o mapeamento térmico ativo, sua injeção responde melhor a acelerações progressivas."
+   ];
+   
+   // Se houver cálculo recente na memória, gera um insight dinâmico baseado em preços reais!
+   if (appState.abastecimentos.length > 0) {
+     const last = appState.abastecimentos[0];
+     insights.unshift(`Seu último registro de abastecimento no ${last.combustivel} rendeu economia real na bomba!`);
+   }
+   
+   let index = 0;
+   label.textContent = insights[0];
+   setInterval(() => {
+     index = (index + 1) % insights.length;
+     label.textContent = insights[index];
+   }, 8000);
+ }
+
 
  // LOGOUT
  const btnLogoutTrig = document.getElementById('btn-logout-trigger');
@@ -4095,10 +4440,10 @@
  overlays.forEach(overlay => {
  overlay.addEventListener('click', (e) => {
  if (e.target === overlay) {
-  if (overlay.id === 'modal-register-driver' && !appState.motoristaNome) {
-  return;
-  }
-  overlay.classList.remove('active');
+ if (overlay.id === 'modal-register-driver' && !appState.motoristaNome) {
+ return;
+ }
+ overlay.classList.remove('active');
  }
  });
  });
