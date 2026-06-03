@@ -1105,14 +1105,13 @@
  /* --- TERMINAL OBD2 SIMULADOR --- */
  .obd-terminal-box {
  background: #02040a;
- border: 1px solid var(--accent-blue);
  color: #32ff64;
  font-family: 'Courier New', monospace;
  padding: 12px;
  font-size: 0.8rem;
  line-height: 1.4;
  overflow-y: auto;
- height: 120px;
+ height: 100px;
  margin-top: 10px;
  }
 
@@ -1294,6 +1293,22 @@
  color: var(--accent-gold);
  }
 
+/* Ajuste fino para a tela de Suporte */
+#screen-support .bento-grid {
+  padding: 0 5px; /* Evita colagem nas bordas do mobile */
+}
+
+.support-contact-btn {
+  margin-bottom: 12px; /* Espaçamento entre botões de contato */
+  padding: 18px 20px !important;
+}
+
+.obd-terminal-box {
+  margin-top: 20px;
+  padding: 16px !important;
+  border-radius: 0px !important;
+}
+
  /* ==========================================
  MEDIA QUERIES - SPA VIEWPORT RESPONSIVIDADE
  ========================================== */
@@ -1445,7 +1460,7 @@
  <!-- Bento Metas.ai (HOME - PRIORIDADE 1) -->
  <div class="bento-card" id="home-quick-goals-card">
  <div style="text-align: left; width: 100%; display: flex; flex-direction: column; gap: 10px;">
- <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Metas.ai • Telemetria Diária</span>
+ <span style="font-size: 0.72rem; font-weight: 700; text-transform: uppercase; color: var(--accent-gold); letter-spacing: 0.5px;">Metas.ai • Lançamento Rápido</span>
  <h3 style="font-size: 1.15rem; font-weight: 800; margin-top: 0px; margin-bottom: 2px;">CÁLCULO E REGISTRO</h3>
 
  <!-- View 1: Sem Metas Ativas -->
@@ -2070,7 +2085,6 @@
  </div>
 
  <!-- Terminal OBD2 (Badass Gearhead Usability Tool) -->
- <span class="category-title" style="font-size: 0.78rem; color: var(--text-muted); font-weight: 700; margin-top: 10px;">créditos :)</span>
  <div class="obd-terminal-box" id="obd-terminal-logs">
    [OBD2] Carregando interface de barramento CAN...<br>
    [OBD2] Pronto. Sintonizado com o veículo ativo.<br>
@@ -2227,14 +2241,14 @@
  <div style="display: flex; flex-direction: column; gap: 8px;">
  <span style="font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.5px;">Avatar de Preferência</span>
  <div class="avatar-selector-grid">
- <button class="avatar-option-btn selected" data-avatar="👨‍✈️">👨‍✈️</button>
- <button class="avatar-option-btn" data-avatar="🚀">🚀</button>
- <button class="avatar-option-btn" data-avatar="🏎️">🏎️</button>
- <button class="avatar-option-btn" data-avatar="⚙️">⚙️</button>
- <button class="avatar-option-btn" data-avatar="🦸">🦸</button>
- <button class="avatar-option-btn" data-avatar="🚥">🚥</button>
- <button class="avatar-option-btn" data-avatar="🏁">🏁</button>
- <button class="avatar-option-btn" data-avatar="⚡">⚡</button>
+	<button class="avatar-option-btn selected" data-avatar="👨‍✈️">👨‍✈️</button>
+	<button class="avatar-option-btn" data-avatar="🏎️">🏎️</button>
+	<button class="avatar-option-btn" data-avatar="🚘">🚘</button>
+	<button class="avatar-option-btn" data-avatar="🔩">🔩</button>
+	<button class="avatar-option-btn" data-avatar="🔥">🔥</button>
+	<button class="avatar-option-btn" data-avatar="😎">😎</button>
+	<button class="avatar-option-btn" data-avatar="🤙">🤙</button>
+	<button class="avatar-option-btn" data-avatar="👊">👊</button>
  </div>
  </div>
  </div>
@@ -2592,18 +2606,17 @@
 
  // CONTROLE BOTTOM SHEET (MENU EXCEDENTE MOBILE)
  function toggleBottomSheet(open) {
- const backdrop = document.getElementById('sheet-backdrop');
- const sheet = document.getElementById('sheet-more');
- if (backdrop && sheet) {
- if (open) {
- backdrop.classList.add('active');
- sheet.classList.add('active');
- } else {
- backdrop.classList.remove('active');
- sheet.classList.remove('active');
- }
- }
- }
+  const backdrop = document.getElementById('sheet-backdrop');
+  const sheet = document.getElementById('sheet-more');
+  
+  if (open) {
+    backdrop.classList.add('active');
+    sheet.classList.add('active');
+  } else {
+    backdrop.classList.remove('active');
+    sheet.classList.remove('active');
+  }
+}
 
  function selectSheetTab(screenId) {
  toggleBottomSheet(false);
@@ -2691,7 +2704,7 @@
  } else {
  switchTab('screen-welcome');
  }
- }, 1600);
+ }, 777);
  }
 
  // Gravar motorista (Onboarding)
@@ -4380,10 +4393,13 @@
      "[OBD2] Sincronizando com barramento de telemetria CAN...",
      "[OBD2] Relação lambda ideal detectada (1.00)",
      "[OBD2] Temperatura de admissão: 28°C",
+     "[OBD2] Motorista aparentemente sem problemas psicológicos (ainda).",
      "[OBD2] Sensor de pressão do coletor (MAP): OK",
      "[OBD2] Ajuste de combustível a longo prazo (STFT): -1%",
      "[OBD2] Nenhuma anomalia (DTC) localizada no motorista.",
-     "[OBD2] ECU mapeada e calibrada com sucesso!"
+     "[OBD2] ECU mapeada e calibrada com sucesso!",
+     "****** [OBD2] ERROR: Pressão do motorista baixa."
+
    ];
    
    let index = 0;
